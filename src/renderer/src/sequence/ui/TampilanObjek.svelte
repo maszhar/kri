@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
   import { Koordinat } from '../../common/entitas/Koordinat'
+  import InputNamaObjek from './InputNamaObjek.svelte'
 
   interface Properti {
     nama: string
@@ -21,11 +22,14 @@
 
   let sedangMengedit = $state(false)
   let elemenNamaObjek: Node
+  let elemenInputNamaObjek: InputNamaObjek | undefined = $state(undefined)
   let namaObjekSementara: string = $state('')
 
   function tanganiKlikSaatMengedit(e: MouseEvent): void {
-    if (!elemenNamaObjek.contains(e.target as Node)) {
-      akhiriMengedit()
+    if (typeof elemenInputNamaObjek !== 'undefined') {
+      if (!elemenInputNamaObjek.contains(e.target as Node)) {
+        akhiriMengedit()
+      }
     }
   }
 
@@ -84,7 +88,7 @@
     bind:this={elemenNamaObjek}
   >
     {#if sedangMengedit}
-      <input type="text" bind:value={namaObjekSementara} />
+      <InputNamaObjek bind:nilai={namaObjekSementara} bind:this={elemenInputNamaObjek} />
     {:else}
       {nama}
     {/if}
