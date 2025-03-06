@@ -7,6 +7,6 @@
   const { children }: Properti = $props()
 </script>
 
-<div class="overflow-auto">
+<div class="relative overflow-auto">
   {@render children?.()}
 </div>
