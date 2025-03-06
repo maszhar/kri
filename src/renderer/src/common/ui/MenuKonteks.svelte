@@ -1,10 +1,12 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte'
+  import { Koordinat } from '../entitas/Koordinat'
 
   interface Properti {
+    posisi?: Koordinat
     saatSelesai?: () => void
   }
-  let { saatSelesai }: Properti = $props()
+  let { posisi = new Koordinat(), saatSelesai }: Properti = $props()
 
   let elemen: Node
 
@@ -24,4 +26,10 @@
   })
 </script>
 
-<div bind:this={elemen} class="absolute z-10 border bg-white">Menu Konteks</div>
+<div
+  bind:this={elemen}
+  class="absolute z-10 border bg-white"
+  style={`left: ${posisi.x}px; top: ${posisi.y}px;`}
+>
+  Menu Konteks
+</div>

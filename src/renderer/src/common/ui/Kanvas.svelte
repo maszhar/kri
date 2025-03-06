@@ -5,15 +5,16 @@
   interface Properti {
     children?: Snippet
     ukuran?: Ukuran2D
-    saatKlikGanda?: () => void
+    saatBukaMenuKonteks?: (e: MouseEvent) => void
   }
-  const { children, ukuran = new Ukuran2D(100, 100), saatKlikGanda }: Properti = $props()
+  const { children, ukuran = new Ukuran2D(100, 100), saatBukaMenuKonteks }: Properti = $props()
 </script>
 
 <div
   class="m-6 inline-block bg-white"
   style={`width: ${ukuran.lebar}px; height: ${ukuran.tinggi}px;`}
-  ondblclick={(): void => saatKlikGanda?.()}
+  ondblclick={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
+  oncontextmenu={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
   role="button"
   tabindex={0}
 >

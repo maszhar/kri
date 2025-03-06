@@ -7,8 +7,8 @@
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
 
   let posisiMenuKonteks: Koordinat | null = $state(null)
-  function tanganiKanvasKlikGanda(): void {
-    posisiMenuKonteks = new Koordinat(0, 0)
+  function tanganiKanvasBukaMenuKonteks(e: MouseEvent): void {
+    posisiMenuKonteks = new Koordinat(e.clientX, e.clientY - 23)
   }
   function tanganiMenuKonteksSelesai(): void {
     posisiMenuKonteks = null
@@ -16,7 +16,10 @@
 </script>
 
 {#if posisiMenuKonteks !== null}
-  <MenuKonteks saatSelesai={(): void => tanganiMenuKonteksSelesai()} />
+  <MenuKonteks posisi={posisiMenuKonteks} saatSelesai={(): void => tanganiMenuKonteksSelesai()} />
 {/if}
 
-<Kanvas ukuran={ukuranKanvas} saatKlikGanda={(): void => tanganiKanvasKlikGanda()}></Kanvas>
+<Kanvas
+  ukuran={ukuranKanvas}
+  saatBukaMenuKonteks={(e: MouseEvent): void => tanganiKanvasBukaMenuKonteks(e)}
+></Kanvas>
