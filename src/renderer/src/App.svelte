@@ -1,13 +1,13 @@
 <script lang="ts">
-  import Dasar from './common/Dasar.svelte'
-  import Jendela from './common/Jendela.svelte'
-  import Kanvas from './common/Kanvas.svelte'
+  import Dasar from './common/ui/Dasar.svelte'
+  import Jendela from './common/ui/Jendela.svelte'
+  import PanelAtas from './common/ui/PanelAtas.svelte'
+  import TampilanSequenceDiagram from './sequence/ui/TampilanSequenceDiagram.svelte'
 </script>
 
 <Dasar>
+  <PanelAtas />
   <Jendela>
-    <Kanvas>
-      <div class="text-red-500">Uji Coba TailwindCSS</div>
-    </Kanvas>
+    <TampilanSequenceDiagram />
   </Jendela>
 </Dasar>
