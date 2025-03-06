@@ -1,8 +1,8 @@
-# kri-app
+# KRI
 
-An Electron application with Svelte and TypeScript
+Aplikasi perancang model UML. Aplikasi offline yang melayani penggambaran Sequence Diagram dan Class Diagram yang terintegrasi. 
 
-## Recommended IDE Setup
+## Rekomendasi Penataan IDE
 
 - [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)
 
