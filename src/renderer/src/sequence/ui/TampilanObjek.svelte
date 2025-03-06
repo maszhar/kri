@@ -2,6 +2,7 @@
   import { onDestroy } from 'svelte'
   import { Koordinat } from '../../common/entitas/Koordinat'
   import InputNamaObjek from './InputNamaObjek.svelte'
+  import TampilanLifeLine from './TampilanLifeLine.svelte'
 
   interface Properti {
     nama: string
@@ -73,7 +74,7 @@
 </script>
 
 <div
-  class={`absolute ${diseleksi ? 'cursor-move' : 'cursor-default'}`}
+  class={`absolute flex flex-col items-center ${diseleksi ? 'cursor-move' : 'cursor-default'}`}
   style={`left: ${posisi.x}px; top: ${posisi.y}px`}
   onclick={(): void => saatMintaSeleksi?.()}
   onkeydown={(e: unknown): void => tanganiKeyboardTurun(e as KeyboardEvent)}
@@ -93,4 +94,5 @@
       {nama}
     {/if}
   </div>
+  <TampilanLifeLine />
 </div>
