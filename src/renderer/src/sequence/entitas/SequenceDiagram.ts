@@ -17,6 +17,15 @@ export class SequenceDiagram {
     this.kumpulanKomponen.push(new Class())
     return this.kumpulanKomponen
   }
+
+  ubahNamaKomponen(indeks: number, namaBaru: string): Komponen[] {
+    if (this.kumpulanKomponen.length < indeks + 1) {
+      return this.kumpulanKomponen
+    }
+
+    this.kumpulanKomponen[indeks].nama = namaBaru
+    return this.kumpulanKomponen
+  }
 }
 
 export interface ParameterSequenceDiagram {

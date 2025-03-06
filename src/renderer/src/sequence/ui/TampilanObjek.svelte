@@ -8,17 +8,20 @@
     posisi?: Koordinat
     diseleksi?: boolean
     saatMintaSeleksi?: () => void
+    saatNamaObjekDiedit?: (nama: string) => void
   }
   const {
     nama,
     indeks,
     posisi = new Koordinat(),
     diseleksi = false,
-    saatMintaSeleksi
+    saatMintaSeleksi,
+    saatNamaObjekDiedit
   }: Properti = $props()
 
   let sedangMengedit = $state(false)
   let elemenNamaObjek: Node
+  let namaObjekSementara: string = $state('')
 
   function tanganiKlikSaatMengedit(e: MouseEvent): void {
     if (!elemenNamaObjek.contains(e.target as Node)) {
@@ -33,6 +36,7 @@
   }
 
   function mulaiMengedit(): void {
+    namaObjekSementara = nama
     window.addEventListener('click', tanganiKlikSaatMengedit)
     window.addEventListener('keydown', tanganiKeyboardTurunSaatMengedit)
     sedangMengedit = true
@@ -41,6 +45,8 @@
   function akhiriMengedit(): void {
     window.removeEventListener('click', tanganiKlikSaatMengedit)
     window.removeEventListener('keydown', tanganiKeyboardTurunSaatMengedit)
+    saatNamaObjekDiedit?.(namaObjekSementara)
+    namaObjekSementara = ''
     sedangMengedit = false
   }
 
@@ -78,7 +84,7 @@
     bind:this={elemenNamaObjek}
   >
     {#if sedangMengedit}
-      <input type="text" value={nama} />
+      <input type="text" bind:value={namaObjekSementara} />
     {:else}
       {nama}
     {/if}

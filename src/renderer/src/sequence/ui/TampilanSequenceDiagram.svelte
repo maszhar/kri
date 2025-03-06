@@ -32,6 +32,10 @@
     indeksKomponenDiseleksi = indeks
   }
 
+  function tanganiEditNamaObjek(indeks: number, namaBaru: string): void {
+    kumpulanKomponen = sequenceDiagram.ubahNamaKomponen(indeks, namaBaru)
+  }
+
   onMount(() => {
     sequenceDiagram = new SequenceDiagram()
     kumpulanKomponen = sequenceDiagram.getKumpulanKomponen()
@@ -57,6 +61,7 @@
         diseleksi={indeksKomponenDiseleksi === indeks}
         {indeks}
         saatMintaSeleksi={(): void => tanganiPermintaanSeleksi(indeks)}
+        saatNamaObjekDiedit={(nama: string): void => tanganiEditNamaObjek(indeks, nama)}
       />
     {/each}
   </Kanvas>
