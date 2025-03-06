@@ -1,6 +1,8 @@
 <script lang="ts">
   import { Koordinat } from '../../common/entitas/Koordinat'
   import { Ukuran2D } from '../../common/entitas/Ukuran2D'
+  import ItemMenuKonteks from '../../common/ui/ItemMenuKonteks.svelte'
+  import JudulMenuKonteks from '../../common/ui/JudulMenuKonteks.svelte'
   import Kanvas from '../../common/ui/Kanvas.svelte'
   import MenuKonteks from '../../common/ui/MenuKonteks.svelte'
 
@@ -16,7 +18,10 @@
 </script>
 
 {#if posisiMenuKonteks !== null}
-  <MenuKonteks posisi={posisiMenuKonteks} saatSelesai={(): void => tanganiMenuKonteksSelesai()} />
+  <MenuKonteks posisi={posisiMenuKonteks} saatSelesai={(): void => tanganiMenuKonteksSelesai()}>
+    <JudulMenuKonteks>Tambah Komponen</JudulMenuKonteks>
+    <ItemMenuKonteks>Buat class baru</ItemMenuKonteks>
+  </MenuKonteks>
 {/if}
 
 <Kanvas
