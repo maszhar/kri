@@ -11,7 +11,7 @@
 </script>
 
 <div
-  class="m-6 inline-block bg-white"
+  class="relative m-6 inline-block bg-white"
   style={`width: ${ukuran.lebar}px; height: ${ukuran.tinggi}px;`}
   ondblclick={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
   oncontextmenu={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}

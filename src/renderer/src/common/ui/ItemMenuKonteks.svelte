@@ -3,13 +3,15 @@
 
   interface Properti {
     children?: Snippet
+    saatDiklik?: () => void
   }
-  const { children }: Properti = $props()
+  const { children, saatDiklik }: Properti = $props()
 </script>
 
 <button
   type="button"
   class="select-none min-w-52 text-left py-2 px-4 cursor-pointer hover:bg-blue-100"
+  onclick={(): void => saatDiklik?.()}
 >
   {@render children?.()}
 </button>
