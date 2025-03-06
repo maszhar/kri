@@ -2,7 +2,7 @@ import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   main: {
     plugins: [externalizeDepsPlugin()]
   },
@@ -10,6 +10,9 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
-    plugins: [svelte(), tailwindcss()]
+    plugins: [svelte(), tailwindcss()],
+    build: {
+      minify: mode === 'production'
+    }
   }
-})
+}))
