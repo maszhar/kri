@@ -7,13 +7,13 @@
   function tanganiKanvasKlikGanda(): void {
     posisiMenuKonteks = new Koordinat(0, 0)
   }
-  function tanganiMenuKonteksDibatalkan(): void {
+  function tanganiMenuKonteksSelesai(): void {
     posisiMenuKonteks = null
   }
 </script>
 
 {#if posisiMenuKonteks !== null}
-  <MenuKonteks saatDibatalkan={(): void => tanganiMenuKonteksDibatalkan()} />
+  <MenuKonteks saatSelesai={(): void => tanganiMenuKonteksSelesai()} />
 {/if}
 
 <Kanvas saatKlikGanda={(): void => tanganiKanvasKlikGanda()}></Kanvas>

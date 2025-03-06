@@ -2,15 +2,15 @@
   import { onDestroy, onMount } from 'svelte'
 
   interface Properti {
-    saatDibatalkan?: () => void
+    saatSelesai?: () => void
   }
-  let { saatDibatalkan }: Properti = $props()
+  let { saatSelesai }: Properti = $props()
 
   let elemen: Node
 
   function tanganiKlik(e: PointerEvent): void {
     if (!elemen.contains(e.target as Node)) {
-      saatDibatalkan?.()
+      saatSelesai?.()
     }
   }
 
