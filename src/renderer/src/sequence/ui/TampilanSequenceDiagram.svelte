@@ -13,6 +13,7 @@
   let sequenceDiagram: SequenceDiagram | null = $state(null)
   let kumpulanKomponen: Komponen[] = $state([])
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
+  let indeksKomponenDiseleksi = $state(-1)
 
   let posisiMenuKonteks: Koordinat | null = $state(null)
   function tanganiKanvasBukaMenuKonteks(e: MouseEvent): void {
@@ -25,6 +26,10 @@
   function tambahClass(): void {
     kumpulanKomponen = sequenceDiagram.tambahClass()
     tanganiMenuKonteksSelesai()
+  }
+
+  function tanganiPermintaanSeleksi(indeks: number): void {
+    indeksKomponenDiseleksi = indeks
   }
 
   onMount(() => {
@@ -45,8 +50,14 @@
     ukuran={ukuranKanvas}
     saatBukaMenuKonteks={(e: MouseEvent): void => tanganiKanvasBukaMenuKonteks(e)}
   >
-    {#each kumpulanKomponen as komponen, index}
-      <TampilanObjek nama={komponen.nama} posisi={new Koordinat(200 * index + 8, 8)} />
+    {#each kumpulanKomponen as komponen, indeks}
+      <TampilanObjek
+        nama={komponen.nama}
+        posisi={new Koordinat(200 * indeks + 8, 8)}
+        diseleksi={indeksKomponenDiseleksi === indeks}
+        {indeks}
+        saatMintaSeleksi={(): void => tanganiPermintaanSeleksi(indeks)}
+      />
     {/each}
   </Kanvas>
 {:else}
