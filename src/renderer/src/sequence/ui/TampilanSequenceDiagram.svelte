@@ -40,6 +40,11 @@
     kumpulanKomponen = sequenceDiagram.ubahNamaKomponen(indeks, namaBaru)
   }
 
+  let adaYangMengedit = $state(false)
+  function aturAdaYangMengedit(nilai: boolean): void {
+    adaYangMengedit = nilai
+  }
+
   onMount(() => {
     sequenceDiagram = new SequenceDiagram()
     kumpulanKomponen = sequenceDiagram.getKumpulanKomponen()
@@ -67,6 +72,9 @@
         {indeks}
         saatMintaSeleksi={(): void => tanganiPermintaanSeleksi(indeks)}
         saatNamaObjekDiedit={(nama: string): void => tanganiEditNamaObjek(indeks, nama)}
+        {adaYangMengedit}
+        saatMulaiMengedit={(): void => aturAdaYangMengedit(true)}
+        saatSelesaiMengedit={(): void => aturAdaYangMengedit(false)}
       />
     {/each}
   </Kanvas>

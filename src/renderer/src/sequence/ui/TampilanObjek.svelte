@@ -10,26 +10,35 @@
     indeks: number
     posisi?: Koordinat
     diseleksi?: boolean
+    adaYangMengedit?: boolean
     saatMintaSeleksi?: () => void
     saatNamaObjekDiedit?: (nama: string) => void
+    saatMulaiMengedit?: () => void
+    saatSelesaiMengedit?: () => void
   }
   const {
     nama,
     indeks,
     posisi = new Koordinat(),
     diseleksi = false,
+    adaYangMengedit = false,
     saatMintaSeleksi,
-    saatNamaObjekDiedit
+    saatNamaObjekDiedit,
+    saatMulaiMengedit,
+    saatSelesaiMengedit
   }: Properti = $props()
 
   let sedangMengedit = $state(false)
-  let elemenNamaObjek: Node
   let elemenInputNamaObjek: InputNamaObjek | undefined = $state(undefined)
   let namaObjekSementara: string = $state('')
 
+  const idInputNamaObjek = `${new Date().getTime()}${Math.floor(Math.random() * 1000)}`
+
   function tanganiKlik(e: MouseEvent): void {
     if (!sedangMengedit) {
-      e.stopPropagation()
+      if (!adaYangMengedit) {
+        e.stopPropagation()
+      }
       saatMintaSeleksi?.()
     }
   }
@@ -52,6 +61,7 @@
     namaObjekSementara = nama
     window.addEventListener('click', tanganiKlikSaatMengedit)
     window.addEventListener('keydown', tanganiKeyboardTurunSaatMengedit)
+    saatMulaiMengedit?.()
     sedangMengedit = true
   }
 
@@ -60,6 +70,7 @@
     window.removeEventListener('keydown', tanganiKeyboardTurunSaatMengedit)
     saatNamaObjekDiedit?.(namaObjekSementara)
     namaObjekSementara = ''
+    saatSelesaiMengedit?.()
     sedangMengedit = false
   }
 
@@ -94,10 +105,13 @@
     ondblclick={(e: unknown): void => tanganiKlikGanda(e as MouseEvent)}
     role="button"
     tabindex={1000 + indeks}
-    bind:this={elemenNamaObjek}
   >
     {#if sedangMengedit}
-      <InputNamaObjek bind:nilai={namaObjekSementara} bind:this={elemenInputNamaObjek} />
+      <InputNamaObjek
+        bind:nilai={namaObjekSementara}
+        bind:this={elemenInputNamaObjek}
+        id={idInputNamaObjek}
+      />
     {:else}
       {nama}
     {/if}

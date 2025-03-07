@@ -3,8 +3,9 @@
 
   interface Properti {
     nilai?: string
+    id?: string
   }
-  let { nilai = $bindable('') }: Properti = $props()
+  let { nilai = $bindable(''), id }: Properti = $props()
 
   let elemen: Node
 
@@ -20,4 +21,4 @@
   })
 </script>
 
-<input type="text" bind:value={nilai} bind:this={elemen} />
+<input type="text" bind:value={nilai} bind:this={elemen} {id} />
