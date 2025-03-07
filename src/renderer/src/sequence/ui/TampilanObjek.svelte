@@ -3,6 +3,7 @@
   import { Koordinat } from '../../common/entitas/Koordinat'
   import InputNamaObjek from './InputNamaObjek.svelte'
   import TampilanLifeLine from './TampilanLifeLine.svelte'
+  import TampilanSpesifikasiEksekusi from './TampilanSpesifikasiEksekusi.svelte'
 
   interface Properti {
     nama: string
@@ -94,5 +95,9 @@
       {nama}
     {/if}
   </div>
-  <TampilanLifeLine />
+
+  <div class="relative">
+    <TampilanLifeLine />
+    <TampilanSpesifikasiEksekusi />
+  </div>
 </div>
