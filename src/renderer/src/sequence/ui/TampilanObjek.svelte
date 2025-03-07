@@ -122,7 +122,7 @@
   <div class="relative">
     <TampilanLifeLine />
     {#if pertama}
-      <TampilanSpesifikasiEksekusi />
+      <TampilanSpesifikasiEksekusi {indeks} />
     {/if}
   </div>
 </div>
