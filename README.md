@@ -1,6 +1,6 @@
 # KRI
 
-Aplikasi perancang model UML. Aplikasi offline yang melayani penggambaran Sequence Diagram dan Class Diagram yang terintegrasi. 
+Aplikasi perancang model perangkat lunak. Aplikasi offline yang melayani penggambaran Sequence Diagram dan Class Diagram yang terintegrasi.
 
 ## Rekomendasi Penataan IDE
 
