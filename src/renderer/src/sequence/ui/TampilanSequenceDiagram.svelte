@@ -75,6 +75,7 @@
         {adaYangMengedit}
         saatMulaiMengedit={(): void => aturAdaYangMengedit(true)}
         saatSelesaiMengedit={(): void => aturAdaYangMengedit(false)}
+        pertama={indeks === 0}
       />
     {/each}
   </Kanvas>

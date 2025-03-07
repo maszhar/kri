@@ -11,6 +11,7 @@
     posisi?: Koordinat
     diseleksi?: boolean
     adaYangMengedit?: boolean
+    pertama?: boolean
     saatMintaSeleksi?: () => void
     saatNamaObjekDiedit?: (nama: string) => void
     saatMulaiMengedit?: () => void
@@ -22,6 +23,7 @@
     posisi = new Koordinat(),
     diseleksi = false,
     adaYangMengedit = false,
+    pertama = false,
     saatMintaSeleksi,
     saatNamaObjekDiedit,
     saatMulaiMengedit,
@@ -119,6 +121,8 @@
 
   <div class="relative">
     <TampilanLifeLine />
-    <TampilanSpesifikasiEksekusi />
+    {#if pertama}
+      <TampilanSpesifikasiEksekusi />
+    {/if}
   </div>
 </div>
