@@ -32,6 +32,10 @@
     indeksKomponenDiseleksi = indeks
   }
 
+  function hapusSeleksi(): void {
+    indeksKomponenDiseleksi = null
+  }
+
   function tanganiEditNamaObjek(indeks: number, namaBaru: string): void {
     kumpulanKomponen = sequenceDiagram.ubahNamaKomponen(indeks, namaBaru)
   }
@@ -53,6 +57,7 @@
   <Kanvas
     ukuran={ukuranKanvas}
     saatBukaMenuKonteks={(e: MouseEvent): void => tanganiKanvasBukaMenuKonteks(e)}
+    saatDiklik={(): void => hapusSeleksi()}
   >
     {#each kumpulanKomponen as komponen, indeks}
       <TampilanObjek

@@ -27,6 +27,13 @@
   let elemenInputNamaObjek: InputNamaObjek | undefined = $state(undefined)
   let namaObjekSementara: string = $state('')
 
+  function tanganiKlik(e: MouseEvent): void {
+    if (!sedangMengedit) {
+      e.stopPropagation()
+      saatMintaSeleksi?.()
+    }
+  }
+
   function tanganiKlikSaatMengedit(e: MouseEvent): void {
     if (typeof elemenInputNamaObjek !== 'undefined') {
       if (!elemenInputNamaObjek.contains(e.target as Node)) {
@@ -77,7 +84,7 @@
 <div
   class={`absolute flex flex-col items-center ${diseleksi ? 'cursor-move' : 'cursor-default'}`}
   style={`left: ${posisi.x}px; top: ${posisi.y}px`}
-  onclick={(): void => saatMintaSeleksi?.()}
+  onclick={(e: unknown): void => tanganiKlik(e as MouseEvent)}
   onkeydown={(e: unknown): void => tanganiKeyboardTurun(e as KeyboardEvent)}
   role="button"
   tabindex={1 + indeks}

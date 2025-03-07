@@ -6,8 +6,14 @@
     children?: Snippet
     ukuran?: Ukuran2D
     saatBukaMenuKonteks?: (e: MouseEvent) => void
+    saatDiklik?: () => void
   }
-  const { children, ukuran = new Ukuran2D(100, 100), saatBukaMenuKonteks }: Properti = $props()
+  const {
+    children,
+    ukuran = new Ukuran2D(100, 100),
+    saatBukaMenuKonteks,
+    saatDiklik
+  }: Properti = $props()
 </script>
 
 <div
@@ -17,6 +23,8 @@
   oncontextmenu={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
   role="button"
   tabindex={0}
+  onclick={(): void => saatDiklik()}
+  onkeypress={(): void => {}}
 >
   {@render children?.()}
 </div>
