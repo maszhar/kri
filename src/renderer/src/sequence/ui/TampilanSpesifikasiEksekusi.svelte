@@ -24,7 +24,7 @@
 
   function tanganiMouseGerak(e: MouseEvent): void {
     if (mouseMelayang) {
-      posisiKursorMulaiKoneksi = new Koordinat(0, e.clientY - titikAtas + 14)
+      posisiKursorMulaiKoneksi = new Koordinat(4, e.clientY - titikAtas + 14)
     }
   }
 
@@ -34,7 +34,7 @@
 </script>
 
 <div
-  class="absolute top-5"
+  class="absolute -left-1 top-5"
   onmouseenter={(): void => tanganiMouseMelayang()}
   onmousemove={(e: unknown): void => tanganiMouseGerak(e as MouseEvent)}
   onmouseleave={(): void => tanganiMouseMeninggalkan()}
@@ -42,8 +42,8 @@
   tabindex={2000 + indeks}
   bind:this={elemen}
 >
-  <svg width="10" height="200" xmlns="http://www.w3.org/2000/svg">
-    <rect x="1" width="8" height="100" fill="#ccc" stroke="black" />
+  <svg width="17" height="200" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" width="13" height="100" fill="#ccc" stroke="black" />
   </svg>
 </div>
 
