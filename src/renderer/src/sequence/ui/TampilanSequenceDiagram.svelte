@@ -9,6 +9,7 @@
   import { SequenceDiagram } from '../entitas/SequenceDiagram'
   import type { Komponen } from '../../common/entitas/Komponen'
   import TampilanObjek from './TampilanObjek.svelte'
+  import TampilanPesanSinkron from './TampilanPesanSinkron.svelte'
 
   let sequenceDiagram: SequenceDiagram | null = $state(null)
   let kumpulanKomponen: Komponen[] = $state([])
@@ -78,6 +79,7 @@
         pertama={indeks === 0}
       />
     {/each}
+    <TampilanPesanSinkron />
   </Kanvas>
 {:else}
   Loading...
