@@ -16,6 +16,7 @@
     saatNamaObjekDiedit?: (nama: string) => void
     saatMulaiMengedit?: () => void
     saatSelesaiMengedit?: () => void
+    saatMulaiMembuatPesan?: (titikAwal: Koordinat) => void
   }
   const {
     nama,
@@ -27,7 +28,8 @@
     saatMintaSeleksi,
     saatNamaObjekDiedit,
     saatMulaiMengedit,
-    saatSelesaiMengedit
+    saatSelesaiMengedit,
+    saatMulaiMembuatPesan
   }: Properti = $props()
 
   let sedangMengedit = $state(false)
@@ -122,7 +124,7 @@
   <div class="relative">
     <TampilanLifeLine />
     {#if pertama}
-      <TampilanSpesifikasiEksekusi {indeks} />
+      <TampilanSpesifikasiEksekusi {indeks} {saatMulaiMembuatPesan} />
     {/if}
   </div>
 </div>

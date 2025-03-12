@@ -16,6 +16,8 @@
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
   let indeksKomponenDiseleksi = $state(-1)
 
+  let elemenKanvas: Kanvas | undefined = $state(undefined)
+
   let posisiMenuKonteks: Koordinat | null = $state(null)
   function tanganiKanvasBukaMenuKonteks(e: MouseEvent): void {
     posisiMenuKonteks = new Koordinat(e.clientX, e.clientY - 23)
@@ -46,6 +48,16 @@
     adaYangMengedit = nilai
   }
 
+  let titikAwalMembuatPesan: Koordinat | null = $state(null)
+  function mulaiMembuatPesan(titikAwal: Koordinat): void {
+    if (elemenKanvas) {
+      titikAwalMembuatPesan = new Koordinat(
+        titikAwal.x - elemenKanvas.getXAbsolut(),
+        titikAwal.y - elemenKanvas.getYAbsolut()
+      )
+    }
+  }
+
   onMount(() => {
     sequenceDiagram = new SequenceDiagram()
     kumpulanKomponen = sequenceDiagram.getKumpulanKomponen()
@@ -64,6 +76,7 @@
     ukuran={ukuranKanvas}
     saatBukaMenuKonteks={(e: MouseEvent): void => tanganiKanvasBukaMenuKonteks(e)}
     saatDiklik={(): void => hapusSeleksi()}
+    bind:this={elemenKanvas}
   >
     {#each kumpulanKomponen as komponen, indeks}
       <TampilanObjek
@@ -77,9 +90,14 @@
         saatMulaiMengedit={(): void => aturAdaYangMengedit(true)}
         saatSelesaiMengedit={(): void => aturAdaYangMengedit(false)}
         pertama={indeks === 0}
+        saatMulaiMembuatPesan={mulaiMembuatPesan}
       />
     {/each}
-    <TampilanPesanSinkron />
+
+    <!-- Pesan Sinkron Sementara -->
+    {#if titikAwalMembuatPesan !== null}
+      <TampilanPesanSinkron posisi={titikAwalMembuatPesan} />
+    {/if}
   </Kanvas>
 {:else}
   Loading...

@@ -14,6 +14,16 @@
     saatBukaMenuKonteks,
     saatDiklik
   }: Properti = $props()
+
+  let elemen: HTMLDivElement
+
+  export function getXAbsolut(): number {
+    return elemen.getBoundingClientRect().x
+  }
+
+  export function getYAbsolut(): number {
+    return elemen.getBoundingClientRect().y
+  }
 </script>
 
 <div
@@ -25,6 +35,7 @@
   tabindex={0}
   onclick={(): void => saatDiklik()}
   onkeypress={(): void => {}}
+  bind:this={elemen}
 >
   {@render children?.()}
 </div>

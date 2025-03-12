@@ -5,10 +5,11 @@
 
   interface Properti {
     indeks: number
+    saatMulaiMembuatPesan?: (titikAwal: Koordinat) => void
   }
-  const { indeks }: Properti = $props()
+  const { indeks, saatMulaiMembuatPesan }: Properti = $props()
 
-  let elemen: Node
+  let elemen: HTMLDivElement
   let titikAtas = 0
 
   let posisiKursorMulaiKoneksi: Koordinat | null = $state(null)
@@ -28,8 +29,18 @@
     }
   }
 
+  function tanganiMouseTurun(): void {
+    console.log(titikAtas)
+    saatMulaiMembuatPesan?.(
+      new Koordinat(
+        elemen.getBoundingClientRect().x + elemen.clientWidth - 1,
+        titikAtas + posisiKursorMulaiKoneksi.y - 18
+      )
+    )
+  }
+
   onMount(() => {
-    titikAtas = (elemen as HTMLElement).getBoundingClientRect().y
+    titikAtas = elemen.getBoundingClientRect().y
   })
 </script>
 
@@ -38,6 +49,7 @@
   onmouseenter={(): void => tanganiMouseMelayang()}
   onmousemove={(e: unknown): void => tanganiMouseGerak(e as MouseEvent)}
   onmouseleave={(): void => tanganiMouseMeninggalkan()}
+  onmousedown={(): void => tanganiMouseTurun()}
   role="button"
   tabindex={2000 + indeks}
   bind:this={elemen}
