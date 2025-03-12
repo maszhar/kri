@@ -30,7 +30,6 @@
   }
 
   function tanganiMouseTurun(): void {
-    console.log(titikAtas)
     saatMulaiMembuatPesan?.(
       new Koordinat(
         elemen.getBoundingClientRect().x + elemen.clientWidth - 1,
