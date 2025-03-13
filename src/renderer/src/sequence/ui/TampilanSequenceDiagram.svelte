@@ -63,7 +63,7 @@
   }
 
   function tanganiMouseGerakSaatMembuatPesan(e: MouseEvent): void {
-    panjangPesanSedangDibuat = e.clientX - titikAwalMembuatPesan.x - 12
+    panjangPesanSedangDibuat = Math.max(e.clientX - titikAwalMembuatPesan.x - 12, 0)
   }
 
   function akhiriMembuatPesan(): void {
