@@ -49,13 +49,28 @@
   }
 
   let titikAwalMembuatPesan: Koordinat | null = $state(null)
+  let panjangPesanSedangDibuat = $state(0)
   function mulaiMembuatPesan(titikAwal: Koordinat): void {
     if (elemenKanvas) {
       titikAwalMembuatPesan = new Koordinat(
         titikAwal.x - elemenKanvas.getXAbsolut(),
         titikAwal.y - elemenKanvas.getYAbsolut()
       )
+
+      window.addEventListener('mouseup', akhiriMembuatPesan)
+      window.addEventListener('mousemove', tanganiMouseGerakSaatMembuatPesan)
     }
+  }
+
+  function tanganiMouseGerakSaatMembuatPesan(e: MouseEvent): void {
+    panjangPesanSedangDibuat = e.clientX - titikAwalMembuatPesan.x - 12
+  }
+
+  function akhiriMembuatPesan(): void {
+    window.removeEventListener('mouseup', akhiriMembuatPesan)
+    window.removeEventListener('mousemove', tanganiMouseGerakSaatMembuatPesan)
+    titikAwalMembuatPesan = null
+    panjangPesanSedangDibuat = 0
   }
 
   onMount(() => {
@@ -96,7 +111,7 @@
 
     <!-- Pesan Sinkron Sementara -->
     {#if titikAwalMembuatPesan !== null}
-      <TampilanPesanSinkron posisi={titikAwalMembuatPesan} />
+      <TampilanPesanSinkron posisi={titikAwalMembuatPesan} panjang={panjangPesanSedangDibuat} />
     {/if}
   </Kanvas>
 {:else}
