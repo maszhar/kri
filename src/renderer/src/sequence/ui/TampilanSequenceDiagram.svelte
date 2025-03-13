@@ -106,6 +106,7 @@
         saatSelesaiMengedit={(): void => aturAdaYangMengedit(false)}
         pertama={indeks === 0}
         saatMulaiMembuatPesan={mulaiMembuatPesan}
+        sedangMembuatPesan={titikAwalMembuatPesan !== null}
       />
     {/each}
 

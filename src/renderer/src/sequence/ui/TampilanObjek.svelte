@@ -12,6 +12,7 @@
     diseleksi?: boolean
     adaYangMengedit?: boolean
     pertama?: boolean
+    sedangMembuatPesan?: boolean
     saatMintaSeleksi?: () => void
     saatNamaObjekDiedit?: (nama: string) => void
     saatMulaiMengedit?: () => void
@@ -25,6 +26,7 @@
     diseleksi = false,
     adaYangMengedit = false,
     pertama = false,
+    sedangMembuatPesan = false,
     saatMintaSeleksi,
     saatNamaObjekDiedit,
     saatMulaiMengedit,
@@ -37,6 +39,7 @@
   let namaObjekSementara: string = $state('')
 
   const idInputNamaObjek = `${new Date().getTime()}${Math.floor(Math.random() * 1000)}`
+  let posisiPratinjauSpesifikasiEksekusi: Koordinat | null = $state(null)
 
   function tanganiKlik(e: MouseEvent): void {
     if (!sedangMengedit) {
@@ -89,6 +92,19 @@
     mulaiMengedit()
   }
 
+  function tanganiMouseGerakSaatMembuatPesan(e: MouseEvent): void {
+    if (sedangMembuatPesan) {
+      e.stopPropagation()
+      posisiPratinjauSpesifikasiEksekusi = new Koordinat(0, 0)
+    }
+  }
+
+  $effect((): void => {
+    if (sedangMembuatPesan === false) {
+      posisiPratinjauSpesifikasiEksekusi = null
+    }
+  })
+
   onDestroy(() => {
     if (typeof window !== 'undefined' && sedangMengedit) {
       akhiriMengedit()
@@ -122,9 +138,15 @@
   </div>
 
   <div class="relative">
-    <TampilanLifeLine />
+    <TampilanLifeLine
+      saatMouseGerak={(e: MouseEvent): void => tanganiMouseGerakSaatMembuatPesan(e)}
+      {indeks}
+    />
     {#if pertama}
       <TampilanSpesifikasiEksekusi {indeks} {saatMulaiMembuatPesan} />
+    {/if}
+    {#if posisiPratinjauSpesifikasiEksekusi}
+      <TampilanSpesifikasiEksekusi {indeks} pratinjau />
     {/if}
   </div>
 </div>

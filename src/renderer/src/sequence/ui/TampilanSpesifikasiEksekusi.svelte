@@ -5,9 +5,10 @@
 
   interface Properti {
     indeks: number
+    pratinjau?: boolean
     saatMulaiMembuatPesan?: (titikAwal: Koordinat) => void
   }
-  const { indeks, saatMulaiMembuatPesan }: Properti = $props()
+  const { indeks, saatMulaiMembuatPesan, pratinjau = false }: Properti = $props()
 
   let elemen: HTMLDivElement
   let titikAtas = 0
@@ -54,7 +55,13 @@
   bind:this={elemen}
 >
   <svg width="17" height="200" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" width="13" height="100" fill="#ccc" stroke="black" />
+    <rect
+      x="2"
+      width="13"
+      height="100"
+      fill={`${pratinjau ? '#fff' : '#ccc'}`}
+      stroke={`${pratinjau ? '#888' : 'black'}`}
+    />
   </svg>
 </div>
 
