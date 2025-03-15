@@ -1,4 +1,4 @@
-1    - 999  = Tampilan Objek
+150         = Name Interaksi
 1000 - 1999 = Kotak Nama Objek
 2000 - 2999 = Tampilan Spesifikasi Eksekusi
 3000 - 3999 = Lifeline
