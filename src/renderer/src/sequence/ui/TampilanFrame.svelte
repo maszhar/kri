@@ -15,7 +15,36 @@
       viewBox="0 0 300 20"
       preserveAspectRatio="xMaxYMid slice"
     >
-      <path d="M300 0 l 0 15 l -5 5 l -295 0" stroke="black" stroke-width="2" fill="none" />
+      <line
+        x1="0"
+        y1="20"
+        x2="295"
+        y2="20"
+        vector-effect="non-scaling-stroke"
+        stroke-width="1.5"
+        shape-rendering="crispEdges"
+        stroke="black"
+      />
+      <line
+        x1="300"
+        y1="0"
+        x2="300"
+        y2="15"
+        vector-effect="non-scaling-stroke"
+        stroke-width="1.5"
+        shape-rendering="crispEdges"
+        stroke="black"
+      />
+      <line
+        x1="300"
+        y1="15"
+        x2="295"
+        y2="20"
+        vector-effect="non-scaling-stroke"
+        stroke-width="1"
+        shape-rendering="crispEdges"
+        stroke="black"
+      />
     </svg>
     <div class="text-sm pt-1 pb-1.5 px-3"><strong>sd</strong> Nama Interaksi</div>
   </div>
