@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -15,6 +15,18 @@ function createWindow(): void {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
+  })
+
+  ipcMain.on('tampilkanDialogBukaProyek', (): void => {
+    dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [
+        {
+          name: 'Proyek Kri',
+          extensions: ['kri']
+        }
+      ]
+    })
   })
 
   mainWindow.on('ready-to-show', () => {

@@ -3,10 +3,14 @@
   import Jendela from './common/ui/Jendela.svelte'
   import PanelAtas from './common/ui/panel-atas/PanelAtas.svelte'
   import TampilanSequenceDiagram from './sequence/ui/TampilanSequenceDiagram.svelte'
+
+  function tampilkanDialogBukaProyek(): void {
+    window.mesin.tampilkanDialogBukaProyek()
+  }
 </script>
 
 <Dasar>
-  <PanelAtas />
+  <PanelAtas saatBukaProyekDiklik={tampilkanDialogBukaProyek} />
   <Jendela>
     <TampilanSequenceDiagram />
   </Jendela>
