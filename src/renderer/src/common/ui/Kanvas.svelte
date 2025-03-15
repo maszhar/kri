@@ -7,12 +7,14 @@
     ukuran?: Ukuran2D
     saatBukaMenuKonteks?: (e: MouseEvent) => void
     saatDiklik?: () => void
+    class?: string
   }
   const {
     children,
     ukuran = new Ukuran2D(100, 100),
     saatBukaMenuKonteks,
-    saatDiklik
+    saatDiklik,
+    class: className = ''
   }: Properti = $props()
 
   let elemen: HTMLDivElement
@@ -27,7 +29,7 @@
 </script>
 
 <div
-  class="relative m-6 inline-block bg-white"
+  class={`relative m-6 inline-block bg-white ${className}`}
   style={`width: ${ukuran.lebar}px; height: ${ukuran.tinggi}px;`}
   ondblclick={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
   oncontextmenu={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}

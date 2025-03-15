@@ -10,6 +10,7 @@
   import type { Komponen } from '../../common/entitas/Komponen'
   import TampilanObjek from './TampilanObjek.svelte'
   import TampilanPesanSinkron from './TampilanPesanSinkron.svelte'
+  import TampilanFrame from './TampilanFrame.svelte'
 
   let sequenceDiagram: SequenceDiagram | null = $state(null)
   let kumpulanKomponen: Komponen[] = $state([])
@@ -92,28 +93,31 @@
     saatBukaMenuKonteks={(e: MouseEvent): void => tanganiKanvasBukaMenuKonteks(e)}
     saatDiklik={(): void => hapusSeleksi()}
     bind:this={elemenKanvas}
+    class="p-4"
   >
-    {#each kumpulanKomponen as komponen, indeks}
-      <TampilanObjek
-        nama={komponen.nama}
-        posisi={new Koordinat(200 * indeks + 8, 8)}
-        diseleksi={indeksKomponenDiseleksi === indeks}
-        {indeks}
-        saatMintaSeleksi={(): void => tanganiPermintaanSeleksi(indeks)}
-        saatNamaObjekDiedit={(nama: string): void => tanganiEditNamaObjek(indeks, nama)}
-        {adaYangMengedit}
-        saatMulaiMengedit={(): void => aturAdaYangMengedit(true)}
-        saatSelesaiMengedit={(): void => aturAdaYangMengedit(false)}
-        pertama={indeks === 0}
-        saatMulaiMembuatPesan={mulaiMembuatPesan}
-        sedangMembuatPesan={titikAwalMembuatPesan !== null}
-      />
-    {/each}
+    <TampilanFrame>
+      {#each kumpulanKomponen as komponen, indeks}
+        <TampilanObjek
+          nama={komponen.nama}
+          posisi={new Koordinat(200 * indeks + 8, 8)}
+          diseleksi={indeksKomponenDiseleksi === indeks}
+          {indeks}
+          saatMintaSeleksi={(): void => tanganiPermintaanSeleksi(indeks)}
+          saatNamaObjekDiedit={(nama: string): void => tanganiEditNamaObjek(indeks, nama)}
+          {adaYangMengedit}
+          saatMulaiMengedit={(): void => aturAdaYangMengedit(true)}
+          saatSelesaiMengedit={(): void => aturAdaYangMengedit(false)}
+          pertama={indeks === 0}
+          saatMulaiMembuatPesan={mulaiMembuatPesan}
+          sedangMembuatPesan={titikAwalMembuatPesan !== null}
+        />
+      {/each}
 
-    <!-- Pesan Sinkron Sementara -->
-    {#if titikAwalMembuatPesan !== null}
-      <TampilanPesanSinkron posisi={titikAwalMembuatPesan} panjang={panjangPesanSedangDibuat} />
-    {/if}
+      <!-- Pesan Sinkron Sementara -->
+      {#if titikAwalMembuatPesan !== null}
+        <TampilanPesanSinkron posisi={titikAwalMembuatPesan} panjang={panjangPesanSedangDibuat} />
+      {/if}
+    </TampilanFrame>
   </Kanvas>
 {:else}
   Loading...
