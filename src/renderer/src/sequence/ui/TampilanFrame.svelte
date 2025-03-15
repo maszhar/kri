@@ -64,9 +64,9 @@
   })
 </script>
 
-<div class="relative border min-h-40">
+<div class="relative border min-h-30 flex gap-4 p-4 pt-12">
   <div
-    class={`absolute ${adaYangMengedit ? 'cursor-default' : 'cursor-move'}`}
+    class={`absolute top-0 left-0 ${adaYangMengedit ? 'cursor-default' : 'cursor-move'}`}
     role="button"
     tabindex={150}
     ondblclick={mulaiMengeditNamaInteraksi}

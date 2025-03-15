@@ -113,7 +113,7 @@
 </script>
 
 <div
-  class={`absolute flex flex-col items-center ${diseleksi ? 'cursor-move' : 'cursor-default'}`}
+  class={`flex flex-col items-center ${diseleksi ? 'cursor-move' : 'cursor-default'}`}
   style={`left: ${posisi.x}px; top: ${posisi.y}px`}
   onclick={(e: unknown): void => tanganiKlik(e as MouseEvent)}
   onkeydown={(e: unknown): void => tanganiKeyboardTurun(e as KeyboardEvent)}
