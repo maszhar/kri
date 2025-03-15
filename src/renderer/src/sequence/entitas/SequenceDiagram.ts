@@ -1,15 +1,17 @@
 import { Class } from '../../common/entitas/Class'
 import type { Komponen } from '../../common/entitas/Komponen'
+import { Model } from '../../common/entitas/Model'
 
-export class SequenceDiagram {
+export class SequenceDiagram extends Model {
   public nama: string
   private kumpulanKomponen: Komponen[] = []
 
   constructor(parameter: ParameterSequenceDiagram = {}) {
+    super()
     this.nama = parameter.nama || 'InteraksiBaru'
   }
 
-  getKumpulanKomponen(): Komponen[] {
+  getKoleksiKomponen(): Komponen[] {
     return this.kumpulanKomponen
   }
 
