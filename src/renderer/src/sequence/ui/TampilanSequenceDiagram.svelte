@@ -12,12 +12,15 @@
   import TampilanPesanSinkron from './TampilanPesanSinkron.svelte'
   import TampilanFrame from './TampilanFrame.svelte'
 
-  let sequenceDiagram: SequenceDiagram | null = $state(null)
+  let sequenceDiagram: SequenceDiagram | null = null
+  let siap = $state(false)
   let kumpulanKomponen: Komponen[] = $state([])
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
   let indeksKomponenDiseleksi = $state(-1)
 
   let elemenKanvas: Kanvas | undefined = $state(undefined)
+
+  let namaInteraksi = $state('Nama Interaksi')
 
   let posisiMenuKonteks: Koordinat | null = $state(null)
   function tanganiKanvasBukaMenuKonteks(e: MouseEvent): void {
@@ -74,13 +77,27 @@
     panjangPesanSedangDibuat = 0
   }
 
+  // Nama interaksi
+  function perbaruiNamaInteraksi(namaBaru: string): void {
+    namaInteraksi = namaBaru
+    sequenceDiagram.nama = namaBaru
+  }
+
+  // Event Svelte
   onMount(() => {
+    // load sequence diagram
     sequenceDiagram = new SequenceDiagram()
+
+    // konversi objek sequence diagram menjadi state
+    namaInteraksi = sequenceDiagram.nama
     kumpulanKomponen = sequenceDiagram.getKumpulanKomponen()
+
+    // atur halaman menjadi siap
+    siap = true
   })
 </script>
 
-{#if sequenceDiagram}
+{#if siap}
   {#if posisiMenuKonteks !== null}
     <MenuKonteks posisi={posisiMenuKonteks} saatSelesai={(): void => tanganiMenuKonteksSelesai()}>
       <JudulMenuKonteks>Tambah Komponen</JudulMenuKonteks>
@@ -95,7 +112,13 @@
     bind:this={elemenKanvas}
     class="p-4"
   >
-    <TampilanFrame>
+    <TampilanFrame
+      {adaYangMengedit}
+      {namaInteraksi}
+      saatMulaiMengedit={(): void => aturAdaYangMengedit(true)}
+      saatSelesaiMengedit={(): void => aturAdaYangMengedit(false)}
+      saatNamaInteraksiDiedit={perbaruiNamaInteraksi}
+    >
       {#each kumpulanKomponen as komponen, indeks}
         <TampilanObjek
           nama={komponen.nama}

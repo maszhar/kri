@@ -6,7 +6,7 @@ export class SequenceDiagram {
   private kumpulanKomponen: Komponen[] = []
 
   constructor(parameter: ParameterSequenceDiagram = {}) {
-    this.nama = parameter.nama || ''
+    this.nama = parameter.nama || 'InteraksiBaru'
   }
 
   getKumpulanKomponen(): Komponen[] {

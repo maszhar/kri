@@ -2,13 +2,21 @@
   import type { Snippet } from 'svelte'
 
   interface Properti {
+    namaInteraksi: string
+    adaYangMengedit: boolean
     children?: Snippet
-    saatMulaiMengedit?: () => void
-    saatSelesaiMengedit?: () => void
-    saatNamaInteraksiDiedit?: (namaBaru: string) => void
+    saatMulaiMengedit: () => void
+    saatSelesaiMengedit: () => void
+    saatNamaInteraksiDiedit: (namaBaru: string) => void
   }
-  const { children, saatMulaiMengedit, saatSelesaiMengedit, saatNamaInteraksiDiedit }: Properti =
-    $props()
+  const {
+    children,
+    saatMulaiMengedit,
+    saatSelesaiMengedit,
+    saatNamaInteraksiDiedit,
+    adaYangMengedit,
+    namaInteraksi
+  }: Properti = $props()
 
   let sedangMengedit = $state(false)
   let elemenInputNamaInteraksi: HTMLInputElement | null = $state(null)
@@ -21,9 +29,9 @@
 
   function mulaiMengeditNamaInteraksi(e: MouseEvent): void {
     e.stopPropagation()
-    namaInteraksiSementara = 'Nama Interaksi'
+    namaInteraksiSementara = namaInteraksi
     sedangMengedit = true
-    saatMulaiMengedit?.()
+    saatMulaiMengedit()
 
     window.addEventListener('click', tanganiKlikSaatMengeditNamaInteraksi)
   }
@@ -37,8 +45,8 @@
   function selesaikanMengeditNamaInteraksi(): void {
     sedangMengedit = false
     window.removeEventListener('click', tanganiKlikSaatMengeditNamaInteraksi)
-    saatSelesaiMengedit?.()
-    saatNamaInteraksiDiedit?.(namaInteraksiSementara)
+    saatSelesaiMengedit()
+    saatNamaInteraksiDiedit(namaInteraksiSementara)
   }
 
   function tanganiKeyboardTurunDiInputNamaInteraksi(e: KeyboardEvent): void {
@@ -58,7 +66,7 @@
 
 <div class="relative border min-h-40">
   <div
-    class={`absolute ${sedangMengedit ? 'cursor-default' : 'cursor-move'}`}
+    class={`absolute ${adaYangMengedit ? 'cursor-default' : 'cursor-move'}`}
     role="button"
     tabindex={150}
     ondblclick={mulaiMengeditNamaInteraksi}
@@ -112,7 +120,7 @@
           onkeydown={tanganiKeyboardTurunDiInputNamaInteraksi}
         />
       {/if}
-      <span class={sedangMengedit ? 'opacity-0' : ''}>Nama Interaksi</span>
+      <span class={sedangMengedit ? 'opacity-0' : ''}>{namaInteraksi}</span>
     </div>
   </div>
   {@render children?.()}
