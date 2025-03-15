@@ -108,7 +108,7 @@
         stroke="black"
       />
     </svg>
-    <div class="text-sm pt-1 pb-1.5 px-3 z-10">
+    <div class="text-sm pt-1 pb-1.5 px-3 z-10 select-none">
       <strong>sd</strong>
       {#if sedangMengedit}
         <input
