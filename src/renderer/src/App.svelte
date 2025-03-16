@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { Proyek } from '../../umum/entitas/Proyek'
-  import Dasar from './common/ui/Dasar.svelte'
-  import Jendela from './common/ui/Jendela.svelte'
-  import PanelAtas from './common/ui/panel-atas/PanelAtas.svelte'
+  import Dasar from './umum/ui/Dasar.svelte'
+  import Jendela from './umum/ui/Jendela.svelte'
+  import PanelAtas from './umum/ui/panel-atas/PanelAtas.svelte'
   import TampilanSequenceDiagram from './sequence/ui/TampilanSequenceDiagram.svelte'
   import type { Model } from '../../umum/entitas/Model'
   import { SequenceDiagram } from '../../umum/entitas/SequenceDiagram'

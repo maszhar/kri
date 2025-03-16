@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { Koordinat } from '../../common/entitas/Koordinat'
+  import { Koordinat } from '../../umum/entitas/Koordinat'
   import InputNamaObjek from './InputNamaObjek.svelte'
   import TampilanLifeLine from './TampilanLifeLine.svelte'
   import TampilanSpesifikasiEksekusi from './TampilanSpesifikasiEksekusi.svelte'
