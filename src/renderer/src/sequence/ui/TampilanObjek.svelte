@@ -4,9 +4,10 @@
   import InputNamaObjek from './InputNamaObjek.svelte'
   import TampilanLifeLine from './TampilanLifeLine.svelte'
   import TampilanSpesifikasiEksekusi from './TampilanSpesifikasiEksekusi.svelte'
+  import type { Objek } from '../../../../umum/entitas/Objek'
 
   interface Properti {
-    nama: string
+    objek: Objek
     indeks: number
     posisi?: Koordinat
     diseleksi?: boolean
@@ -20,7 +21,7 @@
     saatMulaiMembuatPesan?: (titikAwal: Koordinat) => void
   }
   const {
-    nama,
+    objek,
     indeks,
     posisi = new Koordinat(),
     diseleksi = false,
@@ -65,7 +66,7 @@
   }
 
   function mulaiMengedit(): void {
-    namaObjekSementara = nama
+    namaObjekSementara = ''
     window.addEventListener('click', tanganiKlikSaatMengedit)
     window.addEventListener('keydown', tanganiKeyboardTurunSaatMengedit)
     saatMulaiMengedit?.()
@@ -133,7 +134,7 @@
         id={idInputNamaObjek}
       />
     {:else}
-      {nama}
+      {objek.hasilkanTeksTampilan()}
     {/if}
   </div>
 

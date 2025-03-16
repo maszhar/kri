@@ -11,6 +11,7 @@
   import TampilanPesanSinkron from './TampilanPesanSinkron.svelte'
   import TampilanFrame from './TampilanFrame.svelte'
   import type { Klas } from '../../../../umum/entitas/Klas'
+  import { Objek } from '../../../../umum/entitas/Objek'
 
   interface Properti {
     sequenceDiagram: SequenceDiagram
@@ -117,20 +118,22 @@
     saatNamaInteraksiDiedit={perbaruiNamaInteraksi}
   >
     {#each koleksiKomponen as komponen, indeks}
-      <TampilanObjek
-        nama={komponen.nama}
-        posisi={new Koordinat(200 * indeks + 8, 8)}
-        diseleksi={indeksKomponenDiseleksi === indeks}
-        {indeks}
-        saatMintaSeleksi={(): void => tanganiPermintaanSeleksi(indeks)}
-        saatNamaObjekDiedit={(nama: string): void => tanganiEditNamaObjek(indeks, nama)}
-        {adaYangMengedit}
-        saatMulaiMengedit={(): void => aturAdaYangMengedit(true)}
-        saatSelesaiMengedit={(): void => aturAdaYangMengedit(false)}
-        pertama={indeks === 0}
-        saatMulaiMembuatPesan={mulaiMembuatPesan}
-        sedangMembuatPesan={titikAwalMembuatPesan !== null}
-      />
+      {#if komponen instanceof Objek}
+        <TampilanObjek
+          objek={komponen}
+          posisi={new Koordinat(200 * indeks + 8, 8)}
+          diseleksi={indeksKomponenDiseleksi === indeks}
+          {indeks}
+          saatMintaSeleksi={(): void => tanganiPermintaanSeleksi(indeks)}
+          saatNamaObjekDiedit={(nama: string): void => tanganiEditNamaObjek(indeks, nama)}
+          {adaYangMengedit}
+          saatMulaiMengedit={(): void => aturAdaYangMengedit(true)}
+          saatSelesaiMengedit={(): void => aturAdaYangMengedit(false)}
+          pertama={indeks === 0}
+          saatMulaiMembuatPesan={mulaiMembuatPesan}
+          sedangMembuatPesan={titikAwalMembuatPesan !== null}
+        />
+      {/if}
     {/each}
 
     <!-- Pesan Sinkron Sementara -->
