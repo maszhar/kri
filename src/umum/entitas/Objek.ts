@@ -14,6 +14,7 @@ export class Objek extends KomponenSequenceDiagram {
     if (this.klas) {
       teksTampilan += ` : ${this.klas.nama}`
     }
+    teksTampilan = teksTampilan.trim()
     return teksTampilan
   }
 }
