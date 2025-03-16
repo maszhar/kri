@@ -1,3 +1,4 @@
+import { SequenceDiagramPb } from '../proto/kri'
 import { Class } from './Class'
 import type { Komponen } from './Komponen'
 import { Model } from './Model'
@@ -39,6 +40,12 @@ export class SequenceDiagram extends Model {
     return new SequenceDiagram({
       nama: data.nama
     })
+  }
+
+  keProto(): SequenceDiagramPb {
+    return {
+      nama: this.nama
+    }
   }
 }
 

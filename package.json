@@ -13,6 +13,7 @@
     "typecheck": "npm run typecheck:node && npm run svelte-check",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
+    "compile:proto": "protoc --ts_out src/umum/proto --proto_path proto proto/kri.proto",
     "build": "npm run typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
@@ -23,6 +24,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
+    "@protobuf-ts/runtime": "^2.9.5",
     "@tailwindcss/vite": "^4.0.10",
     "tailwindcss": "^4.0.10"
   },
@@ -30,6 +32,7 @@
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
     "@electron-toolkit/eslint-config-ts": "^3.0.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
+    "@protobuf-ts/plugin": "^2.9.5",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "@types/node": "^22.13.4",
     "electron": "^34.2.0",
@@ -39,6 +42,7 @@
     "eslint-plugin-svelte": "^2.46.1",
     "prettier": "^3.5.1",
     "prettier-plugin-svelte": "^3.3.3",
+    "protoc": "^1.1.3",
     "svelte": "^5.20.1",
     "svelte-check": "^4.1.4",
     "typescript": "^5.7.3",
@@ -48,7 +52,8 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "electron",
-      "esbuild"
+      "esbuild",
+      "protoc"
     ]
   }
 }

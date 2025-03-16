@@ -1,3 +1,4 @@
+import { ProyekPb } from '../proto/kri'
 import { SequenceDiagram } from './SequenceDiagram'
 
 export class Proyek {
@@ -32,6 +33,14 @@ export class Proyek {
           SequenceDiagram.bongkarDataTerbungkus(dataSequenceDiagram)
       )
     })
+  }
+
+  keProto(): ProyekPb {
+    return {
+      koleksiSequenceDiagram: this.koleksiSequenceDiagram.map((sequenceDiagram) =>
+        sequenceDiagram.keProto()
+      )
+    }
   }
 }
 

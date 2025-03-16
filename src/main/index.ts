@@ -3,6 +3,8 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { Proyek } from '../umum/entitas/Proyek'
+import { ProyekPb } from '../umum/proto/kri'
+import { writeFile } from 'fs/promises'
 
 function createWindow(): void {
   // Create the browser window.
@@ -41,7 +43,16 @@ function createWindow(): void {
 
   ipcMain.handle('simpanProyek', async (_, lokasiBerkas, data): Promise<void> => {
     const proyek = Proyek.bongkarDataTerbungkus(data)
-    console.log(proyek)
+    const protoProyek = proyek.keProto()
+    const binaryProyek = ProyekPb.toBinary(protoProyek)
+
+    const binaryProyekKri = new Uint8Array(binaryProyek.length + 1)
+    binaryProyekKri[0] = 1
+    for (let i = 0; i < binaryProyek.length; i++) {
+      binaryProyekKri[i + 1] = binaryProyek[i]
+    }
+
+    await writeFile(lokasiBerkas, binaryProyekKri)
   })
 
   mainWindow.on('ready-to-show', () => {
