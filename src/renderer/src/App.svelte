@@ -11,10 +11,13 @@
   let proyek: Proyek = new Proyek()
   let lokasiPenyimpananProyek = ''
 
-  let modelAktif: Model | null = null
+  let modelAktif: Model | null = $state(null)
 
-  function tampilkanDialogBukaProyek(): void {
-    window.mesin.tampilkanDialogBukaProyek()
+  async function bukaProyek(): Promise<void> {
+    const dataProyek = await window.mesin.bukaProyek()
+    proyek = Proyek.bongkarDataTerbungkus(dataProyek.data)
+    lokasiPenyimpananProyek = dataProyek.lokasi
+    modelAktif = proyek.koleksiSequenceDiagram[0]
   }
 
   async function simpanProyek(): Promise<void> {
@@ -37,7 +40,7 @@
 </script>
 
 <Dasar>
-  <PanelAtas saatBukaProyekDiklik={tampilkanDialogBukaProyek} saatSimpanDiklik={simpanProyek} />
+  <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} />
   <Jendela>
     {#if modelAktif instanceof SequenceDiagram}
       <TampilanSequenceDiagram sequenceDiagram={modelAktif} />

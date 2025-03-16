@@ -3,7 +3,7 @@ import '@electron-toolkit/preload'
 declare global {
   interface Window {
     mesin: {
-      tampilkanDialogBukaProyek: () => void
+      bukaProyek: () => Promise<{ lokasi: string; data: unknown } | null>
       tampilkanDialogSimpanProyek: () => Promise<string>
       simpanProyek: (lokasiBerkas: string, data: unknown) => void
     }

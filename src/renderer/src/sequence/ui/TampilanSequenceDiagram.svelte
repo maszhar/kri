@@ -24,6 +24,10 @@
 
   let namaInteraksi = $state(sequenceDiagram.nama)
 
+  $effect(() => {
+    namaInteraksi = sequenceDiagram.nama
+  })
+
   let posisiMenuKonteks: Koordinat | null = $state(null)
   function tanganiKanvasBukaMenuKonteks(e: MouseEvent): void {
     posisiMenuKonteks = new Koordinat(e.clientX, e.clientY - 23)

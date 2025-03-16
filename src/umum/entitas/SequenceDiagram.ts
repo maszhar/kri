@@ -47,6 +47,12 @@ export class SequenceDiagram extends Model {
       nama: this.nama
     }
   }
+
+  static dariProto(proto: SequenceDiagramPb): SequenceDiagram {
+    return new SequenceDiagram({
+      nama: proto.nama
+    })
+  }
 }
 
 export interface ParameterSequenceDiagram {

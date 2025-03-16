@@ -2,7 +2,8 @@ import { contextBridge, ipcRenderer } from 'electron'
 
 // Custom APIs for renderer
 const mesin = {
-  tampilkanDialogBukaProyek: (): void => ipcRenderer.send('tampilkanDialogBukaProyek'),
+  bukaProyek: (): Promise<{ lokasi: string; data: unknown } | null> =>
+    ipcRenderer.invoke('bukaProyek'),
   tampilkanDialogSimpanProyek: (): Promise<string | null> =>
     ipcRenderer.invoke('tampilkanDialogSimpanProyek'),
   simpanProyek: (lokasiBerkas: string, data: unknown): Promise<void> =>

@@ -4,7 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { Proyek } from '../umum/entitas/Proyek'
 import { ProyekPb } from '../umum/proto/kri'
-import { writeFile } from 'fs/promises'
+import { writeFile, readFile } from 'fs/promises'
 
 function createWindow(): void {
   // Create the browser window.
@@ -25,11 +25,39 @@ function createWindow(): void {
     extensions: ['kri']
   }
 
-  ipcMain.on('tampilkanDialogBukaProyek', (): void => {
-    dialog.showOpenDialog({
+  ipcMain.handle('bukaProyek', async (): Promise<{ lokasi: string; data: unknown } | null> => {
+    const hasilBukaBerkas = await dialog.showOpenDialog({
       properties: ['openFile'],
       filters: [kriFileFilter]
     })
+    if (hasilBukaBerkas.canceled) {
+      return null
+    }
+
+    const buffer = await readFile(hasilBukaBerkas.filePaths[0])
+    const binaryProyekKri = new Uint8Array(buffer)
+
+    if (binaryProyekKri.length < 1) {
+      // TODO: throw error
+      return null
+    }
+
+    if (binaryProyekKri[0] !== 1) {
+      // TODO: throw error
+      return null
+    }
+
+    const binaryProyek = new Uint8Array(binaryProyekKri.length - 1)
+    for (let i = 0; i < binaryProyek.length; i++) {
+      binaryProyek[i] = binaryProyekKri[i + 1]
+    }
+
+    const protoProyek = ProyekPb.fromBinary(binaryProyek)
+    const proyek = Proyek.dariProto(protoProyek)
+    return {
+      lokasi: hasilBukaBerkas.filePaths[0],
+      data: proyek.bungkusData()
+    }
   })
 
   ipcMain.handle('tampilkanDialogSimpanProyek', async (): Promise<string | null> => {

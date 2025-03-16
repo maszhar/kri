@@ -42,6 +42,14 @@ export class Proyek {
       )
     }
   }
+
+  static dariProto(proto: ProyekPb): Proyek {
+    return new Proyek({
+      koleksiSequenceDiagram: proto.koleksiSequenceDiagram.map((protoSequenceDiagram) =>
+        SequenceDiagram.dariProto(protoSequenceDiagram)
+      )
+    })
+  }
 }
 
 interface ParameterBuatProyek {
