@@ -15,9 +15,26 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface ProyekPb {
     /**
-     * @generated from protobuf field: repeated SequenceDiagramPb koleksiSequenceDiagram = 1;
+     * @generated from protobuf field: repeated KlasPb koleksiKlas = 1;
+     */
+    koleksiKlas: KlasPb[];
+    /**
+     * @generated from protobuf field: repeated SequenceDiagramPb koleksiSequenceDiagram = 2;
      */
     koleksiSequenceDiagram: SequenceDiagramPb[];
+}
+/**
+ * @generated from protobuf message KlasPb
+ */
+export interface KlasPb {
+    /**
+     * @generated from protobuf field: uint32 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: string nama = 2;
+     */
+    nama: string;
 }
 /**
  * @generated from protobuf message SequenceDiagramPb
@@ -27,16 +44,65 @@ export interface SequenceDiagramPb {
      * @generated from protobuf field: string nama = 1;
      */
     nama: string;
+    /**
+     * @generated from protobuf field: repeated KomponenSequenceDiagramPb koleksiKomponen = 2;
+     */
+    koleksiKomponen: KomponenSequenceDiagramPb[];
+    /**
+     * @generated from protobuf field: repeated ObjekPb koleksiObjek = 3;
+     */
+    koleksiObjek: ObjekPb[];
+}
+/**
+ * @generated from protobuf message KomponenSequenceDiagramPb
+ */
+export interface KomponenSequenceDiagramPb {
+    /**
+     * @generated from protobuf field: JenisKomponenSequenceDiagramPb jenis = 1;
+     */
+    jenis: JenisKomponenSequenceDiagramPb;
+    /**
+     * @generated from protobuf field: uint32 id = 2;
+     */
+    id: number;
+}
+/**
+ * @generated from protobuf message ObjekPb
+ */
+export interface ObjekPb {
+    /**
+     * @generated from protobuf field: uint32 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: string nama = 2;
+     */
+    nama: string;
+    /**
+     * @generated from protobuf field: uint32 idKlas = 3;
+     */
+    idKlas: number;
+}
+/**
+ * @generated from protobuf enum JenisKomponenSequenceDiagramPb
+ */
+export enum JenisKomponenSequenceDiagramPb {
+    /**
+     * @generated from protobuf enum value: JENIS_KOMPONEN_SD_OBJEK = 0;
+     */
+    JENIS_KOMPONEN_SD_OBJEK = 0
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ProyekPb$Type extends MessageType<ProyekPb> {
     constructor() {
         super("ProyekPb", [
-            { no: 1, name: "koleksiSequenceDiagram", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SequenceDiagramPb }
+            { no: 1, name: "koleksiKlas", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => KlasPb },
+            { no: 2, name: "koleksiSequenceDiagram", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SequenceDiagramPb }
         ]);
     }
     create(value?: PartialMessage<ProyekPb>): ProyekPb {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.koleksiKlas = [];
         message.koleksiSequenceDiagram = [];
         if (value !== undefined)
             reflectionMergePartial<ProyekPb>(this, message, value);
@@ -47,7 +113,10 @@ class ProyekPb$Type extends MessageType<ProyekPb> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated SequenceDiagramPb koleksiSequenceDiagram */ 1:
+                case /* repeated KlasPb koleksiKlas */ 1:
+                    message.koleksiKlas.push(KlasPb.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated SequenceDiagramPb koleksiSequenceDiagram */ 2:
                     message.koleksiSequenceDiagram.push(SequenceDiagramPb.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -62,9 +131,12 @@ class ProyekPb$Type extends MessageType<ProyekPb> {
         return message;
     }
     internalBinaryWrite(message: ProyekPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated SequenceDiagramPb koleksiSequenceDiagram = 1; */
+        /* repeated KlasPb koleksiKlas = 1; */
+        for (let i = 0; i < message.koleksiKlas.length; i++)
+            KlasPb.internalBinaryWrite(message.koleksiKlas[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated SequenceDiagramPb koleksiSequenceDiagram = 2; */
         for (let i = 0; i < message.koleksiSequenceDiagram.length; i++)
-            SequenceDiagramPb.internalBinaryWrite(message.koleksiSequenceDiagram[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            SequenceDiagramPb.internalBinaryWrite(message.koleksiSequenceDiagram[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -76,15 +148,74 @@ class ProyekPb$Type extends MessageType<ProyekPb> {
  */
 export const ProyekPb = new ProyekPb$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class KlasPb$Type extends MessageType<KlasPb> {
+    constructor() {
+        super("KlasPb", [
+            { no: 1, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KlasPb>): KlasPb {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.nama = "";
+        if (value !== undefined)
+            reflectionMergePartial<KlasPb>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KlasPb): KlasPb {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint32 id */ 1:
+                    message.id = reader.uint32();
+                    break;
+                case /* string nama */ 2:
+                    message.nama = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KlasPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint32 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).uint32(message.id);
+        /* string nama = 2; */
+        if (message.nama !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nama);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message KlasPb
+ */
+export const KlasPb = new KlasPb$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class SequenceDiagramPb$Type extends MessageType<SequenceDiagramPb> {
     constructor() {
         super("SequenceDiagramPb", [
-            { no: 1, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "koleksiKomponen", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => KomponenSequenceDiagramPb },
+            { no: 3, name: "koleksiObjek", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ObjekPb }
         ]);
     }
     create(value?: PartialMessage<SequenceDiagramPb>): SequenceDiagramPb {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.nama = "";
+        message.koleksiKomponen = [];
+        message.koleksiObjek = [];
         if (value !== undefined)
             reflectionMergePartial<SequenceDiagramPb>(this, message, value);
         return message;
@@ -96,6 +227,12 @@ class SequenceDiagramPb$Type extends MessageType<SequenceDiagramPb> {
             switch (fieldNo) {
                 case /* string nama */ 1:
                     message.nama = reader.string();
+                    break;
+                case /* repeated KomponenSequenceDiagramPb koleksiKomponen */ 2:
+                    message.koleksiKomponen.push(KomponenSequenceDiagramPb.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated ObjekPb koleksiObjek */ 3:
+                    message.koleksiObjek.push(ObjekPb.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -112,6 +249,12 @@ class SequenceDiagramPb$Type extends MessageType<SequenceDiagramPb> {
         /* string nama = 1; */
         if (message.nama !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.nama);
+        /* repeated KomponenSequenceDiagramPb koleksiKomponen = 2; */
+        for (let i = 0; i < message.koleksiKomponen.length; i++)
+            KomponenSequenceDiagramPb.internalBinaryWrite(message.koleksiKomponen[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated ObjekPb koleksiObjek = 3; */
+        for (let i = 0; i < message.koleksiObjek.length; i++)
+            ObjekPb.internalBinaryWrite(message.koleksiObjek[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -122,3 +265,121 @@ class SequenceDiagramPb$Type extends MessageType<SequenceDiagramPb> {
  * @generated MessageType for protobuf message SequenceDiagramPb
  */
 export const SequenceDiagramPb = new SequenceDiagramPb$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KomponenSequenceDiagramPb$Type extends MessageType<KomponenSequenceDiagramPb> {
+    constructor() {
+        super("KomponenSequenceDiagramPb", [
+            { no: 1, name: "jenis", kind: "enum", T: () => ["JenisKomponenSequenceDiagramPb", JenisKomponenSequenceDiagramPb] },
+            { no: 2, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KomponenSequenceDiagramPb>): KomponenSequenceDiagramPb {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.jenis = 0;
+        message.id = 0;
+        if (value !== undefined)
+            reflectionMergePartial<KomponenSequenceDiagramPb>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KomponenSequenceDiagramPb): KomponenSequenceDiagramPb {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* JenisKomponenSequenceDiagramPb jenis */ 1:
+                    message.jenis = reader.int32();
+                    break;
+                case /* uint32 id */ 2:
+                    message.id = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KomponenSequenceDiagramPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* JenisKomponenSequenceDiagramPb jenis = 1; */
+        if (message.jenis !== 0)
+            writer.tag(1, WireType.Varint).int32(message.jenis);
+        /* uint32 id = 2; */
+        if (message.id !== 0)
+            writer.tag(2, WireType.Varint).uint32(message.id);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message KomponenSequenceDiagramPb
+ */
+export const KomponenSequenceDiagramPb = new KomponenSequenceDiagramPb$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ObjekPb$Type extends MessageType<ObjekPb> {
+    constructor() {
+        super("ObjekPb", [
+            { no: 1, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "idKlas", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ObjekPb>): ObjekPb {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.nama = "";
+        message.idKlas = 0;
+        if (value !== undefined)
+            reflectionMergePartial<ObjekPb>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ObjekPb): ObjekPb {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint32 id */ 1:
+                    message.id = reader.uint32();
+                    break;
+                case /* string nama */ 2:
+                    message.nama = reader.string();
+                    break;
+                case /* uint32 idKlas */ 3:
+                    message.idKlas = reader.uint32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ObjekPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint32 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).uint32(message.id);
+        /* string nama = 2; */
+        if (message.nama !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nama);
+        /* uint32 idKlas = 3; */
+        if (message.idKlas !== 0)
+            writer.tag(3, WireType.Varint).uint32(message.idKlas);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ObjekPb
+ */
+export const ObjekPb = new ObjekPb$Type();

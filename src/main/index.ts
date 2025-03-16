@@ -70,7 +70,7 @@ function createWindow(): void {
   })
 
   ipcMain.handle('simpanProyek', async (_, lokasiBerkas, data): Promise<void> => {
-    const proyek = Proyek.bongkarDataTerbungkus(data)
+    const proyek = Proyek.bongkarBungkusanData(data)
     const protoProyek = proyek.keProto()
     const binaryProyek = ProyekPb.toBinary(protoProyek)
 

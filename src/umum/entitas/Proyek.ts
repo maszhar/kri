@@ -26,25 +26,39 @@ export class Proyek {
     return sequenceDiagram
   }
 
+  private beriIdUntukSeluruhKlas(): void {
+    for (let i = 0; i < this.koleksiKlas.length; i++) {
+      this.koleksiKlas[i].id = i + 1
+    }
+  }
+
   bungkusData(): unknown {
+    this.beriIdUntukSeluruhKlas()
+
     return {
+      koleksiKlas: this.koleksiKlas.map((klas) => klas.bungkusData()),
       koleksiSequenceDiagram: this.koleksiSequenceDiagram.map((sequenceDiagram): unknown =>
         sequenceDiagram.bungkusData()
       )
     }
   }
 
-  static bongkarDataTerbungkus(data: any): Proyek {
+  static bongkarBungkusanData(data: any): Proyek {
+    const koleksiKlas = data.koleksiKlas.map((dataKlas) => Klas.bongkarBungkusanData(dataKlas))
     return new Proyek({
+      koleksiKlas: koleksiKlas,
       koleksiSequenceDiagram: data.koleksiSequenceDiagram.map(
         (dataSequenceDiagram: any): SequenceDiagram =>
-          SequenceDiagram.bongkarDataTerbungkus(dataSequenceDiagram)
+          SequenceDiagram.bongkarBungkusanData(dataSequenceDiagram, koleksiKlas)
       )
     })
   }
 
   keProto(): ProyekPb {
+    this.beriIdUntukSeluruhKlas()
+
     return {
+      koleksiKlas: this.koleksiKlas.map((klas) => klas.keProto()),
       koleksiSequenceDiagram: this.koleksiSequenceDiagram.map((sequenceDiagram) =>
         sequenceDiagram.keProto()
       )

@@ -1,9 +1,32 @@
 syntax = "proto3";
 
 message ProyekPb {
-  repeated SequenceDiagramPb koleksiSequenceDiagram = 1;
+  repeated KlasPb koleksiKlas = 1;
+  repeated SequenceDiagramPb koleksiSequenceDiagram = 2;
+}
+
+message KlasPb {
+  uint32 id = 1;
+  string nama = 2;
 }
 
 message SequenceDiagramPb {
   string nama = 1;
+  repeated KomponenSequenceDiagramPb koleksiKomponen = 2;
+  repeated ObjekPb koleksiObjek = 3;
+}
+
+enum JenisKomponenSequenceDiagramPb {
+  JENIS_KOMPONEN_SD_OBJEK = 0;
+}
+
+message KomponenSequenceDiagramPb {
+  JenisKomponenSequenceDiagramPb jenis = 1;
+  uint32 id = 2;
+}
+
+message ObjekPb {
+  uint32 id = 1;
+  string nama = 2;
+  uint32 idKlas = 3;
 }

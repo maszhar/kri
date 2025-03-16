@@ -16,7 +16,7 @@
 
   async function bukaProyek(): Promise<void> {
     const dataProyek = await window.mesin.bukaProyek()
-    proyek = Proyek.bongkarDataTerbungkus(dataProyek.data)
+    proyek = Proyek.bongkarBungkusanData(dataProyek.data)
     lokasiPenyimpananProyek = dataProyek.lokasi
     modelAktif = proyek.koleksiSequenceDiagram[0]
   }
