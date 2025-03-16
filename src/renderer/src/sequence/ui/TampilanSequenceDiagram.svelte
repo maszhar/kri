@@ -30,7 +30,7 @@
 
   let posisiMenuKonteks: Koordinat | null = $state(null)
   function tanganiKanvasBukaMenuKonteks(e: MouseEvent): void {
-    posisiMenuKonteks = new Koordinat(e.clientX, e.clientY - 23)
+    posisiMenuKonteks = new Koordinat(e.clientX, e.clientY)
   }
   function tanganiMenuKonteksSelesai(): void {
     posisiMenuKonteks = null
