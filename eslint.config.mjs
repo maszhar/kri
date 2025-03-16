@@ -23,7 +23,8 @@ export default tseslint.config(
   eslintConfigPrettier,
   {
     rules: {
-      '@typescript-eslint/no-empty-function': 'off'
+      '@typescript-eslint/no-empty-function': 'off',
+      '@typescript-eslint/no-explicit-any': 'off'
     }
   }
 )

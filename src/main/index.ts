@@ -1,7 +1,8 @@
-import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog, FileFilter } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { Proyek } from '../umum/entitas/Proyek'
 
 function createWindow(): void {
   // Create the browser window.
@@ -17,16 +18,30 @@ function createWindow(): void {
     }
   })
 
+  const kriFileFilter: FileFilter = {
+    name: 'Proyek Kri',
+    extensions: ['kri']
+  }
+
   ipcMain.on('tampilkanDialogBukaProyek', (): void => {
     dialog.showOpenDialog({
       properties: ['openFile'],
-      filters: [
-        {
-          name: 'Proyek Kri',
-          extensions: ['kri']
-        }
-      ]
+      filters: [kriFileFilter]
     })
+  })
+
+  ipcMain.handle('tampilkanDialogSimpanProyek', async (): Promise<string | null> => {
+    const hasil = await dialog.showSaveDialog({
+      properties: ['showOverwriteConfirmation'],
+      filters: [kriFileFilter],
+      defaultPath: 'Proyek Baru.kri'
+    })
+    return !hasil.canceled ? hasil.filePath : null
+  })
+
+  ipcMain.handle('simpanProyek', async (_, lokasiBerkas, data): Promise<void> => {
+    const proyek = Proyek.bongkarDataTerbungkus(data)
+    console.log(proyek)
   })
 
   mainWindow.on('ready-to-show', () => {

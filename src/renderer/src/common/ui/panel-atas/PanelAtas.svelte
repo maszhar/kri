@@ -8,8 +8,9 @@
 
   interface Properti {
     saatBukaProyekDiklik: () => void
+    saatSimpanDiklik: () => void
   }
-  const { saatBukaProyekDiklik }: Properti = $props()
+  const { saatBukaProyekDiklik, saatSimpanDiklik }: Properti = $props()
 
   let tabAktif = $state(0)
 </script>
@@ -19,7 +20,7 @@
 </TempatTabPanelAtas>
 <TempatTombolPanelAtas>
   <KelompokTombolPanelAtas>
-    <TombolBesarPanelAtas>Simpan</TombolBesarPanelAtas>
+    <TombolBesarPanelAtas saatDiklik={saatSimpanDiklik}>Simpan</TombolBesarPanelAtas>
     <TombolKecilPanelAtas>Proyek Baru</TombolKecilPanelAtas>
     <TombolKecilPanelAtas saatDiklik={saatBukaProyekDiklik}>Buka Proyek</TombolKecilPanelAtas>
   </KelompokTombolPanelAtas>

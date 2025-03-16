@@ -1,5 +1,5 @@
 import { readonly, writable } from 'svelte/store'
-import { Komponen } from './common/entitas/Komponen'
+import { Komponen } from '../../umum/entitas/Komponen'
 
 export class AppData {
   private _kumpulanKomponen$ = writable<Komponen[]>([])
