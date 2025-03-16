@@ -1,27 +1,32 @@
 import { SequenceDiagramPb } from '../proto/kri'
-import { Class } from './Class'
-import type { Komponen } from './Komponen'
+import { Klas } from './Klas'
+import type { KomponenSequenceDiagram } from './KomponenSequenceDiagram'
 import { Model } from './Model'
+import { Objek } from './Objek'
 
 export class SequenceDiagram extends Model {
   public nama: string
-  private koleksiKomponen: Komponen[] = []
+  private koleksiKomponen: KomponenSequenceDiagram[] = []
 
   constructor(parameter: ParameterSequenceDiagram = {}) {
     super()
     this.nama = parameter.nama || 'InteraksiBaru'
   }
 
-  getKoleksiKomponen(): Komponen[] {
+  getKoleksiKomponen(): KomponenSequenceDiagram[] {
     return this.koleksiKomponen
   }
 
-  tambahClass(): Komponen[] {
-    this.koleksiKomponen.push(new Class())
+  tambahObjek(klas: Klas): KomponenSequenceDiagram[] {
+    this.koleksiKomponen.push(
+      new Objek({
+        klas: klas
+      })
+    )
     return this.koleksiKomponen
   }
 
-  ubahNamaKomponen(indeks: number, namaBaru: string): Komponen[] {
+  ubahNamaKomponen(indeks: number, namaBaru: string): KomponenSequenceDiagram[] {
     if (this.koleksiKomponen.length < indeks + 1) {
       return this.koleksiKomponen
     }

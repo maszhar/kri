@@ -1,3 +1,3 @@
-export class Komponen {
+export class KomponenSequenceDiagram {
   constructor(public nama: string = 'Komponen Baru') {}
 }

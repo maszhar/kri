@@ -7,6 +7,7 @@
   import TampilanSequenceDiagram from './sequence/ui/TampilanSequenceDiagram.svelte'
   import type { Model } from '../../umum/entitas/Model'
   import { SequenceDiagram } from '../../umum/entitas/SequenceDiagram'
+  import type { Klas } from '../../umum/entitas/Klas'
 
   let proyek: Proyek = new Proyek()
   let lokasiPenyimpananProyek = ''
@@ -33,6 +34,10 @@
     await window.mesin.simpanProyek(lokasiPenyimpananProyek, proyek.bungkusData())
   }
 
+  function tambahKlasBaru(): Klas {
+    return proyek.tambahKlasBaru()
+  }
+
   onMount(() => {
     const sequenceDiagram = proyek.tambahSequenceDiagramBaru()
     modelAktif = sequenceDiagram
@@ -43,7 +48,7 @@
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} />
   <Jendela>
     {#if modelAktif instanceof SequenceDiagram}
-      <TampilanSequenceDiagram sequenceDiagram={modelAktif} />
+      <TampilanSequenceDiagram {tambahKlasBaru} sequenceDiagram={modelAktif} />
     {/if}
   </Jendela>
 </Dasar>

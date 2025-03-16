@@ -6,15 +6,17 @@
   import Kanvas from '../../umum/ui/Kanvas.svelte'
   import MenuKonteks from '../../umum/ui/MenuKonteks.svelte'
   import { SequenceDiagram } from '../../../../umum/entitas/SequenceDiagram'
-  import type { Komponen } from '../../../../umum/entitas/Komponen'
+  import type { KomponenSequenceDiagram as Komponen } from '../../../../umum/entitas/KomponenSequenceDiagram'
   import TampilanObjek from './TampilanObjek.svelte'
   import TampilanPesanSinkron from './TampilanPesanSinkron.svelte'
   import TampilanFrame from './TampilanFrame.svelte'
+  import type { Klas } from '../../../../umum/entitas/Klas'
 
   interface Properti {
     sequenceDiagram: SequenceDiagram
+    tambahKlasBaru: () => Klas
   }
-  const { sequenceDiagram }: Properti = $props()
+  const { sequenceDiagram, tambahKlasBaru }: Properti = $props()
 
   let koleksiKomponen: Komponen[] = $state(sequenceDiagram.getKoleksiKomponen())
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
@@ -36,8 +38,9 @@
     posisiMenuKonteks = null
   }
 
-  function tambahClass(): void {
-    koleksiKomponen = sequenceDiagram.tambahClass()
+  function tambahObjekDariKlasBaru(): void {
+    const klas = tambahKlasBaru()
+    koleksiKomponen = sequenceDiagram.tambahObjek(klas)
     tanganiMenuKonteksSelesai()
   }
 
@@ -93,7 +96,9 @@
 {#if posisiMenuKonteks !== null}
   <MenuKonteks posisi={posisiMenuKonteks} saatSelesai={(): void => tanganiMenuKonteksSelesai()}>
     <JudulMenuKonteks>Tambah Komponen</JudulMenuKonteks>
-    <ItemMenuKonteks saatDiklik={(): void => tambahClass()}>Buat class baru</ItemMenuKonteks>
+    <ItemMenuKonteks saatDiklik={tambahObjekDariKlasBaru}
+      >Buat objek dari class baru</ItemMenuKonteks
+    >
   </MenuKonteks>
 {/if}
 

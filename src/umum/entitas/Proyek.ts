@@ -1,15 +1,23 @@
 import { ProyekPb } from '../proto/kri'
+import { Klas } from './Klas'
 import { SequenceDiagram } from './SequenceDiagram'
 
 export class Proyek {
+  koleksiKlas: Klas[]
   koleksiSequenceDiagram: SequenceDiagram[]
 
   constructor(parameter: ParameterBuatProyek = {}) {
-    if (parameter.koleksiSequenceDiagram) {
-      this.koleksiSequenceDiagram = parameter.koleksiSequenceDiagram
-    } else {
-      this.koleksiSequenceDiagram = []
-    }
+    // klas
+    this.koleksiKlas = parameter.koleksiKlas || []
+
+    // sequence diagram
+    this.koleksiSequenceDiagram = parameter.koleksiSequenceDiagram || []
+  }
+
+  tambahKlasBaru(): Klas {
+    const klas = new Klas()
+    this.koleksiKlas.push(klas)
+    return klas
   }
 
   tambahSequenceDiagramBaru(): SequenceDiagram {
@@ -53,5 +61,6 @@ export class Proyek {
 }
 
 interface ParameterBuatProyek {
+  koleksiKlas?: Klas[]
   koleksiSequenceDiagram?: SequenceDiagram[]
 }
