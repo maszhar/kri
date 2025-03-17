@@ -16,8 +16,9 @@
   interface Properti {
     sequenceDiagram: SequenceDiagram
     tambahKlasBaru: () => Klas
+    saatSequenceDiagramDiperbarui: () => void
   }
-  const { sequenceDiagram, tambahKlasBaru }: Properti = $props()
+  const { sequenceDiagram, tambahKlasBaru, saatSequenceDiagramDiperbarui }: Properti = $props()
 
   let koleksiKomponen: Komponen[] = $state(sequenceDiagram.getKoleksiKomponen())
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
@@ -92,15 +93,16 @@
   function perbaruiNamaInteraksi(namaBaru: string): void {
     namaInteraksi = namaBaru
     sequenceDiagram.nama = namaBaru
+    saatSequenceDiagramDiperbarui()
   }
 </script>
 
 {#if posisiMenuKonteks !== null}
   <MenuKonteks posisi={posisiMenuKonteks} saatSelesai={(): void => tanganiMenuKonteksSelesai()}>
     <JudulMenuKonteks>Tambah Komponen</JudulMenuKonteks>
-    <ItemMenuKonteks saatDiklik={tambahObjekDariKlasBaru}
-      >Buat objek dari class baru</ItemMenuKonteks
-    >
+    <ItemMenuKonteks saatDiklik={tambahObjekDariKlasBaru}>
+      Buat objek dari class baru
+    </ItemMenuKonteks>
   </MenuKonteks>
 {/if}
 

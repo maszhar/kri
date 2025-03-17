@@ -8,10 +8,10 @@ export class Proyek {
 
   constructor(parameter: ParameterBuatProyek = {}) {
     // klas
-    this.koleksiKlas = parameter.koleksiKlas || []
+    this.koleksiKlas = parameter.koleksiKlas ?? []
 
     // sequence diagram
-    this.koleksiSequenceDiagram = parameter.koleksiSequenceDiagram || []
+    this.koleksiSequenceDiagram = parameter.koleksiSequenceDiagram ?? []
   }
 
   tambahKlasBaru(): Klas {
@@ -74,6 +74,10 @@ export class Proyek {
         SequenceDiagram.dariProto(protoSequenceDiagram, koleksiKlas)
       )
     })
+  }
+
+  buatKlonaSequenceDiagram(indeks: number): void {
+    this.koleksiSequenceDiagram[indeks] = this.koleksiSequenceDiagram[indeks].buatKlona()
   }
 }
 

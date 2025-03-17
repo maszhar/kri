@@ -13,6 +13,7 @@
   let proyek: Proyek = new Proyek()
   let lokasiPenyimpananProyek = ''
 
+  let koleksiSequenceDiagram: SequenceDiagram[] = $state([])
   let modelAktif: Model | null = $state(null)
 
   async function bukaProyek(): Promise<void> {
@@ -39,19 +40,36 @@
     return proyek.tambahKlasBaru()
   }
 
+  function perbaruiSequenceDiagram(): void {
+    const indeksSequenceDiagramLamaTerkait = koleksiSequenceDiagram.findIndex(
+      (sequenceDiagramLama) => sequenceDiagramLama == modelAktif
+    )
+    if (indeksSequenceDiagramLamaTerkait < 0) {
+      return
+    }
+    proyek.buatKlonaSequenceDiagram(indeksSequenceDiagramLamaTerkait)
+    koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
+    modelAktif = koleksiSequenceDiagram[indeksSequenceDiagramLamaTerkait]
+  }
+
   onMount(() => {
     const sequenceDiagram = proyek.tambahSequenceDiagramBaru()
     modelAktif = sequenceDiagram
+    koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
   })
 </script>
 
 <Dasar>
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} />
   <div class="flex-grow flex items-stretch">
-    <PanelKiri />
+    <PanelKiri {koleksiSequenceDiagram} />
     <Jendela>
       {#if modelAktif instanceof SequenceDiagram}
-        <TampilanSequenceDiagram {tambahKlasBaru} sequenceDiagram={modelAktif} />
+        <TampilanSequenceDiagram
+          {tambahKlasBaru}
+          sequenceDiagram={modelAktif}
+          saatSequenceDiagramDiperbarui={perbaruiSequenceDiagram}
+        />
       {/if}
     </Jendela>
   </div>

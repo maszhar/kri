@@ -112,6 +112,13 @@ export class SequenceDiagram extends Model {
       koleksiKomponen: koleksiKomponen
     })
   }
+
+  buatKlona(): SequenceDiagram {
+    return new SequenceDiagram({
+      nama: this.nama,
+      koleksiKomponen: this.koleksiKomponen
+    })
+  }
 }
 
 export interface ParameterSequenceDiagram {
