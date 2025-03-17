@@ -42,17 +42,22 @@
     }
   }
 
-  function selesaikanMengeditNamaInteraksi(): void {
+  function selesaikanMengeditNamaInteraksi(dibatalkan: boolean = false): void {
     sedangMengedit = false
     window.removeEventListener('click', tanganiKlikSaatMengeditNamaInteraksi)
     saatSelesaiMengedit()
-    saatNamaInteraksiDiedit(namaInteraksiSementara)
+    if (!dibatalkan) {
+      saatNamaInteraksiDiedit(namaInteraksiSementara)
+    }
   }
 
   function tanganiKeyboardTurunDiInputNamaInteraksi(e: KeyboardEvent): void {
-    if (e.key == 'Enter' || e.key == 'Escape' || e.key == 'Tab') {
+    if (e.key == 'Enter' || e.key == 'Tab') {
       e.preventDefault()
       selesaikanMengeditNamaInteraksi()
+    } else if (e.key == 'Escape') {
+      e.preventDefault()
+      selesaikanMengeditNamaInteraksi(true)
     }
   }
 
