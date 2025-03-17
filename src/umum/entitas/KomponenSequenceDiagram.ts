@@ -2,7 +2,7 @@ import { Komponen } from './Komponen'
 
 export class KomponenSequenceDiagram extends Komponen {
   constructor(parameter: ParameterBuatKomponenSequenceDiagram = {}) {
-    super({ id: parameter.id, nama: parameter.nama || 'KomponenBaru' })
+    super({ id: parameter.id, nama: parameter.nama ?? 'KomponenBaru' })
   }
 }
 

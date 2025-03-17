@@ -3,8 +3,8 @@ export class Komponen {
   public nama: string
 
   constructor(parameter: ParameterBuatKomponen = {}) {
-    this.id = parameter.id || 0
-    this.nama = parameter.nama || 'KomponenBaru'
+    this.id = parameter.id ?? 0
+    this.nama = parameter.nama ?? 'KomponenBaru'
   }
 }
 

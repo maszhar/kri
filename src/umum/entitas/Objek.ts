@@ -8,7 +8,7 @@ export class Objek extends KomponenSequenceDiagram {
   constructor(parameter: ParameterBuatObjek = {}) {
     super({
       id: parameter.id,
-      nama: parameter.nama || ''
+      nama: parameter.nama ?? ''
     })
     this.klas = parameter.klas
   }
