@@ -16,11 +16,12 @@ enum JenisKomponen {
 
 export class SequenceDiagram extends Model {
   public nama: string
-  private koleksiKomponen: KomponenSequenceDiagram[] = []
+  private koleksiKomponen: KomponenSequenceDiagram[]
 
   constructor(parameter: ParameterSequenceDiagram = {}) {
     super()
     this.nama = parameter.nama || 'InteraksiBaru'
+    this.koleksiKomponen = parameter.koleksiKomponen || []
   }
 
   getKoleksiKomponen(): KomponenSequenceDiagram[] {
