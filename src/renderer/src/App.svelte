@@ -8,6 +8,7 @@
   import type { Model } from '../../umum/entitas/Model'
   import { SequenceDiagram } from '../../umum/entitas/SequenceDiagram'
   import type { Klas } from '../../umum/entitas/Klas'
+  import PanelKiri from './umum/ui/panel-kiri/PanelKiri.svelte'
 
   let proyek: Proyek = new Proyek()
   let lokasiPenyimpananProyek = ''
@@ -46,9 +47,12 @@
 
 <Dasar>
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} />
-  <Jendela>
-    {#if modelAktif instanceof SequenceDiagram}
-      <TampilanSequenceDiagram {tambahKlasBaru} sequenceDiagram={modelAktif} />
-    {/if}
-  </Jendela>
+  <div class="flex-grow flex items-stretch">
+    <PanelKiri />
+    <Jendela>
+      {#if modelAktif instanceof SequenceDiagram}
+        <TampilanSequenceDiagram {tambahKlasBaru} sequenceDiagram={modelAktif} />
+      {/if}
+    </Jendela>
+  </div>
 </Dasar>

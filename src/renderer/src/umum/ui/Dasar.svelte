@@ -7,6 +7,6 @@
   const { children }: Properti = $props()
 </script>
 
-<main class="bg-zinc-300 min-h-screen">
+<main class="bg-zinc-300 min-h-screen flex flex-col">
   {@render children?.()}
 </main>
