@@ -114,7 +114,7 @@
 </script>
 
 <div
-  class={`flex flex-col items-center ${diseleksi ? 'cursor-move' : 'cursor-default'}`}
+  class="flex flex-col items-center"
   style={`left: ${posisi.x}px; top: ${posisi.y}px`}
   onclick={(e: unknown): void => tanganiKlik(e as MouseEvent)}
   onkeydown={(e: unknown): void => tanganiKeyboardTurun(e as KeyboardEvent)}
@@ -122,7 +122,7 @@
   tabindex={1 + indeks}
 >
   <div
-    class={`border py-1 px-4 select-none ${diseleksi ? 'border-blue-600 ring-2 ring-blue-600' : 'border-black'}`}
+    class={`border py-1 px-4 select-none  ${adaYangMengedit ? 'cursor-default' : 'cursor-move'} ${diseleksi ? 'border-blue-600 ring-2 ring-blue-600' : 'border-black'}`}
     ondblclick={(e: unknown): void => tanganiKlikGanda(e as MouseEvent)}
     role="button"
     tabindex={1000 + indeks}
