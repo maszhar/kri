@@ -29,6 +29,7 @@
 
   $effect(() => {
     namaInteraksi = sequenceDiagram.nama
+    koleksiKomponen = sequenceDiagram.getKoleksiKomponen()
   })
 
   let posisiMenuKonteks: Koordinat | null = $state(null)
