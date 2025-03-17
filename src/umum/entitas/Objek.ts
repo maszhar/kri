@@ -46,6 +46,18 @@ export class Objek extends KomponenSequenceDiagram {
       idKlas: this.klas?.id || 0
     }
   }
+
+  static dariProto(proto: ObjekPb, koleksiKlas: Klas[] = []): Objek {
+    const klas =
+      proto.idKlas > 0 && koleksiKlas.length > 0
+        ? koleksiKlas.find((klas) => klas.id == proto.idKlas)
+        : undefined
+    return new Objek({
+      id: proto.id,
+      nama: proto.nama,
+      klas: klas
+    })
+  }
 }
 
 interface ParameterBuatObjek {

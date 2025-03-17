@@ -19,6 +19,7 @@
     proyek = Proyek.bongkarBungkusanData(dataProyek.data)
     lokasiPenyimpananProyek = dataProyek.lokasi
     modelAktif = proyek.koleksiSequenceDiagram[0]
+    console.log(proyek)
   }
 
   async function simpanProyek(): Promise<void> {

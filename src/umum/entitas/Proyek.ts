@@ -66,9 +66,12 @@ export class Proyek {
   }
 
   static dariProto(proto: ProyekPb): Proyek {
+    const koleksiKlas = proto.koleksiKlas.map((protoKlas) => Klas.dariProto(protoKlas))
+
     return new Proyek({
+      koleksiKlas: koleksiKlas,
       koleksiSequenceDiagram: proto.koleksiSequenceDiagram.map((protoSequenceDiagram) =>
-        SequenceDiagram.dariProto(protoSequenceDiagram)
+        SequenceDiagram.dariProto(protoSequenceDiagram, koleksiKlas)
       )
     })
   }

@@ -94,9 +94,21 @@ export class SequenceDiagram extends Model {
     }
   }
 
-  static dariProto(proto: SequenceDiagramPb): SequenceDiagram {
+  static dariProto(proto: SequenceDiagramPb, koleksiKlas: Klas[] = []): SequenceDiagram {
+    const koleksiKomponen: KomponenSequenceDiagram[] = []
+
+    proto.koleksiKomponen.forEach((protoKoleksiKomponen) => {
+      const objekTerkait = proto.koleksiObjek.find(
+        (protoObjek) => protoObjek.id == protoKoleksiKomponen.id
+      )
+      if (objekTerkait) {
+        koleksiKomponen.push(Objek.dariProto(objekTerkait, koleksiKlas))
+      }
+    })
+
     return new SequenceDiagram({
-      nama: proto.nama
+      nama: proto.nama,
+      koleksiKomponen: koleksiKomponen
     })
   }
 }
