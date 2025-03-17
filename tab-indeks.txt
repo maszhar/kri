@@ -1,4 +1,6 @@
+11          = Panel Kiri
 150         = Name Interaksi
 1000 - 1999 = Kotak Nama Objek
 2000 - 2999 = Tampilan Spesifikasi Eksekusi
 3000 - 3999 = Lifeline
+4000 - 4999 = Item di Panel Kiri
