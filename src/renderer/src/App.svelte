@@ -40,6 +40,12 @@
     return proyek.tambahKlasBaru()
   }
 
+  function buatSequenceDiagram(): void {
+    const sequenceDiagram = proyek.tambahSequenceDiagramBaru()
+    modelAktif = sequenceDiagram
+    koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
+  }
+
   function perbaruiSequenceDiagram(): void {
     const indeksSequenceDiagramLamaTerkait = koleksiSequenceDiagram.findIndex(
       (sequenceDiagramLama) => sequenceDiagramLama == modelAktif
@@ -53,8 +59,6 @@
   }
 
   onMount(() => {
-    const sequenceDiagram = proyek.tambahSequenceDiagramBaru()
-    modelAktif = sequenceDiagram
     koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
   })
 </script>
@@ -62,7 +66,7 @@
 <Dasar>
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} />
   <div class="flex-grow flex items-stretch">
-    <PanelKiri {koleksiSequenceDiagram} />
+    <PanelKiri {koleksiSequenceDiagram} saatBuatSequenceDiagram={buatSequenceDiagram} />
     <Jendela>
       {#if modelAktif instanceof SequenceDiagram}
         <TampilanSequenceDiagram

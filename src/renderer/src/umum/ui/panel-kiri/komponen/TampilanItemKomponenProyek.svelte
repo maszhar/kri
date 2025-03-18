@@ -7,14 +7,23 @@
     level?: number
     dipilih?: boolean
     saatDipilih: () => void
+    saatMenuKonteks?: (e: MouseEvent) => void
   }
-  const { children, indeks, saatDipilih, level = 0, dipilih = false }: Properti = $props()
+  const {
+    children,
+    indeks,
+    saatDipilih,
+    level = 0,
+    dipilih = false,
+    saatMenuKonteks
+  }: Properti = $props()
 </script>
 
 <button
   class={`flex flex-nowrap justify-start ${dipilih ? 'bg-blue-300' : ''}`}
   tabindex={4000 + indeks}
   onclick={saatDipilih}
+  oncontextmenu={saatMenuKonteks}
 >
   {#if level > 0}
     <svg class="h-4 flex-none" style={`width: ${18 * level}px`}></svg>

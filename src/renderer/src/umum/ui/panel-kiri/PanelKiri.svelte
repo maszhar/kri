@@ -1,14 +1,21 @@
 <script lang="ts">
   import type { SequenceDiagram } from '../../../../../umum/entitas/SequenceDiagram'
+  import { Koordinat } from '../../entitas/Koordinat'
+  import ItemMenuKonteks from '../ItemMenuKonteks.svelte'
+  import MenuKonteks from '../MenuKonteks.svelte'
   import TampilanItemKomponenProyek from './komponen/TampilanItemKomponenProyek.svelte'
 
   interface Properti {
     koleksiSequenceDiagram: SequenceDiagram[]
+    saatBuatSequenceDiagram: () => void
   }
-  const { koleksiSequenceDiagram }: Properti = $props()
+  const { koleksiSequenceDiagram, saatBuatSequenceDiagram }: Properti = $props()
 
   let itemDipilih = $state(-1)
   let elemenPanel: HTMLDivElement
+
+  const JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM = 1
+  let dataMenuKonteks: { jenis: number; posisi: Koordinat } | null = $state(null)
 
   function tanganiPanelDiklik(e: MouseEvent): void {
     if (elemenPanel === e.target) {
@@ -31,6 +38,23 @@
   }
 
   let koleksiClassDiagram = ['a']
+
+  function tampilkanMenuKonteksSequenceDiagram(e: MouseEvent): void {
+    bukaMenuKonteks(e, JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM)
+  }
+
+  function bukaMenuKonteks(e: MouseEvent, jenis: number): void {
+    dataMenuKonteks = {
+      jenis: jenis,
+      posisi: new Koordinat(e.clientX, e.clientY)
+    }
+    window.addEventListener('click', tutupMenuKonteks)
+  }
+
+  function tutupMenuKonteks(): void {
+    dataMenuKonteks = null
+    window.removeEventListener('click', tutupMenuKonteks)
+  }
 </script>
 
 <div
@@ -69,6 +93,7 @@
     saatDipilih={(): void => pilih(koleksiClassDiagram.length + 3)}
     indeks={koleksiClassDiagram.length + 3}
     dipilih={itemDipilih === koleksiClassDiagram.length + 3}
+    saatMenuKonteks={tampilkanMenuKonteksSequenceDiagram}
   >
     Sequence Diagram
   </TampilanItemKomponenProyek>
@@ -84,3 +109,11 @@
     </TampilanItemKomponenProyek>
   {/each}
 </div>
+
+{#if dataMenuKonteks !== null}
+  {#if dataMenuKonteks.jenis === JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM}
+    <MenuKonteks posisi={dataMenuKonteks.posisi}>
+      <ItemMenuKonteks saatDiklik={saatBuatSequenceDiagram}>Buat Sequence Diagram</ItemMenuKonteks>
+    </MenuKonteks>
+  {/if}
+{/if}
