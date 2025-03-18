@@ -35,7 +35,7 @@
   oncontextmenu={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
   role="button"
   tabindex={0}
-  onclick={(): void => saatDiklik()}
+  onclick={saatDiklik}
   onkeypress={(): void => {}}
   bind:this={elemen}
 >
