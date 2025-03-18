@@ -34,7 +34,7 @@
   let dataMenuKonteks: { jenis: number; posisi: Koordinat } | null = $state(null)
 
   function tanganiPanelDiklik(e: MouseEvent): void {
-    if (elemenPanel === e.target) {
+    if (elemenPanel === e.target && dataMenuKonteks === null) {
       hilangkanPilihan()
     }
   }
