@@ -27,13 +27,18 @@
       saatBuka?.()
     }
   }
+
+  function tanganiMenuKonteks(e: MouseEvent): void {
+    saatDipilih()
+    saatMenuKonteks?.(e)
+  }
 </script>
 
 <button
   class={`flex flex-nowrap justify-start ${dipilih ? 'bg-blue-300' : ''}`}
   tabindex={4000 + indeks}
   onclick={saatDipilih}
-  oncontextmenu={saatMenuKonteks}
+  oncontextmenu={tanganiMenuKonteks}
   ondblclick={saatBuka}
   onkeydown={saatKeyboardTurun}
 >
