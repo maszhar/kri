@@ -13,19 +13,24 @@
     modelAktif: Model | null
     saatBuatSequenceDiagram: () => void
     saatBukaSequenceDiagram: (indeks: number) => void
+    saatBuatDiagramKlas: () => void
+    saatBukaDiagramKlas: (indeks: number) => void
   }
   const {
     koleksiSequenceDiagram,
     koleksiDiagramKlas,
     modelAktif,
     saatBuatSequenceDiagram,
-    saatBukaSequenceDiagram
+    saatBukaSequenceDiagram,
+    saatBuatDiagramKlas,
+    saatBukaDiagramKlas
   }: Properti = $props()
 
   let itemDipilih = $state(-1)
   let elemenPanel: HTMLDivElement
 
-  const JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM = 1
+  const JENIS_MENU_KONTEKS_DIAGRAM_KLAS = 1
+  const JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM = 3
   let dataMenuKonteks: { jenis: number; posisi: Koordinat } | null = $state(null)
 
   function tanganiPanelDiklik(e: MouseEvent): void {
@@ -48,10 +53,12 @@
     itemDipilih = indeks
   }
 
-  let koleksiClassDiagram = ['a']
-
   function tampilkanMenuKonteksSequenceDiagram(e: MouseEvent): void {
     bukaMenuKonteks(e, JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM)
+  }
+
+  function tampilkanMenuKonteksDiagramKlas(e: MouseEvent): void {
+    bukaMenuKonteks(e, JENIS_MENU_KONTEKS_DIAGRAM_KLAS)
   }
 
   function bukaMenuKonteks(e: MouseEvent, jenis: number): void {
@@ -88,6 +95,7 @@
     saatDipilih={(): void => pilih(1)}
     indeks={1}
     dipilih={itemDipilih === 1}
+    saatMenuKonteks={tampilkanMenuKonteksDiagramKlas}
   >
     Diagram Klas
   </TampilanItemKomponenProyek>
@@ -95,9 +103,11 @@
   {#each koleksiDiagramKlas as diagramKlas, indeks}
     <TampilanItemKomponenProyek
       level={2}
-      saatDipilih={(): void => pilih(2)}
+      saatDipilih={(): void => pilih(indeks + 2)}
       indeks={indeks + 2}
-      dipilih={itemDipilih === 2}
+      dipilih={itemDipilih === indeks + 2}
+      aktif={modelAktif === diagramKlas}
+      saatBuka={(): void => saatBukaDiagramKlas(indeks)}
     >
       {diagramKlas.nama}
     </TampilanItemKomponenProyek>
@@ -105,9 +115,9 @@
 
   <TampilanItemKomponenProyek
     level={1}
-    saatDipilih={(): void => pilih(koleksiClassDiagram.length + 3)}
-    indeks={koleksiClassDiagram.length + 3}
-    dipilih={itemDipilih === koleksiClassDiagram.length + 3}
+    saatDipilih={(): void => pilih(koleksiDiagramKlas.length + 3)}
+    indeks={koleksiDiagramKlas.length + 3}
+    dipilih={itemDipilih === koleksiDiagramKlas.length + 3}
     saatMenuKonteks={tampilkanMenuKonteksSequenceDiagram}
   >
     Sequence Diagram
@@ -116,9 +126,9 @@
   {#each koleksiSequenceDiagram as sequenceDiagram, indeks}
     <TampilanItemKomponenProyek
       level={2}
-      saatDipilih={(): void => pilih(koleksiClassDiagram.length + 4 + indeks)}
-      indeks={koleksiClassDiagram.length + 4 + indeks}
-      dipilih={itemDipilih === koleksiClassDiagram.length + 4 + indeks}
+      saatDipilih={(): void => pilih(koleksiDiagramKlas.length + 4 + indeks)}
+      indeks={koleksiDiagramKlas.length + 4 + indeks}
+      dipilih={itemDipilih === koleksiDiagramKlas.length + 4 + indeks}
       aktif={modelAktif === sequenceDiagram}
       saatBuka={(): void => saatBukaSequenceDiagram(indeks)}
     >
@@ -128,7 +138,11 @@
 </div>
 
 {#if dataMenuKonteks !== null}
-  {#if dataMenuKonteks.jenis === JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM}
+  {#if dataMenuKonteks.jenis === JENIS_MENU_KONTEKS_DIAGRAM_KLAS}
+    <MenuKonteks posisi={dataMenuKonteks.posisi}>
+      <ItemMenuKonteks saatDiklik={saatBuatDiagramKlas}>Buat Diagram Klas</ItemMenuKonteks>
+    </MenuKonteks>
+  {:else if dataMenuKonteks.jenis === JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM}
     <MenuKonteks posisi={dataMenuKonteks.posisi}>
       <ItemMenuKonteks saatDiklik={saatBuatSequenceDiagram}>Buat Sequence Diagram</ItemMenuKonteks>
     </MenuKonteks>

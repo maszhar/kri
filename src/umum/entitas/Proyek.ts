@@ -25,6 +25,12 @@ export class Proyek {
     return klas
   }
 
+  tambahDiagramKlasBaru(): DiagramKlas {
+    const diagramKlas = new DiagramKlas()
+    this.koleksiDiagramKlas.push(diagramKlas)
+    return diagramKlas
+  }
+
   tambahSequenceDiagramBaru(): SequenceDiagram {
     const sequenceDiagram = new SequenceDiagram()
     this.koleksiSequenceDiagram.push(sequenceDiagram)

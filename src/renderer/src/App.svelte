@@ -64,6 +64,16 @@
     modelAktif = koleksiSequenceDiagram[indeksSequenceDiagramLamaTerkait]
   }
 
+  function bukaDiagramKlas(indeks: number): void {
+    modelAktif = koleksiDiagramKlas[indeks]
+  }
+
+  function buatDiagramKlas(): void {
+    const diagramKlas = proyek.tambahDiagramKlasBaru()
+    koleksiDiagramKlas = proyek.koleksiDiagramKlas
+    modelAktif = diagramKlas
+  }
+
   onMount(() => {
     koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
     koleksiDiagramKlas = proyek.koleksiDiagramKlas
@@ -79,6 +89,8 @@
       {modelAktif}
       saatBukaSequenceDiagram={bukaSequenceDiagram}
       {koleksiDiagramKlas}
+      saatBuatDiagramKlas={buatDiagramKlas}
+      saatBukaDiagramKlas={bukaDiagramKlas}
     />
     <Jendela>
       {#if modelAktif instanceof SequenceDiagram}
