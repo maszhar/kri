@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { DiagramKlas } from '../../../../../umum/entitas/DiagramKlas'
   import type { Model } from '../../../../../umum/entitas/Model'
   import type { SequenceDiagram } from '../../../../../umum/entitas/SequenceDiagram'
   import { Koordinat } from '../../entitas/Koordinat'
@@ -8,12 +9,14 @@
 
   interface Properti {
     koleksiSequenceDiagram: SequenceDiagram[]
+    koleksiDiagramKlas: DiagramKlas[]
     modelAktif: Model | null
     saatBuatSequenceDiagram: () => void
     saatBukaSequenceDiagram: (indeks: number) => void
   }
   const {
     koleksiSequenceDiagram,
+    koleksiDiagramKlas,
     modelAktif,
     saatBuatSequenceDiagram,
     saatBukaSequenceDiagram
@@ -86,16 +89,20 @@
     indeks={1}
     dipilih={itemDipilih === 1}
   >
-    Class Diagram
+    Diagram Klas
   </TampilanItemKomponenProyek>
-  <TampilanItemKomponenProyek
-    level={2}
-    saatDipilih={(): void => pilih(2)}
-    indeks={2}
-    dipilih={itemDipilih === 2}
-  >
-    Class Diagram 1
-  </TampilanItemKomponenProyek>
+
+  {#each koleksiDiagramKlas as diagramKlas, indeks}
+    <TampilanItemKomponenProyek
+      level={2}
+      saatDipilih={(): void => pilih(2)}
+      indeks={indeks + 2}
+      dipilih={itemDipilih === 2}
+    >
+      {diagramKlas.nama}
+    </TampilanItemKomponenProyek>
+  {/each}
+
   <TampilanItemKomponenProyek
     level={1}
     saatDipilih={(): void => pilih(koleksiClassDiagram.length + 3)}

@@ -1,14 +1,19 @@
 import { ProyekPb } from '../proto/kri'
+import { DiagramKlas } from './DiagramKlas'
 import { Klas } from './Klas'
 import { SequenceDiagram } from './SequenceDiagram'
 
 export class Proyek {
   koleksiKlas: Klas[]
   koleksiSequenceDiagram: SequenceDiagram[]
+  koleksiDiagramKlas: DiagramKlas[]
 
   constructor(parameter: ParameterBuatProyek = {}) {
     // klas
     this.koleksiKlas = parameter.koleksiKlas ?? []
+
+    // diagram klas
+    this.koleksiDiagramKlas = parameter.koleksiDiagramKlas ?? []
 
     // sequence diagram
     this.koleksiSequenceDiagram = parameter.koleksiSequenceDiagram ?? []
@@ -84,4 +89,5 @@ export class Proyek {
 interface ParameterBuatProyek {
   koleksiKlas?: Klas[]
   koleksiSequenceDiagram?: SequenceDiagram[]
+  koleksiDiagramKlas?: DiagramKlas[]
 }

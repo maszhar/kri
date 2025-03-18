@@ -9,11 +9,13 @@
   import { SequenceDiagram } from '../../umum/entitas/SequenceDiagram'
   import type { Klas } from '../../umum/entitas/Klas'
   import PanelKiri from './umum/ui/panel-kiri/PanelKiri.svelte'
+  import type { DiagramKlas } from '../../umum/entitas/DiagramKlas'
 
   let proyek: Proyek = new Proyek()
   let lokasiPenyimpananProyek = ''
 
   let koleksiSequenceDiagram: SequenceDiagram[] = $state([])
+  let koleksiDiagramKlas: DiagramKlas[] = $state([])
   let modelAktif: Model | null = $state(null)
 
   async function bukaProyek(): Promise<void> {
@@ -64,6 +66,7 @@
 
   onMount(() => {
     koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
+    koleksiDiagramKlas = proyek.koleksiDiagramKlas
   })
 </script>
 
@@ -75,6 +78,7 @@
       saatBuatSequenceDiagram={buatSequenceDiagram}
       {modelAktif}
       saatBukaSequenceDiagram={bukaSequenceDiagram}
+      {koleksiDiagramKlas}
     />
     <Jendela>
       {#if modelAktif instanceof SequenceDiagram}
