@@ -6,6 +6,7 @@
     children?: Snippet
     level?: number
     dipilih?: boolean
+    aktif?: boolean
     saatDipilih: () => void
     saatMenuKonteks?: (e: MouseEvent) => void
   }
@@ -15,6 +16,7 @@
     saatDipilih,
     level = 0,
     dipilih = false,
+    aktif = false,
     saatMenuKonteks
   }: Properti = $props()
 </script>
@@ -29,7 +31,7 @@
     <svg class="h-4 flex-none" style={`width: ${18 * level}px`}></svg>
   {/if}
   <div class="w-4 h-4 bg-red-500 mt-0.5 flex-none"></div>
-  <div class="text-sm text-left ms-1 text-nowrap">
+  <div class={`text-sm text-left ms-1 text-nowrap ${aktif ? 'font-bold' : ''}`}>
     {@render children?.()}
   </div>
 </button>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Model } from '../../../../../umum/entitas/Model'
   import type { SequenceDiagram } from '../../../../../umum/entitas/SequenceDiagram'
   import { Koordinat } from '../../entitas/Koordinat'
   import ItemMenuKonteks from '../ItemMenuKonteks.svelte'
@@ -8,8 +9,9 @@
   interface Properti {
     koleksiSequenceDiagram: SequenceDiagram[]
     saatBuatSequenceDiagram: () => void
+    modelAktif: Model | null
   }
-  const { koleksiSequenceDiagram, saatBuatSequenceDiagram }: Properti = $props()
+  const { koleksiSequenceDiagram, saatBuatSequenceDiagram, modelAktif }: Properti = $props()
 
   let itemDipilih = $state(-1)
   let elemenPanel: HTMLDivElement
@@ -104,6 +106,7 @@
       saatDipilih={(): void => pilih(koleksiClassDiagram.length + 4 + indeks)}
       indeks={koleksiClassDiagram.length + 4 + indeks}
       dipilih={itemDipilih === koleksiClassDiagram.length + 4 + indeks}
+      aktif={modelAktif === sequenceDiagram}
     >
       {sequenceDiagram.nama}
     </TampilanItemKomponenProyek>

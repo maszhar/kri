@@ -66,7 +66,11 @@
 <Dasar>
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} />
   <div class="flex-grow flex items-stretch">
-    <PanelKiri {koleksiSequenceDiagram} saatBuatSequenceDiagram={buatSequenceDiagram} />
+    <PanelKiri
+      {koleksiSequenceDiagram}
+      saatBuatSequenceDiagram={buatSequenceDiagram}
+      {modelAktif}
+    />
     <Jendela>
       {#if modelAktif instanceof SequenceDiagram}
         <TampilanSequenceDiagram
