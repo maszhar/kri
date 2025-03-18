@@ -8,10 +8,16 @@
 
   interface Properti {
     koleksiSequenceDiagram: SequenceDiagram[]
-    saatBuatSequenceDiagram: () => void
     modelAktif: Model | null
+    saatBuatSequenceDiagram: () => void
+    saatBukaSequenceDiagram: (indeks: number) => void
   }
-  const { koleksiSequenceDiagram, saatBuatSequenceDiagram, modelAktif }: Properti = $props()
+  const {
+    koleksiSequenceDiagram,
+    modelAktif,
+    saatBuatSequenceDiagram,
+    saatBukaSequenceDiagram
+  }: Properti = $props()
 
   let itemDipilih = $state(-1)
   let elemenPanel: HTMLDivElement
@@ -107,6 +113,7 @@
       indeks={koleksiClassDiagram.length + 4 + indeks}
       dipilih={itemDipilih === koleksiClassDiagram.length + 4 + indeks}
       aktif={modelAktif === sequenceDiagram}
+      saatBuka={(): void => saatBukaSequenceDiagram(indeks)}
     >
       {sequenceDiagram.nama}
     </TampilanItemKomponenProyek>

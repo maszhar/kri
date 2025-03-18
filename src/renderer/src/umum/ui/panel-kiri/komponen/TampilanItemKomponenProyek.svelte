@@ -9,6 +9,7 @@
     aktif?: boolean
     saatDipilih: () => void
     saatMenuKonteks?: (e: MouseEvent) => void
+    saatBuka?: () => void
   }
   const {
     children,
@@ -17,8 +18,15 @@
     level = 0,
     dipilih = false,
     aktif = false,
-    saatMenuKonteks
+    saatMenuKonteks,
+    saatBuka
   }: Properti = $props()
+
+  function saatKeyboardTurun(e: KeyboardEvent): void {
+    if (e.key === 'Enter') {
+      saatBuka?.()
+    }
+  }
 </script>
 
 <button
@@ -26,6 +34,8 @@
   tabindex={4000 + indeks}
   onclick={saatDipilih}
   oncontextmenu={saatMenuKonteks}
+  ondblclick={saatBuka}
+  onkeydown={saatKeyboardTurun}
 >
   {#if level > 0}
     <svg class="h-4 flex-none" style={`width: ${18 * level}px`}></svg>

@@ -40,6 +40,10 @@
     return proyek.tambahKlasBaru()
   }
 
+  function bukaSequenceDiagram(indeks: number): void {
+    modelAktif = koleksiSequenceDiagram[indeks]
+  }
+
   function buatSequenceDiagram(): void {
     const sequenceDiagram = proyek.tambahSequenceDiagramBaru()
     modelAktif = sequenceDiagram
@@ -70,6 +74,7 @@
       {koleksiSequenceDiagram}
       saatBuatSequenceDiagram={buatSequenceDiagram}
       {modelAktif}
+      saatBukaSequenceDiagram={bukaSequenceDiagram}
     />
     <Jendela>
       {#if modelAktif instanceof SequenceDiagram}
