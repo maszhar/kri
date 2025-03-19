@@ -19,6 +19,12 @@
 
   let elemen: HTMLDivElement
 
+  function tanganiKlikGanda(e: MouseEvent): void {
+    if (e.target === elemen) {
+      saatBukaMenuKonteks?.(e)
+    }
+  }
+
   export function dapatkanElemen(): HTMLDivElement {
     return elemen
   }
@@ -35,7 +41,7 @@
 <div
   class={`relative m-6 inline-block bg-white ${className}`}
   style={`width: ${ukuran.lebar}px; height: ${ukuran.tinggi}px;`}
-  ondblclick={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
+  ondblclick={tanganiKlikGanda}
   oncontextmenu={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
   role="button"
   tabindex={20000}
