@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Koordinat } from '../../umum/entitas/Koordinat'
+  import { Koordinat } from '../../../../umum/entitas/Koordinat'
 
   interface Properti {
     posisi?: Koordinat

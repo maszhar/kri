@@ -11,7 +11,7 @@
 <button
   type="button"
   class="select-none min-w-52 text-left py-2 px-4 cursor-pointer hover:bg-blue-100"
-  onclick={(): void => saatDiklik?.()}
+  onclick={saatDiklik}
 >
   {@render children?.()}
 </button>

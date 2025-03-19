@@ -9,7 +9,8 @@
   import { SequenceDiagram } from '../../umum/entitas/SequenceDiagram'
   import type { Klas } from '../../umum/entitas/Klas'
   import PanelKiri from './umum/ui/panel-kiri/PanelKiri.svelte'
-  import type { DiagramKlas } from '../../umum/entitas/DiagramKlas'
+  import { DiagramKlas } from '../../umum/entitas/DiagramKlas'
+  import TampilanDiagramKlas from './klas/TampilanDiagramKlas.svelte'
 
   let proyek: Proyek = new Proyek()
   let lokasiPenyimpananProyek = ''
@@ -99,6 +100,8 @@
           sequenceDiagram={modelAktif}
           saatSequenceDiagramDiperbarui={perbaruiSequenceDiagram}
         />
+      {:else if modelAktif instanceof DiagramKlas}
+        <TampilanDiagramKlas diagramKlas={modelAktif} {tambahKlasBaru} />
       {/if}
     </Jendela>
   </div>

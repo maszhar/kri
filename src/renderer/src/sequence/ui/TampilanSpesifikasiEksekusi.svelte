@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Koordinat } from '../../umum/entitas/Koordinat'
+  import { Koordinat } from '../../../../umum/entitas/Koordinat'
   import TampilanKursorMulaiKoneksi from './TampilanKursorMulaiKoneksi.svelte'
 
   interface Properti {

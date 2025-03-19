@@ -2,7 +2,7 @@
   import type { DiagramKlas } from '../../../../../umum/entitas/DiagramKlas'
   import type { Model } from '../../../../../umum/entitas/Model'
   import type { SequenceDiagram } from '../../../../../umum/entitas/SequenceDiagram'
-  import { Koordinat } from '../../entitas/Koordinat'
+  import { Koordinat } from '../../../../../umum/entitas/Koordinat'
   import ItemMenuKonteks from '../ItemMenuKonteks.svelte'
   import MenuKonteks from '../MenuKonteks.svelte'
   import TampilanItemKomponenProyek from './komponen/TampilanItemKomponenProyek.svelte'

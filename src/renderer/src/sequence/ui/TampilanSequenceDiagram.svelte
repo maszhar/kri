@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Koordinat } from '../../umum/entitas/Koordinat'
+  import { Koordinat } from '../../../../umum/entitas/Koordinat'
   import { Ukuran2D } from '../../umum/entitas/Ukuran2D'
   import ItemMenuKonteks from '../../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../../umum/ui/JudulMenuKonteks.svelte'

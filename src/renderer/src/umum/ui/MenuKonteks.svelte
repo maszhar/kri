@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount, type Snippet } from 'svelte'
-  import { Koordinat } from '../entitas/Koordinat'
+  import { Koordinat } from '../../../../umum/entitas/Koordinat'
 
   interface Properti {
     posisi?: Koordinat
