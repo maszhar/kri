@@ -57,6 +57,11 @@
     return new Koordinat(elemenKanvas.getXAbsolut(), elemenKanvas.getYAbsolut())
   }
 
+  function terapkanPerubahanKlas(indeks: number): void {
+    diagramKlas.terapkanPerubahanKlas(indeks)
+    koleksiElemenKlas = diagramKlas.koleksiElemenKlas
+  }
+
   $effect(() => {
     koleksiElemenKlas = diagramKlas.koleksiElemenKlas
   })
@@ -83,6 +88,7 @@
       mintaDipilih={(): void => pilihElemenKlas(indeks)}
       dipilih={elemenKlasDipilih === indeks}
       {dapatkanKoordinatPojokKiriAtasKanvas}
+      terapkanPerubahanKlas={(): void => terapkanPerubahanKlas(indeks)}
     />
   {/each}
 </Kanvas>

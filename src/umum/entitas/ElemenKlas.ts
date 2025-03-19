@@ -11,6 +11,13 @@ export class ElemenKlas extends Elemen {
     })
     this.klas = parameter.klas
   }
+
+  buatKlona(): ElemenKlas {
+    return new ElemenKlas({
+      klas: this.klas,
+      posisi: this.posisi
+    })
+  }
 }
 
 interface ParameterBuatElemenKlas {

@@ -9,6 +9,7 @@
     mintaDipilih: () => void
     indeks: number
     dapatkanKoordinatPojokKiriAtasKanvas: () => Koordinat
+    terapkanPerubahanKlas: () => void
   }
   let {
     elemenKlas,
@@ -16,7 +17,8 @@
     dipilih,
     indeks,
     mintaDipilih,
-    dapatkanKoordinatPojokKiriAtasKanvas
+    dapatkanKoordinatPojokKiriAtasKanvas,
+    terapkanPerubahanKlas
   }: Properti = $props()
 
   let elemen: HTMLDivElement
@@ -28,6 +30,7 @@
     nama = elemenKlas.klas.nama
   })
 
+  // Perpindahan posisi elemen
   let titikPojokKiriAtasKanvas: Koordinat | null = null
   let bedaTitikKursorDanElemenSaatAwalMemindah: Koordinat | null = null
 
@@ -57,6 +60,50 @@
     window.removeEventListener('mousemove', tanganiMousePindahSaatMemindahElemen)
     bedaTitikKursorDanElemenSaatAwalMemindah = null
   }
+
+  // Edit nama
+  let mengedit = $state(false)
+  let namaKlasSementara = $state('')
+  let elemenInputNamaKlas: HTMLInputElement | null = $state(null)
+
+  function mulaiMengedit(): void {
+    window.addEventListener('click', tanganiKlikSaatMengedit)
+    namaKlasSementara = nama
+    mengedit = true
+  }
+
+  function tanganiKlikSaatMengedit(e: MouseEvent): void {
+    e.stopPropagation()
+    if (elemenInputNamaKlas.contains(e.target as Node)) {
+      return
+    }
+    akhiriMengedit()
+  }
+
+  function akhiriMengedit(terapkan = true): void {
+    window.removeEventListener('click', tanganiKlikSaatMengedit)
+    if (terapkan) {
+      elemenKlas.klas.nama = namaKlasSementara
+      terapkanPerubahanKlas()
+    }
+    namaKlasSementara = ''
+    mengedit = false
+  }
+
+  function tanganiKeyboardTurunDiInputNamaKlas(e: KeyboardEvent): void {
+    if (e.key === 'Enter' || e.key === 'Tab') {
+      akhiriMengedit()
+    } else if (e.key === 'Escape') {
+      akhiriMengedit(false)
+    }
+  }
+
+  $effect(() => {
+    if (mengedit === true && elemenInputNamaKlas !== null) {
+      elemenInputNamaKlas.focus()
+      elemenInputNamaKlas.select()
+    }
+  })
 </script>
 
 <div
@@ -67,6 +114,21 @@
   tabindex={20000 + indeks}
   onkeydown={(): void => {}}
   style={`left: ${posisi.x}px; top: ${posisi.y}px;`}
+  ondblclick={mulaiMengedit}
 >
-  <div class="select-none font-bold py-1 px-4">{nama}</div>
+  <div class="relative select-none font-bold py-1 px-4">
+    {#if mengedit}
+      <input
+        bind:this={elemenInputNamaKlas}
+        class="absolute outline-none z-10 px-2 text-center left-1/2 -translate-x-1/2"
+        type="text"
+        style={`width: ${namaKlasSementara.length + 3}ch`}
+        bind:value={namaKlasSementara}
+        onkeydown={tanganiKeyboardTurunDiInputNamaKlas}
+      />
+    {/if}
+    <span class={mengedit ? 'opacity-0' : ''}>
+      {nama}
+    </span>
+  </div>
 </div>

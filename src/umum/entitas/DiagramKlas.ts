@@ -17,6 +17,10 @@ export class DiagramKlas extends Model {
     this.koleksiElemenKlas.push(elemenKlas)
     return elemenKlas
   }
+
+  terapkanPerubahanKlas(indeks: number): void {
+    this.koleksiElemenKlas[indeks] = this.koleksiElemenKlas[indeks].buatKlona()
+  }
 }
 
 interface ParameterBuatDiagramKlas {
