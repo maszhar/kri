@@ -1,12 +1,16 @@
-import { Proyek } from '../../umum/entitas/Proyek'
+import {
+  ParameterHasilkanKode,
+  PenghasilKodeTypescript
+} from './typescript/PenghasilKodeTypescript'
 
 export class PenghasilKode {
-  hasilkanKodeTypescript(parameter: ParameterHasilkanKodeTypescript): void {
-    console.log(parameter.folderHasilKode)
-  }
-}
+  private penghasilKodeTypescript: PenghasilKodeTypescript | null = null
 
-interface ParameterHasilkanKodeTypescript {
-  proyek: Proyek
-  folderHasilKode: string
+  hasilkanKodeTypescript(parameter: ParameterHasilkanKode): void {
+    if (this.penghasilKodeTypescript === null) {
+      this.penghasilKodeTypescript = new PenghasilKodeTypescript()
+    }
+
+    this.penghasilKodeTypescript.hasilkanKode(parameter)
+  }
 }
