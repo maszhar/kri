@@ -53,6 +53,10 @@
     }
   }
 
+  function dapatkanKoordinatPojokKiriAtasKanvas(): Koordinat {
+    return new Koordinat(elemenKanvas.getXAbsolut(), elemenKanvas.getYAbsolut())
+  }
+
   $effect(() => {
     koleksiElemenKlas = diagramKlas.koleksiElemenKlas
   })
@@ -73,11 +77,12 @@
 >
   {#each koleksiElemenKlas as elemenKlas, indeks}
     <TampilanElemenKlas
-      nama={elemenKlas.klas.nama}
+      {elemenKlas}
       {indeks}
       adaYangMengedit={false}
       mintaDipilih={(): void => pilihElemenKlas(indeks)}
       dipilih={elemenKlasDipilih === indeks}
+      {dapatkanKoordinatPojokKiriAtasKanvas}
     />
   {/each}
 </Kanvas>
