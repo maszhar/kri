@@ -1,5 +1,10 @@
 <script lang="ts">
   import TombolBesarPanelAtas from '../komponen/TombolBesarPanelAtas.svelte'
+
+  interface Properti {
+    hasilkanKode: () => void
+  }
+  const { hasilkanKode }: Properti = $props()
 </script>
 
-<TombolBesarPanelAtas>Hasilkan Kode</TombolBesarPanelAtas>
+<TombolBesarPanelAtas saatDiklik={hasilkanKode}>Hasilkan Kode</TombolBesarPanelAtas>

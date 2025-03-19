@@ -75,6 +75,10 @@
     modelAktif = diagramKlas
   }
 
+  function hasilkanKode(): void {
+    window.mesin.hasilkanKode(proyek.bungkusData())
+  }
+
   onMount(() => {
     koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
     koleksiDiagramKlas = proyek.koleksiDiagramKlas
@@ -82,7 +86,7 @@
 </script>
 
 <Dasar>
-  <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} />
+  <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} {hasilkanKode} />
   <div class="flex-grow flex items-stretch">
     <PanelKiri
       {koleksiSequenceDiagram}

@@ -5,6 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import { Proyek } from '../umum/entitas/Proyek'
 import { ProyekPb } from '../umum/proto/kri'
 import { writeFile, readFile } from 'fs/promises'
+import { PenghasilKode } from './penghasil-kode/PenghasilKode'
 
 function createWindow(): void {
   // Create the browser window.
@@ -81,6 +82,22 @@ function createWindow(): void {
     }
 
     await writeFile(lokasiBerkas, binaryProyekKri)
+  })
+
+  const penghasilKode = new PenghasilKode()
+
+  ipcMain.on('hasilkanKode', async (_, dataProyek): Promise<void> => {
+    const hasilPilihFolderHasilKode = await dialog.showOpenDialog({
+      properties: ['openDirectory']
+    })
+    if (hasilPilihFolderHasilKode.canceled) {
+      return
+    }
+    const proyek = Proyek.bongkarBungkusanData(dataProyek)
+    penghasilKode.hasilkanKodeTypescript({
+      proyek: proyek,
+      folderHasilKode: hasilPilihFolderHasilKode.filePaths[0]
+    })
   })
 
   mainWindow.on('ready-to-show', () => {

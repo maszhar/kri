@@ -7,7 +7,8 @@ const mesin = {
   tampilkanDialogSimpanProyek: (): Promise<string | null> =>
     ipcRenderer.invoke('tampilkanDialogSimpanProyek'),
   simpanProyek: (lokasiBerkas: string, data: unknown): Promise<void> =>
-    ipcRenderer.invoke('simpanProyek', lokasiBerkas, data)
+    ipcRenderer.invoke('simpanProyek', lokasiBerkas, data),
+  hasilkanKode: (dataProyek: any): void => ipcRenderer.send('hasilkanKode', dataProyek)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

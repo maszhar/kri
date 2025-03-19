@@ -8,8 +8,9 @@
   interface Properti {
     saatBukaProyekDiklik: () => void
     saatSimpanDiklik: () => void
+    hasilkanKode: () => void
   }
-  const { saatBukaProyekDiklik, saatSimpanDiklik }: Properti = $props()
+  const { saatBukaProyekDiklik, saatSimpanDiklik, hasilkanKode }: Properti = $props()
 
   const TAB_UMUM = 0
   const TAB_PENGHASIL_KODE = 1
@@ -35,6 +36,6 @@
   {#if tabAktif === TAB_UMUM}
     <TabUmum {saatSimpanDiklik} {saatBukaProyekDiklik} />
   {:else if tabAktif === TAB_PENGHASIL_KODE}
-    <TabPenghasilKode />
+    <TabPenghasilKode {hasilkanKode} />
   {/if}
 </TempatTombolPanelAtas>

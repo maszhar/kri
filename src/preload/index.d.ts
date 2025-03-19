@@ -6,6 +6,7 @@ declare global {
       bukaProyek: () => Promise<{ lokasi: string; data: unknown } | null>
       tampilkanDialogSimpanProyek: () => Promise<string>
       simpanProyek: (lokasiBerkas: string, data: unknown) => void
+      hasilkanKode: (dataProyek: any) => void
     }
   }
 }
