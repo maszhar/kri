@@ -6,7 +6,7 @@
     children?: Snippet
     ukuran?: Ukuran2D
     saatBukaMenuKonteks?: (e: MouseEvent) => void
-    saatDiklik?: () => void
+    saatDiklik?: (e: MouseEvent) => void
     class?: string
   }
   const {
@@ -18,6 +18,10 @@
   }: Properti = $props()
 
   let elemen: HTMLDivElement
+
+  export function dapatkanElemen(): HTMLDivElement {
+    return elemen
+  }
 
   export function getXAbsolut(): number {
     return elemen.getBoundingClientRect().x
@@ -34,7 +38,7 @@
   ondblclick={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
   oncontextmenu={(e: unknown): void => saatBukaMenuKonteks?.(e as MouseEvent)}
   role="button"
-  tabindex={0}
+  tabindex={20000}
   onclick={saatDiklik}
   onkeypress={(): void => {}}
   bind:this={elemen}
