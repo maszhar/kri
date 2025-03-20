@@ -29,7 +29,7 @@
 
 <div
   bind:this={elemen}
-  class="fixed z-30 border-2 border-zinc-600 bg-white rounded-md overflow-hidden shadow-lg"
+  class="fixed z-30 border-2 flex flex-col border-zinc-600 bg-white rounded-md overflow-hidden shadow-lg"
   style={`left: ${posisi.x}px; top: ${posisi.y}px;`}
 >
   {@render children?.()}
