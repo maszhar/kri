@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
+  import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
+  import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
+  import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
 
   interface Properti {
     elemenKlas: ElemenKlas
@@ -98,6 +101,19 @@
     }
   }
 
+  // menu
+  let posisiMenuModifikasiKlas: Koordinat | null = $state(null)
+
+  function bukaMenuModifikasiKlas(e: MouseEvent): void {
+    posisiMenuModifikasiKlas = new Koordinat(e.clientX, e.clientY)
+    window.addEventListener('click', tutupMenuModifikasiKlas)
+  }
+
+  function tutupMenuModifikasiKlas(): void {
+    window.removeEventListener('click', tutupMenuModifikasiKlas)
+    posisiMenuModifikasiKlas = null
+  }
+
   $effect(() => {
     if (mengedit === true && elemenInputNamaKlas !== null) {
       elemenInputNamaKlas.focus()
@@ -105,6 +121,14 @@
     }
   })
 </script>
+
+{#if posisiMenuModifikasiKlas !== null}
+  <MenuKonteks posisi={posisiMenuModifikasiKlas}>
+    <JudulMenuKonteks>Tambah Fitur</JudulMenuKonteks>
+    <ItemMenuKonteks>Tambah Atribut</ItemMenuKonteks>
+    <ItemMenuKonteks>Tambah Operasi</ItemMenuKonteks>
+  </MenuKonteks>
+{/if}
 
 <div
   bind:this={elemen}
@@ -115,6 +139,7 @@
   onkeydown={(): void => {}}
   style={`left: ${posisi.x}px; top: ${posisi.y}px;`}
   ondblclick={mulaiMengedit}
+  oncontextmenu={bukaMenuModifikasiKlas}
 >
   <div class="relative select-none font-bold py-1 px-4">
     {#if mengedit}
