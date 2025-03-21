@@ -4,6 +4,7 @@
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
+  import TampilanKompartemen from './TampilanKompartemen.svelte'
 
   interface Properti {
     elemenKlas: ElemenKlas
@@ -135,13 +136,17 @@
   class={`absolute bg-white border ${adaYangMengedit ? 'cursor-default' : 'cursor-move'} ${dipilih ? 'border-blue-600 ring-2 ring-blue-600' : 'border-black'}`}
   onmousedown={tanganiMouseTurun}
   role="button"
-  tabindex={20000 + indeks}
+  tabindex={30000 + indeks}
   onkeydown={(): void => {}}
   style={`left: ${posisi.x}px; top: ${posisi.y}px;`}
-  ondblclick={mulaiMengedit}
   oncontextmenu={bukaMenuModifikasiKlas}
 >
-  <div class="relative select-none font-bold py-1 px-4">
+  <div
+    class="relative select-none font-bold py-1 px-4"
+    ondblclick={mulaiMengedit}
+    role="button"
+    tabindex={40000 + indeks}
+  >
     {#if mengedit}
       <input
         bind:this={elemenInputNamaKlas}
@@ -156,4 +161,5 @@
       {nama}
     </span>
   </div>
+  <TampilanKompartemen />
 </div>

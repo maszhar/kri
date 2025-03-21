@@ -11,3 +11,4 @@
 
 :DIAGRAM KLAS
 30000 - 39999 = Klas
+40000 - 49999 = Nama Klas
