@@ -65,6 +65,15 @@
   $effect(() => {
     koleksiElemenKlas = diagramKlas.koleksiElemenKlas
   })
+
+  // kunci saat ada yang mengedit
+  let adaYangMengedit = $state(false)
+  function mulaiMengedit(): void {
+    adaYangMengedit = true
+  }
+  function akhiriMengedit(): void {
+    adaYangMengedit = false
+  }
 </script>
 
 {#if posisiMenuDiagramKlas !== null}
@@ -84,11 +93,13 @@
     <TampilanElemenKlas
       {elemenKlas}
       {indeks}
-      adaYangMengedit={false}
+      {adaYangMengedit}
       mintaDipilih={(): void => pilihElemenKlas(indeks)}
       dipilih={elemenKlasDipilih === indeks}
       {dapatkanKoordinatPojokKiriAtasKanvas}
       terapkanPerubahanKlas={(): void => terapkanPerubahanKlas(indeks)}
+      {mulaiMengedit}
+      {akhiriMengedit}
     />
   {/each}
 </Kanvas>

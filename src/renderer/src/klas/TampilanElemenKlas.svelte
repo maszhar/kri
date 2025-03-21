@@ -15,6 +15,8 @@
     indeks: number
     dapatkanKoordinatPojokKiriAtasKanvas: () => Koordinat
     terapkanPerubahanKlas: () => void
+    mulaiMengedit: () => void
+    akhiriMengedit: () => void
   }
   let {
     elemenKlas,
@@ -23,7 +25,9 @@
     indeks,
     mintaDipilih,
     dapatkanKoordinatPojokKiriAtasKanvas,
-    terapkanPerubahanKlas
+    terapkanPerubahanKlas,
+    mulaiMengedit,
+    akhiriMengedit
   }: Properti = $props()
 
   let elemen: HTMLDivElement
@@ -73,10 +77,11 @@
   let namaKlasSementara = $state('')
   let elemenInputNamaKlas: HTMLInputElement | null = $state(null)
 
-  function mulaiMengedit(): void {
+  function mulaiMengeditNamaKlas(): void {
     window.addEventListener('click', tanganiKlikSaatMengedit)
     namaKlasSementara = nama
     mengedit = true
+    mulaiMengedit()
   }
 
   function tanganiKlikSaatMengedit(e: MouseEvent): void {
@@ -84,10 +89,10 @@
     if (elemenInputNamaKlas.contains(e.target as Node)) {
       return
     }
-    akhiriMengedit()
+    akhiriMengeditNamaKlas()
   }
 
-  function akhiriMengedit(terapkan = true): void {
+  function akhiriMengeditNamaKlas(terapkan = true): void {
     window.removeEventListener('click', tanganiKlikSaatMengedit)
     if (terapkan) {
       elemenKlas.klas.nama = namaKlasSementara
@@ -95,13 +100,14 @@
     }
     namaKlasSementara = ''
     mengedit = false
+    akhiriMengedit()
   }
 
   function tanganiKeyboardTurunDiInputNamaKlas(e: KeyboardEvent): void {
     if (e.key === 'Enter' || e.key === 'Tab') {
-      akhiriMengedit()
+      akhiriMengeditNamaKlas()
     } else if (e.key === 'Escape') {
-      akhiriMengedit(false)
+      akhiriMengeditNamaKlas(false)
     }
   }
 
@@ -157,7 +163,7 @@
 >
   <div
     class="relative select-none font-bold py-1 px-4"
-    ondblclick={mulaiMengedit}
+    ondblclick={mulaiMengeditNamaKlas}
     role="button"
     tabindex={40000 + indeks}
   >
