@@ -1,12 +1,21 @@
 import { KlasPb } from '../proto/kri'
+import { Atribut, ParameterBuatAtribut } from './Atribut'
 import { Komponen } from './Komponen'
 
 export class Klas extends Komponen {
+  public koleksiAtribut: Atribut[] = []
+
   constructor(parameter: ParameterBuatKlas = {}) {
     super({
       id: parameter.id,
       nama: parameter.nama || 'KlasBaru'
     })
+  }
+
+  tambahAtributBaru(parameter: ParameterBuatAtribut): Atribut {
+    const atribut = new Atribut(parameter)
+    this.koleksiAtribut.push(atribut)
+    return atribut
   }
 
   bungkusData(): unknown {

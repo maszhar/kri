@@ -4,6 +4,7 @@
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
+  import TampilanAtribut from './TampilanAtribut.svelte'
   import TampilanKompartemen from './TampilanKompartemen.svelte'
 
   interface Properti {
@@ -29,9 +30,11 @@
 
   let nama = $state(elemenKlas.klas.nama)
   let posisi = $state(elemenKlas.posisi)
+  let koleksiAtribut = $state(elemenKlas.klas.koleksiAtribut)
 
   $effect(() => {
     nama = elemenKlas.klas.nama
+    koleksiAtribut = elemenKlas.klas.koleksiAtribut
   })
 
   // Perpindahan posisi elemen
@@ -115,6 +118,17 @@
     posisiMenuModifikasiKlas = null
   }
 
+  // buat atribut
+  let sedangMembuatAtributBaru = $state(false)
+  function mulaiMembuatAtributBaru(): void {
+    sedangMembuatAtributBaru = true
+  }
+  function batalkanEditAtribut(): void {
+    if (sedangMembuatAtributBaru) {
+      sedangMembuatAtributBaru = false
+    }
+  }
+
   $effect(() => {
     if (mengedit === true && elemenInputNamaKlas !== null) {
       elemenInputNamaKlas.focus()
@@ -126,7 +140,7 @@
 {#if posisiMenuModifikasiKlas !== null}
   <MenuKonteks posisi={posisiMenuModifikasiKlas}>
     <JudulMenuKonteks>Tambah Fitur</JudulMenuKonteks>
-    <ItemMenuKonteks>Tambah Atribut</ItemMenuKonteks>
+    <ItemMenuKonteks saatDiklik={mulaiMembuatAtributBaru}>Tambah Atribut</ItemMenuKonteks>
     <ItemMenuKonteks>Tambah Operasi</ItemMenuKonteks>
   </MenuKonteks>
 {/if}
@@ -161,5 +175,16 @@
       {nama}
     </span>
   </div>
-  <TampilanKompartemen />
+  <!-- Kompartemen Atribut -->
+  {#if koleksiAtribut.length > 0 || sedangMembuatAtributBaru}
+    <TampilanKompartemen>
+      {#each koleksiAtribut as atribut}
+        <TampilanAtribut {atribut} batalkanMengedit={batalkanEditAtribut} />
+      {/each}
+
+      {#if sedangMembuatAtributBaru}
+        <TampilanAtribut batalkanMengedit={batalkanEditAtribut} />
+      {/if}
+    </TampilanKompartemen>
+  {/if}
 </div>
