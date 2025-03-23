@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Atribut } from '../../../umum/entitas/Atribut'
+  import { type Atribut, type ParameterBuatAtribut } from '../../../umum/entitas/Atribut'
 
   interface Properti {
     atribut?: Atribut
-    mulaiMengedit: () => void
-    selesaiMengedit: (atributBaru?: Atribut) => void
+    mulaiMengedit?: () => void
+    selesaiMengedit: (atributBaru?: ParameterBuatAtribut) => void
     batalkanMengedit: () => void
   }
   let { atribut, mulaiMengedit, batalkanMengedit, selesaiMengedit }: Properti = $props()
@@ -18,7 +18,7 @@
 
     let atributBaru: Atribut | undefined = undefined
     if (!atribut) {
-      atributBaru = new Atribut({ nama: namaAtributSementara })
+      atributBaru = { nama: namaAtributSementara }
     }
 
     selesaiMengedit(atributBaru)
@@ -29,6 +29,13 @@
       tanganiSelesaiMengedit()
     } else if (e.key == 'Escape') {
       batalkanMengedit()
+    }
+  }
+
+  function tanganiMouseKlikSaatMengedit(e: MouseEvent): void {
+    if (sedangMengedit && e.target != elemenInputAtribut) {
+      window.removeEventListener('click', tanganiMouseKlikSaatMengedit)
+      sedangMengedit = false
     }
   }
 

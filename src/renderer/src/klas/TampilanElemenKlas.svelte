@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Atribut, ParameterBuatAtribut } from '../../../umum/entitas/Atribut'
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
@@ -134,6 +135,13 @@
       sedangMembuatAtributBaru = false
     }
   }
+  function selesaikanEditAtribut(parameterBuatAtribut?: ParameterBuatAtribut): void {
+    if (sedangMembuatAtributBaru && parameterBuatAtribut) {
+      sedangMembuatAtributBaru = false
+    }
+    elemenKlas.klas.tambahAtributBaru(parameterBuatAtribut)
+    koleksiAtribut = elemenKlas.klas.koleksiAtribut
+  }
 
   $effect(() => {
     if (mengedit === true && elemenInputNamaKlas !== null) {
@@ -185,11 +193,19 @@
   {#if koleksiAtribut.length > 0 || sedangMembuatAtributBaru}
     <TampilanKompartemen>
       {#each koleksiAtribut as atribut}
-        <TampilanAtribut {atribut} batalkanMengedit={batalkanEditAtribut} />
+        <TampilanAtribut
+          {atribut}
+          mulaiMengedit={mulaiMengeditNamaKlas}
+          batalkanMengedit={batalkanEditAtribut}
+          selesaiMengedit={selesaikanEditAtribut}
+        />
       {/each}
 
       {#if sedangMembuatAtributBaru}
-        <TampilanAtribut batalkanMengedit={batalkanEditAtribut} />
+        <TampilanAtribut
+          batalkanMengedit={batalkanEditAtribut}
+          selesaiMengedit={selesaikanEditAtribut}
+        />
       {/if}
     </TampilanKompartemen>
   {/if}
