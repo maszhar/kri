@@ -3,7 +3,7 @@
 
   interface Properti {
     children?: Snippet
-    saatDiklik?: () => void
+    saatDiklik?: (e: MouseEvent) => void
   }
   const { children, saatDiklik }: Properti = $props()
 </script>

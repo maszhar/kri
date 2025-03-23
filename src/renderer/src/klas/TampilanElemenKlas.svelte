@@ -112,6 +112,13 @@
     }
   }
 
+  $effect(() => {
+    if (mengedit === true && elemenInputNamaKlas !== null) {
+      elemenInputNamaKlas.focus()
+      elemenInputNamaKlas.select()
+    }
+  })
+
   // menu
   let posisiMenuModifikasiKlas: Koordinat | null = $state(null)
 
@@ -126,14 +133,18 @@
   }
 
   // buat atribut
+  let elemenAtributBaru: TampilanAtribut | null = $state(null)
   let sedangMembuatAtributBaru = $state(false)
-  function mulaiMembuatAtributBaru(): void {
+  function mulaiMembuatAtributBaru(e: MouseEvent): void {
+    e.stopPropagation()
+    tutupMenuModifikasiKlas()
     sedangMembuatAtributBaru = true
   }
   function batalkanEditAtribut(): void {
     if (sedangMembuatAtributBaru) {
       sedangMembuatAtributBaru = false
     }
+    akhiriMengedit()
   }
   function selesaikanEditAtribut(parameterBuatAtribut?: ParameterBuatAtribut): void {
     if (sedangMembuatAtributBaru && parameterBuatAtribut) {
@@ -141,12 +152,11 @@
     }
     elemenKlas.klas.tambahAtributBaru(parameterBuatAtribut)
     koleksiAtribut = elemenKlas.klas.koleksiAtribut
+    akhiriMengedit()
   }
-
   $effect(() => {
-    if (mengedit === true && elemenInputNamaKlas !== null) {
-      elemenInputNamaKlas.focus()
-      elemenInputNamaKlas.select()
+    if (sedangMembuatAtributBaru && elemenAtributBaru) {
+      elemenAtributBaru.mulaiMengeditAtribut()
     }
   })
 </script>
@@ -197,7 +207,7 @@
           indeksKlas={indeks}
           indeksAtribut={indeksAtribut + 1}
           {atribut}
-          mulaiMengedit={mulaiMengeditNamaKlas}
+          {mulaiMengedit}
           batalkanMengedit={batalkanEditAtribut}
           selesaiMengedit={selesaikanEditAtribut}
         />
@@ -205,6 +215,7 @@
 
       {#if sedangMembuatAtributBaru}
         <TampilanAtribut
+          bind:this={elemenAtributBaru}
           indeksKlas={indeks}
           indeksAtribut={0}
           batalkanMengedit={batalkanEditAtribut}

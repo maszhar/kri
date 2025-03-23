@@ -22,7 +22,7 @@
   let elemenInputAtribut: HTMLInputElement | null = $state(null)
   let namaAtributSementara = $state(atribut?.nama ?? '')
 
-  function mulaiMengeditAtribut(): void {
+  export function mulaiMengeditAtribut(): void {
     sedangMengedit = true
     window.addEventListener('click', tanganiMouseKlikSaatMengedit)
     mulaiMengedit?.()
@@ -33,10 +33,13 @@
 
     let atributBaru: Atribut | undefined = undefined
     if (!atribut) {
-      atributBaru = { nama: namaAtributSementara }
+      if (namaAtributSementara.trim().length > 0) {
+        atributBaru = { nama: namaAtributSementara }
+        selesaiMengedit(atributBaru)
+      } else {
+        batalkanMengedit()
+      }
     }
-
-    selesaiMengedit(atributBaru)
   }
 
   function tanganiKeyboardTurunDiInput(e: KeyboardEvent): void {
@@ -50,7 +53,9 @@
   function tanganiMouseKlikSaatMengedit(e: MouseEvent): void {
     if (sedangMengedit && e.target != elemenInputAtribut) {
       window.removeEventListener('click', tanganiMouseKlikSaatMengedit)
-      sedangMengedit = false
+
+      // baru
+      tanganiSelesaiMengedit()
     }
   }
 
@@ -80,6 +85,7 @@
       name="namaAtribut"
       class="absolute outline-none z-10 px-2 top-0 left-0"
       autocomplete="off"
+      style={`width: ${namaAtributSementara.length + 2}ch`}
       bind:value={namaAtributSementara}
       onkeydown={tanganiKeyboardTurunDiInput}
       bind:this={elemenInputAtribut}
