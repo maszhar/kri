@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Atribut, ParameterBuatAtribut } from '../../../umum/entitas/Atribut'
+  import type { ParameterBuatAtribut } from '../../../umum/entitas/Atribut'
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
@@ -30,8 +30,6 @@
     mulaiMengedit,
     akhiriMengedit
   }: Properti = $props()
-
-  let elemen: HTMLDivElement
 
   let nama = $state(elemenKlas.klas.nama)
   let posisi = $state(elemenKlas.posisi)
@@ -135,30 +133,40 @@
   // buat atribut
   let elemenAtributBaru: TampilanAtribut | null = $state(null)
   let sedangMembuatAtributBaru = $state(false)
+
   function mulaiMembuatAtributBaru(e: MouseEvent): void {
     e.stopPropagation()
     tutupMenuModifikasiKlas()
     sedangMembuatAtributBaru = true
   }
+
+  $effect(() => {
+    if (sedangMembuatAtributBaru && elemenAtributBaru) {
+      elemenAtributBaru.mulaiMengeditAtribut()
+    }
+  })
+
+  // edit atribut
   function batalkanEditAtribut(): void {
     if (sedangMembuatAtributBaru) {
       sedangMembuatAtributBaru = false
     }
     akhiriMengedit()
   }
-  function selesaikanEditAtribut(parameterBuatAtribut?: ParameterBuatAtribut): void {
+
+  function selesaikanEditAtribut(
+    indeks: number,
+    parameterBuatAtribut?: ParameterBuatAtribut
+  ): void {
     if (sedangMembuatAtributBaru && parameterBuatAtribut) {
       sedangMembuatAtributBaru = false
+      elemenKlas.klas.tambahAtributBaru(parameterBuatAtribut)
+    } else if (!sedangMembuatAtributBaru) {
+      elemenKlas.klas.terapkanPerubahanAtribut(indeks)
     }
-    elemenKlas.klas.tambahAtributBaru(parameterBuatAtribut)
     koleksiAtribut = elemenKlas.klas.koleksiAtribut
     akhiriMengedit()
   }
-  $effect(() => {
-    if (sedangMembuatAtributBaru && elemenAtributBaru) {
-      elemenAtributBaru.mulaiMengeditAtribut()
-    }
-  })
 </script>
 
 {#if posisiMenuModifikasiKlas !== null}
@@ -170,7 +178,6 @@
 {/if}
 
 <div
-  bind:this={elemen}
   class={`absolute bg-white border ${adaYangMengedit ? 'cursor-default' : 'cursor-move'} ${dipilih ? 'border-blue-600 ring-2 ring-blue-600' : 'border-black'}`}
   onmousedown={tanganiMouseTurun}
   role="button"
@@ -209,7 +216,8 @@
           {atribut}
           {mulaiMengedit}
           batalkanMengedit={batalkanEditAtribut}
-          selesaiMengedit={selesaikanEditAtribut}
+          selesaiMengedit={(parameter?: ParameterBuatAtribut): void =>
+            selesaikanEditAtribut(indeksAtribut, parameter)}
         />
       {/each}
 
@@ -219,7 +227,8 @@
           indeksKlas={indeks}
           indeksAtribut={0}
           batalkanMengedit={batalkanEditAtribut}
-          selesaiMengedit={selesaikanEditAtribut}
+          selesaiMengedit={(parameter?: ParameterBuatAtribut): void =>
+            selesaikanEditAtribut(0, parameter)}
         />
       {/if}
     </TampilanKompartemen>

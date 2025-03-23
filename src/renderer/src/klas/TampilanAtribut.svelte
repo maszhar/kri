@@ -39,6 +39,13 @@
       } else {
         batalkanMengedit()
       }
+    } else {
+      if (namaAtributSementara.trim().length === 0) {
+        batalkanMengedit()
+        return
+      }
+      atribut.nama = namaAtributSementara
+      selesaiMengedit()
     }
   }
 

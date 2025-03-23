@@ -18,6 +18,10 @@ export class Klas extends Komponen {
     return atribut
   }
 
+  terapkanPerubahanAtribut(indeks: number): void {
+    this.koleksiAtribut[indeks] = this.koleksiAtribut[indeks].buatKlona()
+  }
+
   bungkusData(): unknown {
     return {
       id: this.id,
