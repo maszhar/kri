@@ -31,7 +31,7 @@
   function tanganiSelesaiMengedit(): void {
     sedangMengedit = false
 
-    let atributBaru: Atribut | undefined = undefined
+    let atributBaru: ParameterBuatAtribut | undefined = undefined
     if (!atribut) {
       if (namaAtributSementara.trim().length > 0) {
         atributBaru = { nama: namaAtributSementara }
