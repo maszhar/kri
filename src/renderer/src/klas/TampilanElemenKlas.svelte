@@ -173,7 +173,7 @@
     class="relative select-none font-bold py-1 px-4"
     ondblclick={mulaiMengeditNamaKlas}
     role="button"
-    tabindex={40000 + indeks}
+    tabindex={(40000 + indeks) * 100000}
   >
     {#if mengedit}
       <input
@@ -192,8 +192,10 @@
   <!-- Kompartemen Atribut -->
   {#if koleksiAtribut.length > 0 || sedangMembuatAtributBaru}
     <TampilanKompartemen>
-      {#each koleksiAtribut as atribut}
+      {#each koleksiAtribut as atribut, indeksAtribut}
         <TampilanAtribut
+          indeksKlas={indeks}
+          indeksAtribut={indeksAtribut + 1}
           {atribut}
           mulaiMengedit={mulaiMengeditNamaKlas}
           batalkanMengedit={batalkanEditAtribut}
@@ -203,6 +205,8 @@
 
       {#if sedangMembuatAtributBaru}
         <TampilanAtribut
+          indeksKlas={indeks}
+          indeksAtribut={0}
           batalkanMengedit={batalkanEditAtribut}
           selesaiMengedit={selesaikanEditAtribut}
         />

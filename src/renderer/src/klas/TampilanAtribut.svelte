@@ -2,16 +2,31 @@
   import { type Atribut, type ParameterBuatAtribut } from '../../../umum/entitas/Atribut'
 
   interface Properti {
+    indeksKlas: number
+    indeksAtribut: number
     atribut?: Atribut
     mulaiMengedit?: () => void
     selesaiMengedit: (atributBaru?: ParameterBuatAtribut) => void
     batalkanMengedit: () => void
   }
-  let { atribut, mulaiMengedit, batalkanMengedit, selesaiMengedit }: Properti = $props()
+  let {
+    indeksKlas,
+    indeksAtribut,
+    atribut,
+    mulaiMengedit,
+    batalkanMengedit,
+    selesaiMengedit
+  }: Properti = $props()
 
   let sedangMengedit = $state(false)
   let elemenInputAtribut: HTMLInputElement | null = $state(null)
   let namaAtributSementara = $state(atribut?.nama ?? '')
+
+  function mulaiMengeditAtribut(): void {
+    sedangMengedit = true
+    window.addEventListener('click', tanganiMouseKlikSaatMengedit)
+    mulaiMengedit?.()
+  }
 
   function tanganiSelesaiMengedit(): void {
     sedangMengedit = false
@@ -40,12 +55,6 @@
   }
 
   $effect(() => {
-    if (!atribut) {
-      sedangMengedit = true
-    }
-  })
-
-  $effect(() => {
     if (sedangMengedit && elemenInputAtribut) {
       elemenInputAtribut.focus()
       elemenInputAtribut.select()
@@ -53,9 +62,16 @@
   })
 </script>
 
-<div class="relative">
+<div
+  class="relative"
+  role="button"
+  tabindex={(40000 + indeksKlas) * 100000 + 10000 + indeksAtribut}
+  ondblclick={mulaiMengeditAtribut}
+>
   {#if atribut}
-    {atribut?.nama}
+    <span class={`px-2 ${sedangMengedit ? 'opacity-0' : ''}`}>
+      {atribut?.nama}
+    </span>
   {:else}
     <br />
   {/if}

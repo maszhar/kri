@@ -10,5 +10,7 @@
 3000 - 3999 = Lifeline
 
 :DIAGRAM KLAS
-30000 - 39999 = Klas
-40000 - 49999 = Nama Klas
+30000      - 39999       = Klas
+4000000000 - 4999900000  = Nama Klas
+4000010000               = Atribut Baru
+4000010001 - 4999910000  = Atribut
