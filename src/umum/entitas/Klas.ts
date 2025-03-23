@@ -3,13 +3,14 @@ import { Atribut, ParameterBuatAtribut } from './Atribut'
 import { Komponen } from './Komponen'
 
 export class Klas extends Komponen {
-  public koleksiAtribut: Atribut[] = []
+  public koleksiAtribut: Atribut[]
 
   constructor(parameter: ParameterBuatKlas = {}) {
     super({
       id: parameter.id,
       nama: parameter.nama || 'KlasBaru'
     })
+    this.koleksiAtribut = parameter.koleksiAtribut ?? []
   }
 
   tambahAtributBaru(parameter: ParameterBuatAtribut): Atribut {
@@ -25,14 +26,18 @@ export class Klas extends Komponen {
   bungkusData(): unknown {
     return {
       id: this.id,
-      nama: this.nama
+      nama: this.nama,
+      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.bungkusData())
     }
   }
 
   static bongkarBungkusanData(data: any): Klas {
     return new Klas({
       id: data.id,
-      nama: data.nama
+      nama: data.nama,
+      koleksiAtribut: data.koleksiAtribut.map((dataAtribut: any) =>
+        Atribut.bongkarBungkusanData(dataAtribut)
+      )
     })
   }
 
@@ -54,4 +59,5 @@ export class Klas extends Komponen {
 interface ParameterBuatKlas {
   id?: number
   nama?: string
+  koleksiAtribut?: Atribut[]
 }

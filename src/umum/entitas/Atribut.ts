@@ -5,6 +5,16 @@ export class Atribut {
     this.nama = parameter.nama
   }
 
+  bungkusData(): any {
+    return {
+      nama: this.nama
+    }
+  }
+
+  static bongkarBungkusanData(data: any): Atribut {
+    return new Atribut({ nama: data.nama })
+  }
+
   buatKlona(): Atribut {
     return new Atribut({
       nama: this.nama
