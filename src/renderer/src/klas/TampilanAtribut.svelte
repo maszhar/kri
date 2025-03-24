@@ -20,9 +20,10 @@
 
   let sedangMengedit = $state(false)
   let elemenInputAtribut: HTMLInputElement | null = $state(null)
-  let namaAtributSementara = $state(atribut?.nama ?? '')
+  let namaAtributSementara = $state('')
 
   export function mulaiMengeditAtribut(): void {
+    namaAtributSementara = atribut?.nama ?? ''
     sedangMengedit = true
     window.addEventListener('click', tanganiMouseKlikSaatMengedit)
     mulaiMengedit?.()
