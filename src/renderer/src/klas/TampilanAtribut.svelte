@@ -53,8 +53,10 @@
   function tanganiKeyboardTurunDiInput(e: KeyboardEvent): void {
     if (e.key == 'Enter' || e.key == 'Tab') {
       tanganiSelesaiMengedit()
+      sedangMengedit = false
     } else if (e.key == 'Escape') {
       batalkanMengedit()
+      sedangMengedit = false
     }
   }
 
