@@ -191,7 +191,7 @@
   oncontextmenu={bukaMenuModifikasiKlas}
 >
   <div
-    class="relative select-none font-bold py-1 px-4"
+    class="relative select-none font-bold py-1 px-4 text-center"
     ondblclick={mulaiMengeditNamaKlas}
     role="button"
     tabindex={(40000 + indeks) * 100000}
