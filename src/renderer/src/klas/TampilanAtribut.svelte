@@ -81,7 +81,7 @@
   ondblclick={mulaiMengeditAtribut}
 >
   {#if atribut}
-    <span class={`px-2 ${sedangMengedit ? 'opacity-0' : ''}`}>
+    <span class={`px-2 select-none ${sedangMengedit ? 'opacity-0' : ''}`}>
       {atribut?.nama}
     </span>
   {:else}
