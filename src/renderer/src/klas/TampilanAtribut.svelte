@@ -20,10 +20,45 @@
 
   let sedangMengedit = $state(false)
   let elemenInputAtribut: HTMLInputElement | null = $state(null)
-  let namaAtributSementara = $state('')
+  let teksAtributTerformatSementara = $state('')
 
+  // pengformat
+  function hasilkanTeksAtributTerformat(atribut: Atribut): string {
+    let teksTerformat = ''
+    teksTerformat += atribut.nama
+    if (atribut.tipe) {
+      teksTerformat += ` : ${atribut.tipe}`
+    }
+    return teksTerformat
+  }
+
+  function hasilkanParameterBuatAtributDariTeksTerformat(
+    teksTerformat: string
+  ): ParameterBuatAtribut {
+    let indeksPemisahNamaDanTipe = teksTerformat.lastIndexOf(':')
+
+    let nama = ''
+    let tipe = undefined
+    if (indeksPemisahNamaDanTipe === -1) {
+      nama = teksTerformat
+    } else {
+      nama = teksTerformat.slice(0, indeksPemisahNamaDanTipe).trim()
+      tipe = teksTerformat.slice(indeksPemisahNamaDanTipe + 1, teksTerformat.length).trim()
+    }
+
+    return {
+      nama,
+      tipe
+    }
+  }
+
+  // edit atribut
   export function mulaiMengeditAtribut(): void {
-    namaAtributSementara = atribut?.nama ?? ''
+    if (atribut) {
+      teksAtributTerformatSementara = hasilkanTeksAtributTerformat(atribut)
+    } else {
+      teksAtributTerformatSementara = ''
+    }
     sedangMengedit = true
     window.addEventListener('click', tanganiMouseKlikSaatMengedit)
     mulaiMengedit?.()
@@ -32,20 +67,26 @@
   function tanganiSelesaiMengedit(): void {
     sedangMengedit = false
 
-    let atributBaru: ParameterBuatAtribut | undefined = undefined
     if (!atribut) {
-      if (namaAtributSementara.trim().length > 0) {
-        atributBaru = { nama: namaAtributSementara }
-        selesaiMengedit(atributBaru)
+      if (teksAtributTerformatSementara.trim().length > 0) {
+        const parameterAtributBaru = hasilkanParameterBuatAtributDariTeksTerformat(
+          teksAtributTerformatSementara
+        )
+        selesaiMengedit(parameterAtributBaru)
       } else {
         batalkanMengedit()
       }
     } else {
-      if (namaAtributSementara.trim().length === 0) {
+      if (teksAtributTerformatSementara.trim().length === 0) {
         batalkanMengedit()
         return
       }
-      atribut.nama = namaAtributSementara
+
+      const parameterAtributBaru = hasilkanParameterBuatAtributDariTeksTerformat(
+        teksAtributTerformatSementara
+      )
+      atribut.nama = parameterAtributBaru.nama
+      atribut.tipe = parameterAtributBaru.tipe
       selesaiMengedit()
     }
   }
@@ -85,7 +126,7 @@
 >
   {#if atribut}
     <span class={`px-2 select-none ${sedangMengedit ? 'opacity-0' : ''}`}>
-      {atribut?.nama}
+      {hasilkanTeksAtributTerformat(atribut)}
     </span>
   {:else}
     <br />
@@ -95,8 +136,8 @@
       name="namaAtribut"
       class="absolute outline-none z-10 px-2 top-0 left-0"
       autocomplete="off"
-      style={`width: ${namaAtributSementara.length + 2}ch`}
-      bind:value={namaAtributSementara}
+      style={`width: ${teksAtributTerformatSementara.length + 2}ch`}
+      bind:value={teksAtributTerformatSementara}
       onkeydown={tanganiKeyboardTurunDiInput}
       bind:this={elemenInputAtribut}
     />
