@@ -12,7 +12,9 @@ export class PenghasilKodeAtributKlasTypescript {
     // indentasi
     hasilKode += '  '
     // atribut
-    hasilKode += `private ${this.atribut.nama}: any`
+    hasilKode += `private ${this.atribut.nama}: `
+    // tipe atribut
+    hasilKode += `${this.atribut.tipe ?? 'any'}`
     // baris baru
     hasilKode += '\n'
     return hasilKode
