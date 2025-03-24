@@ -19,12 +19,21 @@ export class Proyek {
     this.koleksiSequenceDiagram = parameter.koleksiSequenceDiagram ?? []
   }
 
+  // klas
   tambahKlasBaru(): Klas {
     const klas = new Klas()
     this.koleksiKlas.push(klas)
     return klas
   }
 
+  hapusKlas(klas: Klas): void {
+    const indeksKlasTerkait = this.koleksiKlas.findIndex((itemKlas: Klas) => itemKlas === klas)
+    if (indeksKlasTerkait > -1) {
+      this.koleksiKlas.splice(indeksKlasTerkait, 1)
+    }
+  }
+
+  // diagram urutan
   tambahDiagramKlasBaru(): DiagramKlas {
     const diagramKlas = new DiagramKlas()
     this.koleksiDiagramKlas.push(diagramKlas)

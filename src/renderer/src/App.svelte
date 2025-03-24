@@ -39,10 +39,16 @@
     await window.mesin.simpanProyek(lokasiPenyimpananProyek, proyek.bungkusData())
   }
 
+  // Klas
   function tambahKlasBaru(): Klas {
     return proyek.tambahKlasBaru()
   }
 
+  function hapusKlas(klas: Klas): void {
+    proyek.hapusKlas(klas)
+  }
+
+  // Diagram urutan
   function bukaSequenceDiagram(indeks: number): void {
     modelAktif = koleksiSequenceDiagram[indeks]
   }
@@ -105,7 +111,7 @@
           saatSequenceDiagramDiperbarui={perbaruiSequenceDiagram}
         />
       {:else if modelAktif instanceof DiagramKlas}
-        <TampilanDiagramKlas diagramKlas={modelAktif} {tambahKlasBaru} />
+        <TampilanDiagramKlas diagramKlas={modelAktif} {tambahKlasBaru} {hapusKlas} />
       {/if}
     </Jendela>
   </div>

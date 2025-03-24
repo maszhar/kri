@@ -18,6 +18,7 @@
     terapkanPerubahanKlas: () => void
     mulaiMengedit: () => void
     akhiriMengedit: () => void
+    hapus: () => void
   }
   let {
     elemenKlas,
@@ -28,7 +29,8 @@
     dapatkanKoordinatPojokKiriAtasKanvas,
     terapkanPerubahanKlas,
     mulaiMengedit,
-    akhiriMengedit
+    akhiriMengedit,
+    hapus
   }: Properti = $props()
 
   let nama = $state(elemenKlas.klas.nama)
@@ -174,6 +176,8 @@
     <JudulMenuKonteks>Tambah Fitur</JudulMenuKonteks>
     <ItemMenuKonteks saatDiklik={mulaiMembuatAtributBaru}>Tambah Atribut</ItemMenuKonteks>
     <ItemMenuKonteks>Tambah Operasi</ItemMenuKonteks>
+    <JudulMenuKonteks>Hapus</JudulMenuKonteks>
+    <ItemMenuKonteks saatDiklik={hapus}>Hapus</ItemMenuKonteks>
   </MenuKonteks>
 {/if}
 

@@ -13,8 +13,9 @@
   interface Properti {
     diagramKlas: DiagramKlas
     tambahKlasBaru: () => Klas
+    hapusKlas: (klas: Klas) => void
   }
-  const { diagramKlas, tambahKlasBaru }: Properti = $props()
+  const { diagramKlas, tambahKlasBaru, hapusKlas }: Properti = $props()
 
   let elemenKanvas: Kanvas
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
@@ -74,6 +75,14 @@
   function akhiriMengedit(): void {
     adaYangMengedit = false
   }
+
+  // hapus klas
+  function hapusElemenKlas(indeks: number): void {
+    const klasTerkait = diagramKlas.koleksiElemenKlas[indeks].klas
+    diagramKlas.hapusElemenKlas(indeks)
+    hapusKlas(klasTerkait)
+    koleksiElemenKlas = diagramKlas.koleksiElemenKlas
+  }
 </script>
 
 {#if posisiMenuDiagramKlas !== null}
@@ -100,6 +109,7 @@
       terapkanPerubahanKlas={(): void => terapkanPerubahanKlas(indeks)}
       {mulaiMengedit}
       {akhiriMengedit}
+      hapus={(): void => hapusElemenKlas(indeks)}
     />
   {/each}
 </Kanvas>

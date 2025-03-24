@@ -21,6 +21,11 @@ export class DiagramKlas extends Model {
   terapkanPerubahanKlas(indeks: number): void {
     this.koleksiElemenKlas[indeks] = this.koleksiElemenKlas[indeks].buatKlona()
   }
+
+  // hapus
+  hapusElemenKlas(indeks: number): void {
+    this.koleksiElemenKlas.splice(indeks, 1)
+  }
 }
 
 interface ParameterBuatDiagramKlas {
