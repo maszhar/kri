@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ParameterBuatAtribut } from '../../../umum/entitas/Atribut'
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
+  import type { Klas } from '../../../umum/entitas/Klas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
@@ -15,7 +16,7 @@
     mintaDipilih: () => void
     indeks: number
     dapatkanKoordinatPojokKiriAtasKanvas: () => Koordinat
-    terapkanPerubahanKlas: () => void
+    ubahNamaElemenKlas: (klas: Klas, nama: string) => void
     mulaiMengedit: () => void
     akhiriMengedit: () => void
     hapus: () => void
@@ -27,7 +28,7 @@
     indeks,
     mintaDipilih,
     dapatkanKoordinatPojokKiriAtasKanvas,
-    terapkanPerubahanKlas,
+    ubahNamaElemenKlas,
     mulaiMengedit,
     akhiriMengedit,
     hapus
@@ -73,7 +74,7 @@
     bedaTitikKursorDanElemenSaatAwalMemindah = null
   }
 
-  // Edit nama
+  // Edit nama klas
   let mengedit = $state(false)
   let namaKlasSementara = $state('')
   let elemenInputNamaKlas: HTMLInputElement | null = $state(null)
@@ -96,8 +97,7 @@
   function akhiriMengeditNamaKlas(terapkan = true): void {
     window.removeEventListener('click', tanganiKlikSaatMengedit)
     if (terapkan) {
-      elemenKlas.klas.nama = namaKlasSementara
-      terapkanPerubahanKlas()
+      ubahNamaElemenKlas(elemenKlas.klas, namaKlasSementara)
     }
     namaKlasSementara = ''
     mengedit = false
@@ -210,6 +210,7 @@
       {nama}
     </span>
   </div>
+
   <!-- Kompartemen Atribut -->
   {#if koleksiAtribut.length > 0 || sedangMembuatAtributBaru}
     <TampilanKompartemen>

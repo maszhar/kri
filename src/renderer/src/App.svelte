@@ -11,6 +11,7 @@
   import PanelKiri from './umum/ui/panel-kiri/PanelKiri.svelte'
   import { DiagramKlas } from '../../umum/entitas/DiagramKlas'
   import TampilanDiagramKlas from './klas/TampilanDiagramKlas.svelte'
+  import TampilanPesan from './umum/ui/TampilanPesan.svelte'
 
   let proyek: Proyek = new Proyek()
   let lokasiPenyimpananProyek = ''
@@ -18,6 +19,8 @@
   let koleksiSequenceDiagram: SequenceDiagram[] = $state([])
   let koleksiDiagramKlas: DiagramKlas[] = $state([])
   let modelAktif: Model | null = $state(null)
+
+  let pesan: string | null = $state(null)
 
   async function bukaProyek(): Promise<void> {
     const dataProyek = await window.mesin.bukaProyek()
@@ -42,6 +45,10 @@
   // Klas
   function tambahKlasBaru(): Klas {
     return proyek.tambahKlasBaru()
+  }
+
+  function ubahNamaKlas(klas: Klas, nama: string): void {
+    proyek.ubahNamaKlas(klas, nama)
   }
 
   function hapusKlas(klas: Klas): void {
@@ -85,11 +92,24 @@
     window.mesin.hasilkanKode(proyek.bungkusData())
   }
 
+  // pesan
+  function tampilkanPesan(pPesan: string): void {
+    pesan = pPesan
+  }
+
+  function tutupPesan(): void {
+    pesan = null
+  }
+
   onMount(() => {
     koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
     koleksiDiagramKlas = proyek.koleksiDiagramKlas
   })
 </script>
+
+{#if pesan}
+  <TampilanPesan {pesan} oke={tutupPesan} />
+{/if}
 
 <Dasar>
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} {hasilkanKode} />
@@ -111,7 +131,13 @@
           saatSequenceDiagramDiperbarui={perbaruiSequenceDiagram}
         />
       {:else if modelAktif instanceof DiagramKlas}
-        <TampilanDiagramKlas diagramKlas={modelAktif} {tambahKlasBaru} {hapusKlas} />
+        <TampilanDiagramKlas
+          diagramKlas={modelAktif}
+          {tambahKlasBaru}
+          {ubahNamaKlas}
+          {hapusKlas}
+          {tampilkanPesan}
+        />
       {/if}
     </Jendela>
   </div>

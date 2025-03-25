@@ -3,6 +3,8 @@
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import type { Klas } from '../../../umum/entitas/Klas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
+  import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
+  import { TipeElemen } from '../../../umum/tipe/TipeElemen'
   import { Ukuran2D } from '../umum/entitas/Ukuran2D'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
@@ -13,9 +15,12 @@
   interface Properti {
     diagramKlas: DiagramKlas
     tambahKlasBaru: () => Klas
+    ubahNamaKlas: (klas: Klas, nama: string) => void
     hapusKlas: (klas: Klas) => void
+    tampilkanPesan: (pesan: string) => void
   }
-  const { diagramKlas, tambahKlasBaru, hapusKlas }: Properti = $props()
+  const { diagramKlas, tambahKlasBaru, hapusKlas, ubahNamaKlas, tampilkanPesan }: Properti =
+    $props()
 
   let elemenKanvas: Kanvas
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
@@ -33,6 +38,7 @@
     posisiMenuDiagramKlas = null
   }
 
+  // modifikasi klas
   function tambahElemenKlasBaru(): void {
     const klasBaru = tambahKlasBaru()
     diagramKlas.tambahElemenKlasBaru(
@@ -54,19 +60,27 @@
     elemenKlasDipilih = indeks
   }
 
-  function tanganiKanvasDiklik(e: MouseEvent): void {
-    if (e.target === elemenKanvas.dapatkanElemen()) {
-      elemenKlasDipilih = -1
+  function ubahNamaElemenKlas(indeks: number, klas: Klas, nama: string): void {
+    try {
+      ubahNamaKlas(klas, nama)
+      diagramKlas.terapkanPerubahanKlas(indeks)
+      koleksiElemenKlas = diagramKlas.koleksiElemenKlas
+    } catch (e: any) {
+      if (e instanceof GalatNamaSama && e.tipe === TipeElemen.Klas) {
+        tampilkanPesan(`Nama klas '${e.nama}' telah dipakai.`)
+      }
     }
   }
 
+  // kanvas
   function dapatkanKoordinatPojokKiriAtasKanvas(): Koordinat {
     return new Koordinat(elemenKanvas.getXAbsolut(), elemenKanvas.getYAbsolut())
   }
 
-  function terapkanPerubahanKlas(indeks: number): void {
-    diagramKlas.terapkanPerubahanKlas(indeks)
-    koleksiElemenKlas = diagramKlas.koleksiElemenKlas
+  function tanganiKanvasDiklik(e: MouseEvent): void {
+    if (e.target === elemenKanvas.dapatkanElemen()) {
+      elemenKlasDipilih = -1
+    }
   }
 
   $effect(() => {
@@ -112,7 +126,8 @@
       mintaDipilih={(): void => pilihElemenKlas(indeks)}
       dipilih={elemenKlasDipilih === indeks}
       {dapatkanKoordinatPojokKiriAtasKanvas}
-      terapkanPerubahanKlas={(): void => terapkanPerubahanKlas(indeks)}
+      ubahNamaElemenKlas={(klas: Klas, nama: string): void =>
+        ubahNamaElemenKlas(indeks, klas, nama)}
       {mulaiMengedit}
       {akhiriMengedit}
       hapus={(): void => hapusElemenKlas(indeks)}

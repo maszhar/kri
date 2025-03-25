@@ -2,6 +2,8 @@ import { ProyekPb } from '../proto/kri'
 import { DiagramKlas } from './DiagramKlas'
 import { Klas } from './Klas'
 import { SequenceDiagram } from './SequenceDiagram'
+import { GalatNamaSama } from '../galat/GalatNamaSama'
+import { TipeElemen } from '../tipe/TipeElemen'
 
 export class Proyek {
   koleksiKlas: Klas[]
@@ -34,6 +36,18 @@ export class Proyek {
     const klas = new Klas({ nama: frasaKlasBaru + nomorKlasBaru.toString() })
     this.koleksiKlas.push(klas)
     return klas
+  }
+
+  ubahNamaKlas(klas: Klas, nama: string): void {
+    const klasSelainTerkait = this.koleksiKlas.filter((itemKlas) => itemKlas != klas)
+    if (this.koleksiKlas.length - 1 == klasSelainTerkait.length) {
+      const namaSama = klasSelainTerkait.find((itemKlas) => itemKlas.nama == nama)
+      if (!namaSama) {
+        klas.nama = nama
+      } else {
+        throw new GalatNamaSama(nama, TipeElemen.Klas)
+      }
+    }
   }
 
   hapusKlas(klas: Klas): void {
