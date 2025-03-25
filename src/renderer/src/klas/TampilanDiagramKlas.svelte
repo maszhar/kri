@@ -35,7 +35,13 @@
 
   function tambahElemenKlasBaru(): void {
     const klasBaru = tambahKlasBaru()
-    diagramKlas.tambahElemenKlasBaru(klasBaru)
+    diagramKlas.tambahElemenKlasBaru(
+      klasBaru,
+      new Koordinat(
+        posisiMenuDiagramKlas.x - elemenKanvas.getXAbsolut(),
+        posisiMenuDiagramKlas.y - elemenKanvas.getYAbsolut()
+      )
+    )
     koleksiElemenKlas = diagramKlas.koleksiElemenKlas
   }
 

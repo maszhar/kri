@@ -1,5 +1,6 @@
 import { ElemenKlas } from './ElemenKlas'
 import { Klas } from './Klas'
+import { Koordinat } from './Koordinat'
 import { Model } from './Model'
 
 export class DiagramKlas extends Model {
@@ -12,8 +13,8 @@ export class DiagramKlas extends Model {
     this.koleksiElemenKlas = parameter.koleksiElemenKlas ?? []
   }
 
-  tambahElemenKlasBaru(klas: Klas): ElemenKlas {
-    const elemenKlas = new ElemenKlas({ klas: klas })
+  tambahElemenKlasBaru(klas: Klas, posisi: Koordinat): ElemenKlas {
+    const elemenKlas = new ElemenKlas({ klas: klas, posisi })
     this.koleksiElemenKlas.push(elemenKlas)
     return elemenKlas
   }
