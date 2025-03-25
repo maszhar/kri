@@ -21,7 +21,17 @@ export class Proyek {
 
   // klas
   tambahKlasBaru(): Klas {
-    const klas = new Klas()
+    let nomorKlasBaru = 1
+    const frasaKlasBaru = 'KlasBaru'
+    this.koleksiKlas.forEach((klas) => {
+      if (new RegExp('^' + frasaKlasBaru).test(klas.nama)) {
+        const nomorKlasBaruSekarang = parseInt(klas.nama.slice(frasaKlasBaru.length))
+        if (!isNaN(nomorKlasBaruSekarang)) {
+          nomorKlasBaru = nomorKlasBaruSekarang + 1
+        }
+      }
+    })
+    const klas = new Klas({ nama: frasaKlasBaru + nomorKlasBaru.toString() })
     this.koleksiKlas.push(klas)
     return klas
   }
