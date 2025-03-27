@@ -1,4 +1,6 @@
+import { GalatNamaSama } from '../galat/GalatNamaSama'
 import { KlasPb } from '../proto/kri'
+import { TipeElemen } from '../tipe/TipeElemen'
 import { Atribut, ParameterBuatAtribut } from './Atribut'
 import { Komponen } from './Komponen'
 
@@ -14,13 +16,26 @@ export class Klas extends Komponen {
   }
 
   tambahAtributBaru(parameter: ParameterBuatAtribut): Atribut {
+    const atributBernamaSama = this.koleksiAtribut.find((atribut) => atribut.nama == parameter.nama)
+    if (atributBernamaSama) {
+      throw new GalatNamaSama(parameter.nama, TipeElemen.ATRIBUT)
+    }
+
     const atribut = new Atribut(parameter)
     this.koleksiAtribut.push(atribut)
     return atribut
   }
 
-  terapkanPerubahanAtribut(indeks: number): void {
-    this.koleksiAtribut[indeks] = this.koleksiAtribut[indeks].buatKlona()
+  ubahAtribut(indeks: number, parameter: ParameterBuatAtribut): void {
+    const koleksiAtributSelainIndeks = this.koleksiAtribut.filter((_, i) => i !== indeks)
+    const atributBernamaSama = koleksiAtributSelainIndeks.find(
+      (atribut) => atribut.nama == parameter.nama
+    )
+    if (atributBernamaSama) {
+      throw new GalatNamaSama(parameter.nama, TipeElemen.ATRIBUT)
+    }
+
+    this.koleksiAtribut[indeks] = new Atribut(parameter)
   }
 
   bungkusData(): unknown {

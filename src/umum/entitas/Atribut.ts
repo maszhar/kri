@@ -20,13 +20,6 @@ export class Atribut {
       tipe: data.tipe
     })
   }
-
-  buatKlona(): Atribut {
-    return new Atribut({
-      nama: this.nama,
-      tipe: this.tipe
-    })
-  }
 }
 
 export interface ParameterBuatAtribut {

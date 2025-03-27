@@ -3,6 +3,7 @@
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import type { Klas } from '../../../umum/entitas/Klas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
+  import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
@@ -20,6 +21,7 @@
     mulaiMengedit: () => void
     akhiriMengedit: () => void
     hapus: () => void
+    tampilkanPesan: (pesan: string) => void
   }
   let {
     elemenKlas,
@@ -31,7 +33,8 @@
     ubahNamaElemenKlas,
     mulaiMengedit,
     akhiriMengedit,
-    hapus
+    hapus,
+    tampilkanPesan
   }: Properti = $props()
 
   let nama = $state(elemenKlas.klas.nama)
@@ -156,18 +159,24 @@
     akhiriMengedit()
   }
 
-  function selesaikanEditAtribut(
-    indeks: number,
-    parameterBuatAtribut?: ParameterBuatAtribut
-  ): void {
-    if (sedangMembuatAtributBaru && parameterBuatAtribut) {
-      sedangMembuatAtributBaru = false
-      elemenKlas.klas.tambahAtributBaru(parameterBuatAtribut)
-    } else if (!sedangMembuatAtributBaru) {
-      elemenKlas.klas.terapkanPerubahanAtribut(indeks)
+  function selesaikanEditAtribut(indeks: number, parameterBuatAtribut: ParameterBuatAtribut): void {
+    try {
+      if (sedangMembuatAtributBaru && parameterBuatAtribut) {
+        sedangMembuatAtributBaru = false
+        elemenKlas.klas.tambahAtributBaru(parameterBuatAtribut)
+      } else if (!sedangMembuatAtributBaru) {
+        elemenKlas.klas.ubahAtribut(indeks, parameterBuatAtribut)
+      }
+      koleksiAtribut = elemenKlas.klas.koleksiAtribut
+      akhiriMengedit()
+    } catch (e: any) {
+      if (e instanceof GalatNamaSama) {
+        tampilkanPesan(`Nama atribut '${e.nama}' telah digunakan dalam klas ini.`)
+        akhiriMengedit()
+      } else {
+        throw e
+      }
     }
-    koleksiAtribut = elemenKlas.klas.koleksiAtribut
-    akhiriMengedit()
   }
 </script>
 

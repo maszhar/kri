@@ -6,7 +6,7 @@
     indeksAtribut: number
     atribut?: Atribut
     mulaiMengedit?: () => void
-    selesaiMengedit: (atributBaru?: ParameterBuatAtribut) => void
+    selesaiMengedit: (atributBaru: ParameterBuatAtribut) => void
     batalkanMengedit: () => void
   }
   let {
@@ -85,9 +85,7 @@
       const parameterAtributBaru = hasilkanParameterBuatAtributDariTeksTerformat(
         teksAtributTerformatSementara
       )
-      atribut.nama = parameterAtributBaru.nama
-      atribut.tipe = parameterAtributBaru.tipe
-      selesaiMengedit()
+      selesaiMengedit(parameterAtributBaru)
     }
   }
 

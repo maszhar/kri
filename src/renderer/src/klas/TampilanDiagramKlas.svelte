@@ -131,6 +131,7 @@
       {mulaiMengedit}
       {akhiriMengedit}
       hapus={(): void => hapusElemenKlas(indeks)}
+      {tampilkanPesan}
     />
   {/each}
 </Kanvas>
