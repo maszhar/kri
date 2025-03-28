@@ -204,9 +204,14 @@
     if (titikSentuhAsosiasiDisentuh) {
       const posisiKanvas = dapatkanPosisiKanvas()
 
+      const titikAtas = posisi.y + posisiKanvas.y
+      const titikBawah = titikAtas + elemenTampilanElemenKlas.clientHeight
+      const titikKiri = posisi.x + posisiKanvas.x
+      const titikKanan = titikKiri + elemenTampilanElemenKlas.clientWidth
+
       posisiKursorMulaiAsosiasi = new Koordinat(
-        posisi.x + posisiKanvas.x + elemenTampilanElemenKlas.clientWidth,
-        e.clientY
+        Math.max(titikKiri, Math.min(titikKanan, e.clientX)),
+        Math.max(titikAtas, Math.min(titikBawah, e.clientY))
       )
     }
   }
