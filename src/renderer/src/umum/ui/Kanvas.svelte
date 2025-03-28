@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
   import { Ukuran2D } from '../entitas/Ukuran2D'
+  import { Koordinat } from '../../../../umum/entitas/Koordinat'
 
   interface Properti {
     children?: Snippet
@@ -41,6 +42,10 @@
 
   export function getYAbsolut(): number {
     return elemen.getBoundingClientRect().y
+  }
+
+  export function dapatkanPosisi(): Koordinat {
+    return new Koordinat(elemen.getBoundingClientRect().x, elemen.getBoundingClientRect().y)
   }
 </script>
 

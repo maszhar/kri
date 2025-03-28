@@ -12,6 +12,8 @@
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
   import TampilanElemenKlas from './TampilanElemenKlas.svelte'
 
+  // === ATRIBUT ===
+
   interface Properti {
     diagramKlas: DiagramKlas
     tambahKlasBaru: () => Klas
@@ -22,6 +24,7 @@
   const { diagramKlas, tambahKlasBaru, hapusKlas, ubahNamaKlas, tampilkanPesan }: Properti =
     $props()
 
+  // elemen web
   let elemenKanvas: Kanvas
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
   let koleksiElemenKlas: ElemenKlas[] = $state([])
@@ -29,6 +32,8 @@
   let posisiMenuDiagramKlas: Koordinat | null = $state(null)
 
   let elemenKlasDipilih = $state(-1)
+
+  // === OPERASI ===
 
   function bukaMenuDiagramKlas(e: MouseEvent): void {
     posisiMenuDiagramKlas = new Koordinat(e.clientX, e.clientY)
@@ -132,6 +137,7 @@
       {akhiriMengedit}
       hapus={(): void => hapusElemenKlas(indeks)}
       {tampilkanPesan}
+      dapatkanPosisiKanvas={(): Koordinat => elemenKanvas.dapatkanPosisi()}
     />
   {/each}
 </Kanvas>

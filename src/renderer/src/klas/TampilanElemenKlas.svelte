@@ -4,11 +4,14 @@
   import type { Klas } from '../../../umum/entitas/Klas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
   import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
+  import TampilanKursorMulaiKoneksi from '../sequence/ui/TampilanKursorMulaiKoneksi.svelte'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
   import TampilanAtribut from './TampilanAtribut.svelte'
   import TampilanKompartemen from './TampilanKompartemen.svelte'
+
+  // === ATRIBUT ===
 
   interface Properti {
     elemenKlas: ElemenKlas
@@ -22,6 +25,7 @@
     akhiriMengedit: () => void
     hapus: () => void
     tampilkanPesan: (pesan: string) => void
+    dapatkanPosisiKanvas: () => Koordinat
   }
   let {
     elemenKlas,
@@ -34,12 +38,22 @@
     mulaiMengedit,
     akhiriMengedit,
     hapus,
-    tampilkanPesan
+    tampilkanPesan,
+    dapatkanPosisiKanvas
   }: Properti = $props()
 
   let nama = $state(elemenKlas.klas.nama)
   let posisi = $state(elemenKlas.posisi)
   let koleksiAtribut = $state(elemenKlas.klas.koleksiAtribut)
+
+  // elemen web
+  let elemenTampilanElemenKlas: HTMLDivElement
+
+  // titik sentuh asosiasi
+  let titikSentuhAsosiasiDisentuh: boolean = $state(false)
+  let posisiKursorMulaiAsosiasi: Koordinat | null = $state(null)
+
+  // === OPERASI ===
 
   $effect(() => {
     nama = elemenKlas.klas.nama
@@ -178,6 +192,31 @@
       }
     }
   }
+
+  // titik sentuh asosiasi
+  function tanganiMouseMasukKeTitikSentuhAsosiasi(): void {
+    if (!adaYangMengedit) {
+      titikSentuhAsosiasiDisentuh = true
+    }
+  }
+
+  function tanganiMouseGerakDiTitikSentuhAsosiasi(e: MouseEvent): void {
+    if (titikSentuhAsosiasiDisentuh) {
+      const posisiKanvas = dapatkanPosisiKanvas()
+
+      posisiKursorMulaiAsosiasi = new Koordinat(
+        posisi.x + posisiKanvas.x + elemenTampilanElemenKlas.clientWidth,
+        e.clientY
+      )
+    }
+  }
+
+  function tanganiMouseKeluarDariTitikSentuhAsosiasi(): void {
+    if (titikSentuhAsosiasiDisentuh) {
+      titikSentuhAsosiasiDisentuh = false
+      posisiKursorMulaiAsosiasi = null
+    }
+  }
 </script>
 
 {#if posisiMenuModifikasiKlas !== null}
@@ -190,61 +229,79 @@
   </MenuKonteks>
 {/if}
 
-<div
-  class={`absolute bg-white border ${adaYangMengedit ? 'cursor-default' : 'cursor-move'} ${dipilih ? 'border-blue-600 ring-2 ring-blue-600' : 'border-black'}`}
-  onmousedown={tanganiMouseTurun}
-  role="button"
-  tabindex={30000 + indeks}
-  onkeydown={(): void => {}}
-  style={`left: ${posisi.x}px; top: ${posisi.y}px;`}
-  oncontextmenu={bukaMenuModifikasiKlas}
->
+<div class="absolute" style={`left: ${posisi.x}px; top: ${posisi.y}px;`}>
+  <!-- Titik sentuh asosiasi -->
   <div
-    class="relative select-none font-bold py-1 px-4 text-center"
-    ondblclick={mulaiMengeditNamaKlas}
+    class="absolute -top-1.5 -left-1.5"
+    style="width: calc(100% + 12px); height: calc(100% + 12px);"
+    onmouseenter={tanganiMouseMasukKeTitikSentuhAsosiasi}
+    onmousemove={tanganiMouseGerakDiTitikSentuhAsosiasi}
+    onmouseleave={tanganiMouseKeluarDariTitikSentuhAsosiasi}
     role="button"
-    tabindex={(40000 + indeks) * 100000}
+    tabindex={(40000 + indeks) * 100000 + 90000}
+  ></div>
+
+  <!-- Elemen Klas -->
+  <div
+    class={`relative bg-white border ${adaYangMengedit ? 'cursor-default' : 'cursor-move'} ${dipilih ? 'border-blue-600 ring-2 ring-blue-600' : 'border-black'}`}
+    onmousedown={tanganiMouseTurun}
+    role="button"
+    tabindex={30000 + indeks}
+    onkeydown={(): void => {}}
+    oncontextmenu={bukaMenuModifikasiKlas}
+    bind:this={elemenTampilanElemenKlas}
   >
-    {#if mengedit}
-      <input
-        bind:this={elemenInputNamaKlas}
-        class="absolute outline-none z-10 px-2 text-center left-1/2 -translate-x-1/2"
-        type="text"
-        style={`width: ${namaKlasSementara.length + 3}ch`}
-        bind:value={namaKlasSementara}
-        onkeydown={tanganiKeyboardTurunDiInputNamaKlas}
-      />
-    {/if}
-    <span class={mengedit ? 'opacity-0' : ''}>
-      {nama}
-    </span>
-  </div>
-
-  <!-- Kompartemen Atribut -->
-  {#if koleksiAtribut.length > 0 || sedangMembuatAtributBaru}
-    <TampilanKompartemen>
-      {#each koleksiAtribut as atribut, indeksAtribut}
-        <TampilanAtribut
-          indeksKlas={indeks}
-          indeksAtribut={indeksAtribut + 1}
-          {atribut}
-          {mulaiMengedit}
-          batalkanMengedit={batalkanEditAtribut}
-          selesaiMengedit={(parameter?: ParameterBuatAtribut): void =>
-            selesaikanEditAtribut(indeksAtribut, parameter)}
-        />
-      {/each}
-
-      {#if sedangMembuatAtributBaru}
-        <TampilanAtribut
-          bind:this={elemenAtributBaru}
-          indeksKlas={indeks}
-          indeksAtribut={0}
-          batalkanMengedit={batalkanEditAtribut}
-          selesaiMengedit={(parameter?: ParameterBuatAtribut): void =>
-            selesaikanEditAtribut(0, parameter)}
+    <div
+      class="relative select-none font-bold py-1 px-4 text-center"
+      ondblclick={mulaiMengeditNamaKlas}
+      role="button"
+      tabindex={(40000 + indeks) * 100000}
+    >
+      {#if mengedit}
+        <input
+          bind:this={elemenInputNamaKlas}
+          class="absolute outline-none z-10 px-2 text-center left-1/2 -translate-x-1/2"
+          type="text"
+          style={`width: ${namaKlasSementara.length + 3}ch`}
+          bind:value={namaKlasSementara}
+          onkeydown={tanganiKeyboardTurunDiInputNamaKlas}
         />
       {/if}
-    </TampilanKompartemen>
+      <span class={mengedit ? 'opacity-0' : ''}>
+        {nama}
+      </span>
+    </div>
+
+    <!-- Kompartemen Atribut -->
+    {#if koleksiAtribut.length > 0 || sedangMembuatAtributBaru}
+      <TampilanKompartemen>
+        {#each koleksiAtribut as atribut, indeksAtribut}
+          <TampilanAtribut
+            indeksKlas={indeks}
+            indeksAtribut={indeksAtribut + 1}
+            {atribut}
+            {mulaiMengedit}
+            batalkanMengedit={batalkanEditAtribut}
+            selesaiMengedit={(parameter?: ParameterBuatAtribut): void =>
+              selesaikanEditAtribut(indeksAtribut, parameter)}
+          />
+        {/each}
+
+        {#if sedangMembuatAtributBaru}
+          <TampilanAtribut
+            bind:this={elemenAtributBaru}
+            indeksKlas={indeks}
+            indeksAtribut={0}
+            batalkanMengedit={batalkanEditAtribut}
+            selesaiMengedit={(parameter?: ParameterBuatAtribut): void =>
+              selesaikanEditAtribut(0, parameter)}
+          />
+        {/if}
+      </TampilanKompartemen>
+    {/if}
+  </div>
+
+  {#if titikSentuhAsosiasiDisentuh && posisiKursorMulaiAsosiasi}
+    <TampilanKursorMulaiKoneksi posisi={posisiKursorMulaiAsosiasi} />
   {/if}
 </div>

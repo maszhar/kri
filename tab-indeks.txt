@@ -11,6 +11,9 @@
 
 :DIAGRAM KLAS
 30000      - 39999       = Klas
-4000000000 - 4999900000  = Nama Klas
-4000010000               = Atribut Baru
-4000010001 - 4999910000  = Atribut
+4xxxx00000 - 4xxxx00000  = Nama Klas
+4xxxx10000               = Atribut Baru
+4xxxx10001 - 4xxxx19999  = Atribut
+4xxxx90000               = Titik sentuh asosiasi
+
+=> xxxx = Tab indeks Klas
