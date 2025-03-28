@@ -237,8 +237,8 @@
 <div class="absolute" style={`left: ${posisi.x}px; top: ${posisi.y}px;`}>
   <!-- Titik sentuh asosiasi -->
   <div
-    class="absolute -top-1.5 -left-1.5"
-    style="width: calc(100% + 12px); height: calc(100% + 12px);"
+    class="absolute -top-2 -left-2"
+    style="width: calc(100% + 16px); height: calc(100% + 16px);"
     onmouseenter={tanganiMouseMasukKeTitikSentuhAsosiasi}
     onmousemove={tanganiMouseGerakDiTitikSentuhAsosiasi}
     onmouseleave={tanganiMouseKeluarDariTitikSentuhAsosiasi}
