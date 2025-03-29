@@ -10,7 +10,7 @@
 </script>
 
 <button
-  class={`cursor-pointer px-4 py-1 border-2 border-b-0 ${aktif ? 'bg-blue-400 text-white border-blue-600' : 'hover:bg-blue-200 border-transparent'}`}
+  class={`cursor-pointer px-3 py-1 border-2 border-b-0 text-sm ${aktif ? 'bg-blue-400 text-white border-blue-600' : 'hover:bg-blue-200 border-transparent'}`}
   onclick={pilih}
 >
   {@render children?.()}
