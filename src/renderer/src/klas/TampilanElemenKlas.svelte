@@ -52,6 +52,7 @@
 
   // elemen web
   let elemenTampilanElemenKlas: HTMLDivElement
+  let elemenTitikSentuhAsosiasi: HTMLDivElement
 
   // titik sentuh asosiasi
   let titikSentuhAsosiasiDisentuh: boolean = $state(false)
@@ -228,9 +229,28 @@
   }
 
   function tanganiMouseTurunDiTitikSentuhAsosiasi(e: MouseEvent): void {
+    const styleTitikSentuh = window.getComputedStyle(elemenTitikSentuhAsosiasi, null)
+
+    const jarakTitikSentuhAtas = parseFloat(
+      styleTitikSentuh.getPropertyValue('top').replace('px', '')
+    )
+    const jarakTitikSentuhKiri = parseFloat(
+      styleTitikSentuh.getPropertyValue('left').replace('px', '')
+    )
+
+    const posisiKursorKiri = Math.min(
+      Math.max(0, e.offsetX + jarakTitikSentuhKiri),
+      elemenTitikSentuhAsosiasi.clientWidth + 2 * jarakTitikSentuhKiri
+    )
+
+    const posisiKursorAtas = Math.min(
+      Math.max(0, e.offsetY + jarakTitikSentuhAtas),
+      elemenTitikSentuhAsosiasi.clientHeight + 2 * jarakTitikSentuhAtas
+    )
+
     const titikAwal = new Koordinat(
-      elemenKlas.posisi.x + e.offsetX,
-      elemenKlas.posisi.y + e.offsetY
+      elemenKlas.posisi.x + posisiKursorKiri,
+      elemenKlas.posisi.y + posisiKursorAtas
     )
     mulaiBuatAsosiasi(titikAwal)
     window.addEventListener('mouseup', tanganiMouseNaikSaatBuatAsosiasi)
@@ -256,6 +276,7 @@
 <div class="absolute" style={`left: ${posisi.x}px; top: ${posisi.y}px;`}>
   <!-- Titik sentuh asosiasi -->
   <div
+    bind:this={elemenTitikSentuhAsosiasi}
     class="absolute -top-2 -left-2"
     style="width: calc(100% + 16px); height: calc(100% + 16px);"
     onmouseenter={tanganiMouseMasukKeTitikSentuhAsosiasi}
