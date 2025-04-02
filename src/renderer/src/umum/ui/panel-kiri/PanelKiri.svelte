@@ -76,7 +76,7 @@
 </script>
 
 <div
-  class="w-52 h-full fixed bg-white border-r-2 border-zinc-400 flex flex-col flex-none pt-36 p-3 overflow-auto"
+  class="w-52 h-full fixed bg-white border-r-2 border-zinc-400 flex flex-col flex-none pt-36 p-3 overflow-auto z-30"
   role="button"
   tabindex={11}
   onclick={tanganiPanelDiklik}

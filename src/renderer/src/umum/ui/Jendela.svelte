@@ -7,6 +7,6 @@
   const { children }: Properti = $props()
 </script>
 
-<div class="pt-32 pl-52 z-30">
+<div class="pt-32 pl-52">
   {@render children?.()}
 </div>
