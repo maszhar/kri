@@ -26,6 +26,8 @@
     hapus: () => void
     tampilkanPesan: (pesan: string) => void
     dapatkanPosisiKanvas: () => Koordinat
+    mulaiBuatAsosiasi: (titikAwal: Koordinat) => void
+    akhiriBuatAsosiasi: () => void
   }
   let {
     elemenKlas,
@@ -39,7 +41,9 @@
     akhiriMengedit,
     hapus,
     tampilkanPesan,
-    dapatkanPosisiKanvas
+    dapatkanPosisiKanvas,
+    mulaiBuatAsosiasi,
+    akhiriBuatAsosiasi
   }: Properti = $props()
 
   let nama = $state(elemenKlas.klas.nama)
@@ -222,6 +226,21 @@
       posisiKursorMulaiAsosiasi = null
     }
   }
+
+  function tanganiMouseTurunDiTitikSentuhAsosiasi(e: MouseEvent): void {
+    const titikAwal = new Koordinat(
+      elemenKlas.posisi.x + e.offsetX,
+      elemenKlas.posisi.y + e.offsetY
+    )
+    mulaiBuatAsosiasi(titikAwal)
+    window.addEventListener('mouseup', tanganiMouseNaikSaatBuatAsosiasi)
+  }
+
+  function tanganiMouseNaikSaatBuatAsosiasi(e: MouseEvent): void {
+    e.stopPropagation()
+    window.removeEventListener('mouseup', tanganiMouseNaikSaatBuatAsosiasi)
+    akhiriBuatAsosiasi()
+  }
 </script>
 
 {#if posisiMenuModifikasiKlas !== null}
@@ -242,6 +261,7 @@
     onmouseenter={tanganiMouseMasukKeTitikSentuhAsosiasi}
     onmousemove={tanganiMouseGerakDiTitikSentuhAsosiasi}
     onmouseleave={tanganiMouseKeluarDariTitikSentuhAsosiasi}
+    onmousedown={tanganiMouseTurunDiTitikSentuhAsosiasi}
     role="button"
     tabindex={(40000 + indeks) * 100000 + 90000}
   ></div>

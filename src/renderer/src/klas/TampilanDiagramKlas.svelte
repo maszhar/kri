@@ -10,6 +10,7 @@
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
   import Kanvas from '../umum/ui/Kanvas.svelte'
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
+  import TampilanAsosiasi from './TampilanAsosiasi.svelte'
   import TampilanElemenKlas from './TampilanElemenKlas.svelte'
 
   // === ATRIBUT ===
@@ -32,6 +33,9 @@
   let posisiMenuDiagramKlas: Koordinat | null = $state(null)
 
   let elemenKlasDipilih = $state(-1)
+
+  // buat asosisasi
+  let titikAwalBuatAsosiasi: Koordinat | null = $state(null)
 
   // === OPERASI ===
 
@@ -108,6 +112,15 @@
     hapusKlas(klasTerkait)
     koleksiElemenKlas = diagramKlas.koleksiElemenKlas
   }
+
+  // tangani buat asosiasi
+  function mulaiBuatAsosiasi(titikAwal: Koordinat): void {
+    titikAwalBuatAsosiasi = titikAwal
+  }
+
+  function akhiriBuatAsosiasi(): void {
+    titikAwalBuatAsosiasi = null
+  }
 </script>
 
 {#if posisiMenuDiagramKlas !== null}
@@ -138,6 +151,12 @@
       hapus={(): void => hapusElemenKlas(indeks)}
       {tampilkanPesan}
       dapatkanPosisiKanvas={(): Koordinat => elemenKanvas.dapatkanPosisi()}
+      {mulaiBuatAsosiasi}
+      {akhiriBuatAsosiasi}
     />
   {/each}
+
+  {#if titikAwalBuatAsosiasi !== null}
+    <TampilanAsosiasi posisi={titikAwalBuatAsosiasi} />
+  {/if}
 </Kanvas>
