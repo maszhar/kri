@@ -21,21 +21,23 @@
   }
 </script>
 
-<TempatTabPanelAtas>
-  <TabPanelAtas aktif={tabAktif === TAB_UMUM} pilih={(): void => aktifkanTab(TAB_UMUM)}>
-    Umum
-  </TabPanelAtas>
-  <TabPanelAtas
-    aktif={tabAktif === TAB_PENGHASIL_KODE}
-    pilih={(): void => aktifkanTab(TAB_PENGHASIL_KODE)}
-  >
-    Penghasil Kode
-  </TabPanelAtas>
-</TempatTabPanelAtas>
-<TempatTombolPanelAtas>
-  {#if tabAktif === TAB_UMUM}
-    <TabUmum {saatSimpanDiklik} {saatBukaProyekDiklik} />
-  {:else if tabAktif === TAB_PENGHASIL_KODE}
-    <TabPenghasilKode {hasilkanKode} />
-  {/if}
-</TempatTombolPanelAtas>
+<div class="fixed w-full z-40 h-32">
+  <TempatTabPanelAtas>
+    <TabPanelAtas aktif={tabAktif === TAB_UMUM} pilih={(): void => aktifkanTab(TAB_UMUM)}>
+      Umum
+    </TabPanelAtas>
+    <TabPanelAtas
+      aktif={tabAktif === TAB_PENGHASIL_KODE}
+      pilih={(): void => aktifkanTab(TAB_PENGHASIL_KODE)}
+    >
+      Penghasil Kode
+    </TabPanelAtas>
+  </TempatTabPanelAtas>
+  <TempatTombolPanelAtas>
+    {#if tabAktif === TAB_UMUM}
+      <TabUmum {saatSimpanDiklik} {saatBukaProyekDiklik} />
+    {:else if tabAktif === TAB_PENGHASIL_KODE}
+      <TabPenghasilKode {hasilkanKode} />
+    {/if}
+  </TempatTombolPanelAtas>
+</div>
