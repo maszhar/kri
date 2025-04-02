@@ -26,8 +26,9 @@
     hapus: () => void
     tampilkanPesan: (pesan: string) => void
     dapatkanPosisiKanvas: () => Koordinat
-    mulaiBuatAsosiasi: (titikAwal: Koordinat) => void
+    mulaiBuatAsosiasi: (titikAwal: Koordinat, elemen: ElemenKlas) => void
     akhiriBuatAsosiasi: () => void
+    elemenMembuatAsosiasi: ElemenKlas | null
   }
   let {
     elemenKlas,
@@ -43,7 +44,8 @@
     tampilkanPesan,
     dapatkanPosisiKanvas,
     mulaiBuatAsosiasi,
-    akhiriBuatAsosiasi
+    akhiriBuatAsosiasi,
+    elemenMembuatAsosiasi
   }: Properti = $props()
 
   let nama = $state(elemenKlas.klas.nama)
@@ -58,8 +60,10 @@
   let titikSentuhAsosiasiDisentuh: boolean = $state(false)
   let posisiKursorMulaiAsosiasi: Koordinat | null = $state(null)
 
-  // === OPERASI ===
+  // sebagai target buat asosiasi
+  let sebagaiTargetBuatAsosiasi: boolean = $state(false)
 
+  // === OPERASI ===
   $effect(() => {
     nama = elemenKlas.klas.nama
     koleksiAtribut = elemenKlas.klas.koleksiAtribut
@@ -252,7 +256,7 @@
       elemenKlas.posisi.x + posisiKursorKiri,
       elemenKlas.posisi.y + posisiKursorAtas
     )
-    mulaiBuatAsosiasi(titikAwal)
+    mulaiBuatAsosiasi(titikAwal, elemenKlas)
     window.addEventListener('mouseup', tanganiMouseNaikSaatBuatAsosiasi)
   }
 
@@ -261,6 +265,25 @@
     window.removeEventListener('mouseup', tanganiMouseNaikSaatBuatAsosiasi)
     akhiriBuatAsosiasi()
   }
+
+  // buat asosiasi
+  function tanganiMouseMasukKeElemenKlas(): void {
+    if (elemenMembuatAsosiasi) {
+      sebagaiTargetBuatAsosiasi = true
+    }
+  }
+
+  function tanganiMouseKeluarDariElemenKlas(): void {
+    if (elemenMembuatAsosiasi) {
+      sebagaiTargetBuatAsosiasi = false
+    }
+  }
+
+  $effect(() => {
+    if (elemenMembuatAsosiasi === null && sebagaiTargetBuatAsosiasi) {
+      sebagaiTargetBuatAsosiasi = false
+    }
+  })
 </script>
 
 {#if posisiMenuModifikasiKlas !== null}
@@ -289,7 +312,9 @@
 
   <!-- Elemen Klas -->
   <div
-    class={`relative bg-white border ${adaYangMengedit ? 'cursor-default' : 'cursor-move'} ${dipilih ? 'border-blue-600 ring-2 ring-blue-600' : 'border-black'}`}
+    class={`relative bg-white border ${adaYangMengedit || elemenMembuatAsosiasi !== null ? 'cursor-default' : 'cursor-move'} ${dipilih ? 'border-blue-600 ring-2 ring-blue-600' : 'border-black'} ${sebagaiTargetBuatAsosiasi ? 'ring-3 border-green-700 ring-green-400' : ''}`}
+    onmouseenter={tanganiMouseMasukKeElemenKlas}
+    onmouseleave={tanganiMouseKeluarDariElemenKlas}
     onmousedown={tanganiMouseTurun}
     role="button"
     tabindex={30000 + indeks}

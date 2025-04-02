@@ -36,6 +36,7 @@
 
   // buat asosisasi
   let titikAwalBuatAsosiasi: Koordinat | null = $state(null)
+  let elemenMembuatAsosiasi: ElemenKlas | null = $state(null)
 
   // === OPERASI ===
 
@@ -114,12 +115,14 @@
   }
 
   // tangani buat asosiasi
-  function mulaiBuatAsosiasi(titikAwal: Koordinat): void {
+  function mulaiBuatAsosiasi(titikAwal: Koordinat, elemen: ElemenKlas): void {
     titikAwalBuatAsosiasi = titikAwal
+    elemenMembuatAsosiasi = elemen
   }
 
   function akhiriBuatAsosiasi(): void {
     titikAwalBuatAsosiasi = null
+    elemenMembuatAsosiasi = null
   }
 </script>
 
@@ -153,6 +156,7 @@
       dapatkanPosisiKanvas={(): Koordinat => elemenKanvas.dapatkanPosisi()}
       {mulaiBuatAsosiasi}
       {akhiriBuatAsosiasi}
+      {elemenMembuatAsosiasi}
     />
   {/each}
 
