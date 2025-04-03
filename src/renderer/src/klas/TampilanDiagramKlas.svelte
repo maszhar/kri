@@ -101,6 +101,11 @@
 
   $effect(() => {
     koleksiElemenKlas = diagramKlas.koleksiElemenKlas
+    koleksiAsosiasi = diagramKlas.koleksiElemenKlas
+      .map((elemenKlas) => elemenKlas.klas.koleksiAsosiasi)
+      .reduce((pre, cur) => {
+        return [...pre, ...cur]
+      }, [])
   })
 
   // kunci saat ada yang mengedit
