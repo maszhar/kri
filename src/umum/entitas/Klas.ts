@@ -26,6 +26,12 @@ export class Klas extends Komponen {
     if (atributBernamaSama) {
       throw new GalatNamaSama(parameter.nama, TipeElemen.ATRIBUT)
     }
+    const operasiBernamaSama = this.koleksiOperasi.find(
+      (operasi) => operasi.nama === parameter.nama
+    )
+    if (operasiBernamaSama) {
+      throw new GalatNamaSama(parameter.nama, TipeElemen.OPERASI)
+    }
 
     const atribut = new Atribut(parameter)
     this.koleksiAtribut.push(atribut)
@@ -41,6 +47,13 @@ export class Klas extends Komponen {
       throw new GalatNamaSama(parameter.nama, TipeElemen.ATRIBUT)
     }
 
+    const operasiBernamaSama = this.koleksiOperasi.find(
+      (operasi) => operasi.nama === parameter.nama
+    )
+    if (operasiBernamaSama) {
+      throw new GalatNamaSama(parameter.nama, TipeElemen.OPERASI)
+    }
+
     this.koleksiAtribut[indeks] = new Atribut(parameter)
   }
 
@@ -50,6 +63,11 @@ export class Klas extends Komponen {
     )
     if (operasiBernamaSama) {
       throw new GalatNamaSama(parameter.nama, TipeElemen.OPERASI)
+    }
+
+    const atributBernamaSama = this.koleksiAtribut.find((atribut) => atribut.nama == parameter.nama)
+    if (atributBernamaSama) {
+      throw new GalatNamaSama(parameter.nama, TipeElemen.ATRIBUT)
     }
 
     const operasi = new Operasi(parameter)
@@ -64,6 +82,11 @@ export class Klas extends Komponen {
     )
     if (operasiBernamaSama) {
       throw new GalatNamaSama(parameter.nama, TipeElemen.OPERASI)
+    }
+
+    const atributBernamaSama = this.koleksiAtribut.find((atribut) => atribut.nama == parameter.nama)
+    if (atributBernamaSama) {
+      throw new GalatNamaSama(parameter.nama, TipeElemen.ATRIBUT)
     }
 
     this.koleksiOperasi[indeks] = new Operasi(parameter)
