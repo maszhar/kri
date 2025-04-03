@@ -10,10 +10,8 @@ export class PenghasilKodeOperasiKlasTypescript {
     hasilKode += indentasi
     hasilKode += 'public'
     hasilKode += ` ${operasi.nama}(`
-    operasi.koleksiParameter
-      .map((parameter) => {
-        hasilKode += `${parameter.nama}: ${parameter.tipe ?? 'any'}`
-      })
+    hasilKode += operasi.koleksiParameter
+      .map((parameter) => `${parameter.nama}: ${parameter.tipe ?? 'any'}`)
       .join(', ')
     hasilKode += `)`
     if (operasi.tipeKeluaran) {
