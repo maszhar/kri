@@ -4,9 +4,11 @@ import { TipeElemen } from '../tipe/TipeElemen'
 import { Asosiasi } from './Asosiasi'
 import { Atribut, ParameterBuatAtribut } from './Atribut'
 import { Komponen } from './Komponen'
+import { Operasi, ParameterBuatOperasi } from './Operasi'
 
 export class Klas extends Komponen {
   public koleksiAtribut: Atribut[]
+  public koleksiOperasi: Operasi[]
   public koleksiAsosiasi: Asosiasi[]
 
   constructor(parameter: ParameterBuatKlas = {}) {
@@ -15,6 +17,7 @@ export class Klas extends Komponen {
       nama: parameter.nama || 'KlasBaru'
     })
     this.koleksiAtribut = parameter.koleksiAtribut ?? []
+    this.koleksiOperasi = parameter.koleksiOperasi ?? []
     this.koleksiAsosiasi = parameter.koleksiAsosiasi ?? []
   }
 
@@ -39,6 +42,31 @@ export class Klas extends Komponen {
     }
 
     this.koleksiAtribut[indeks] = new Atribut(parameter)
+  }
+
+  tambahOperasiBaru(parameter: ParameterBuatOperasi): Operasi {
+    const operasiBernamaSama = this.koleksiOperasi.find(
+      (operasi) => operasi.nama === parameter.nama
+    )
+    if (operasiBernamaSama) {
+      throw new GalatNamaSama(parameter.nama, TipeElemen.OPERASI)
+    }
+
+    const operasi = new Operasi(parameter)
+    this.koleksiOperasi.push(operasi)
+    return operasi
+  }
+
+  ubahOperasi(indeks: number, parameter: ParameterBuatOperasi): void {
+    const koleksiOperasiSelainIndeks = this.koleksiOperasi.filter((_, i) => i !== indeks)
+    const operasiBernamaSama = koleksiOperasiSelainIndeks.find(
+      (operasi) => operasi.nama === parameter.nama
+    )
+    if (operasiBernamaSama) {
+      throw new GalatNamaSama(parameter.nama, TipeElemen.OPERASI)
+    }
+
+    this.koleksiOperasi[indeks] = new Operasi(parameter)
   }
 
   bungkusData(): unknown {
@@ -97,4 +125,5 @@ interface ParameterBuatKlas {
   nama?: string
   koleksiAtribut?: Atribut[]
   koleksiAsosiasi?: Asosiasi[]
+  koleksiOperasi?: Operasi[]
 }

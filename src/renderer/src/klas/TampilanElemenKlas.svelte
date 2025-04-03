@@ -3,13 +3,16 @@
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import type { Klas } from '../../../umum/entitas/Klas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
+  import type { ParameterBuatOperasi } from '../../../umum/entitas/Operasi'
   import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
+  import { TipeElemen } from '../../../umum/tipe/TipeElemen'
   import TampilanKursorMulaiKoneksi from '../sequence/ui/TampilanKursorMulaiKoneksi.svelte'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
   import TampilanAtribut from './TampilanAtribut.svelte'
   import TampilanKompartemen from './TampilanKompartemen.svelte'
+  import TampilanOperasi from './TampilanOperasi.svelte'
 
   // === ATRIBUT ===
 
@@ -53,6 +56,7 @@
   let nama = $state(elemenKlas.klas.nama)
   let posisi = $state(elemenKlas.posisi)
   let koleksiAtribut = $state(elemenKlas.klas.koleksiAtribut)
+  let koleksiOperasi = $state(elemenKlas.klas.koleksiOperasi)
 
   // elemen web
   let elemenTampilanElemenKlas: HTMLDivElement
@@ -201,12 +205,72 @@
       akhiriMengedit()
     } catch (e: any) {
       if (e instanceof GalatNamaSama) {
-        tampilkanPesan(`Nama atribut '${e.nama}' telah digunakan dalam klas ini.`)
+        tampilkanGalatNamaSama(e)
         akhiriMengedit()
       } else {
         throw e
       }
     }
+  }
+
+  // buat operasi
+  let elemenOperasiBaru: TampilanOperasi | null = $state(null)
+  let sedangMembuatOperasiBaru = $state(false)
+
+  function mulaiBuatOperasiBaru(e: MouseEvent): void {
+    e.stopPropagation()
+    tutupMenuModifikasiKlas()
+    sedangMembuatOperasiBaru = true
+  }
+
+  $effect(() => {
+    if (sedangMembuatOperasiBaru && elemenOperasiBaru) {
+      elemenOperasiBaru.mulaiEditOperasi()
+    }
+  })
+
+  // edit operasi
+  function batalkanEditOperasi(): void {
+    if (sedangMembuatOperasiBaru) {
+      sedangMembuatOperasiBaru = false
+    }
+    akhiriMengedit()
+  }
+
+  function selesaikanEditOperasi(indeks: number, parameterBuatOperasi: ParameterBuatOperasi): void {
+    try {
+      if (sedangMembuatOperasiBaru && parameterBuatOperasi) {
+        sedangMembuatOperasiBaru = false
+        elemenKlas.klas.tambahOperasiBaru(parameterBuatOperasi)
+      } else if (!sedangMembuatOperasiBaru) {
+        elemenKlas.klas.ubahOperasi(indeks, parameterBuatOperasi)
+      }
+      koleksiOperasi = elemenKlas.klas.koleksiOperasi
+      akhiriMengedit()
+    } catch (e: any) {
+      if (e instanceof GalatNamaSama) {
+        tampilkanGalatNamaSama(e)
+        akhiriMengedit()
+      } else {
+        throw e
+      }
+    }
+  }
+
+  function tampilkanGalatNamaSama(e: GalatNamaSama): void {
+    let tipe = 'elemen'
+    switch (e.tipe) {
+      case TipeElemen.ATRIBUT:
+        tipe = 'atribut'
+        break
+      case TipeElemen.OPERASI:
+        tipe = 'operasi'
+        break
+      default:
+    }
+
+    let pesan = `Nama '${e.nama}' telah digunakan untuk nama ${tipe} dalam klas ini.`
+    tampilkanPesan(pesan)
   }
 
   // titik sentuh asosiasi
@@ -317,7 +381,7 @@
   <MenuKonteks posisi={posisiMenuModifikasiKlas}>
     <JudulMenuKonteks>Tambah Fitur</JudulMenuKonteks>
     <ItemMenuKonteks saatDiklik={mulaiMembuatAtributBaru}>Tambah Atribut</ItemMenuKonteks>
-    <ItemMenuKonteks>Tambah Operasi</ItemMenuKonteks>
+    <ItemMenuKonteks saatDiklik={mulaiBuatOperasiBaru}>Tambah Operasi</ItemMenuKonteks>
     <JudulMenuKonteks>Hapus</JudulMenuKonteks>
     <ItemMenuKonteks saatDiklik={hapus}>Hapus</ItemMenuKonteks>
   </MenuKonteks>
@@ -395,6 +459,35 @@
             batalkanMengedit={batalkanEditAtribut}
             selesaiMengedit={(parameter?: ParameterBuatAtribut): void =>
               selesaikanEditAtribut(0, parameter)}
+          />
+        {/if}
+      </TampilanKompartemen>
+    {/if}
+
+    <!-- Kompartemen Operasi -->
+    {#if koleksiOperasi.length > 0 || sedangMembuatOperasiBaru}
+      <TampilanKompartemen>
+        {#each koleksiOperasi as operasi, indeksOperasi}
+          <TampilanOperasi
+            {operasi}
+            indeksKlas={indeks}
+            indeksOperasi={indeksOperasi + 1}
+            {mulaiMengedit}
+            batalkanMengedit={batalkanEditOperasi}
+            selesaiMengedit={(parameter: ParameterBuatOperasi): void =>
+              selesaikanEditOperasi(indeksOperasi, parameter)}
+          />
+        {/each}
+
+        {#if sedangMembuatOperasiBaru}
+          <TampilanOperasi
+            indeksKlas={indeks}
+            indeksOperasi={0}
+            {mulaiMengedit}
+            batalkanMengedit={batalkanEditOperasi}
+            selesaiMengedit={(parameter: ParameterBuatOperasi): void =>
+              selesaikanEditOperasi(0, parameter)}
+            bind:this={elemenOperasiBaru}
           />
         {/if}
       </TampilanKompartemen>
