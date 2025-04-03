@@ -45,7 +45,7 @@
   }
 
   export function dapatkanPosisi(): Koordinat {
-    return new Koordinat(elemen.getBoundingClientRect().x, elemen.getBoundingClientRect().y)
+    return new Koordinat(elemen.offsetLeft, elemen.offsetTop)
   }
 </script>
 

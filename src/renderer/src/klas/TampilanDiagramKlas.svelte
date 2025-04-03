@@ -35,7 +35,8 @@
   let elemenKlasDipilih = $state(-1)
 
   // buat asosisasi
-  let titikAwalBuatAsosiasi: Koordinat | null = $state(null)
+  let titikAsalBuatAsosiasi: Koordinat | null = $state(null)
+  let titikTujuanBuatAsosiasi: Koordinat | null = $state(null)
   let elemenMembuatAsosiasi: ElemenKlas | null = $state(null)
 
   // === OPERASI ===
@@ -116,13 +117,25 @@
 
   // tangani buat asosiasi
   function mulaiBuatAsosiasi(titikAwal: Koordinat, elemen: ElemenKlas): void {
-    titikAwalBuatAsosiasi = titikAwal
+    titikAsalBuatAsosiasi = titikAwal
+    titikTujuanBuatAsosiasi = titikAwal
     elemenMembuatAsosiasi = elemen
+    window.addEventListener('mousemove', tanganiMouseGerakSaatBuatAsosiasi)
   }
 
   function akhiriBuatAsosiasi(): void {
-    titikAwalBuatAsosiasi = null
+    window.removeEventListener('mousemove', tanganiMouseGerakSaatBuatAsosiasi)
+    titikAsalBuatAsosiasi = null
     elemenMembuatAsosiasi = null
+  }
+
+  function tanganiMouseGerakSaatBuatAsosiasi(e: MouseEvent): void {
+    e.stopPropagation()
+
+    const posisiKanvas = elemenKanvas.dapatkanPosisi()
+    const posisiKursorKiri = e.pageX - posisiKanvas.x
+    const posisiKursorAtas = e.pageY - posisiKanvas.y
+    titikTujuanBuatAsosiasi = new Koordinat(posisiKursorKiri, posisiKursorAtas)
   }
 </script>
 
@@ -160,7 +173,7 @@
     />
   {/each}
 
-  {#if titikAwalBuatAsosiasi !== null}
-    <TampilanAsosiasi posisi={titikAwalBuatAsosiasi} />
+  {#if titikAsalBuatAsosiasi !== null}
+    <TampilanAsosiasi posisiAsal={titikAsalBuatAsosiasi} posisiTujuan={titikTujuanBuatAsosiasi} />
   {/if}
 </Kanvas>
