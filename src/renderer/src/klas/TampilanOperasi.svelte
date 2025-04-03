@@ -69,41 +69,41 @@
 
     const indeksPenutupKoleksiParameter = teksTerformat.lastIndexOf(')')
     if (indeksPenutupKoleksiParameter === -1) {
-      teksKoleksiParameter = teksTerformat.slice(
-        indeksPembukaKoleksiParameter + 1,
-        teksTerformat.length
-      )
+      teksKoleksiParameter = teksTerformat
+        .slice(indeksPembukaKoleksiParameter + 1, teksTerformat.length)
+        .trim()
     } else {
-      teksKoleksiParameter = teksTerformat.slice(
-        indeksPembukaKoleksiParameter + 1,
-        indeksPenutupKoleksiParameter
-      )
+      teksKoleksiParameter = teksTerformat
+        .slice(indeksPembukaKoleksiParameter + 1, indeksPenutupKoleksiParameter)
+        .trim()
     }
 
     let koleksiParameter: ParameterOperasi[] = []
 
-    let koleksiTeksParameter = teksKoleksiParameter.split(',')
-    koleksiTeksParameter.forEach((teksParameter) => {
-      let nama: string
-      let tipe: string | undefined = undefined
+    if (teksKoleksiParameter) {
+      let koleksiTeksParameter = teksKoleksiParameter.split(',')
+      koleksiTeksParameter.forEach((teksParameter) => {
+        let nama: string
+        let tipe: string | undefined = undefined
 
-      const indeksPemisahNamaDanTipe = teksParameter.lastIndexOf(':')
-      if (indeksPemisahNamaDanTipe === -1) {
-        nama = teksParameter.trim()
-      } else {
-        nama = teksParameter.slice(0, indeksPemisahNamaDanTipe).trim()
-        if (teksParameter.length > indeksPemisahNamaDanTipe + 1) {
-          tipe = teksParameter.slice(indeksPemisahNamaDanTipe + 1, teksParameter.length)
+        const indeksPemisahNamaDanTipe = teksParameter.lastIndexOf(':')
+        if (indeksPemisahNamaDanTipe === -1) {
+          nama = teksParameter.trim()
+        } else {
+          nama = teksParameter.slice(0, indeksPemisahNamaDanTipe).trim()
+          if (teksParameter.length > indeksPemisahNamaDanTipe + 1) {
+            tipe = teksParameter.slice(indeksPemisahNamaDanTipe + 1, teksParameter.length)
+          }
         }
-      }
 
-      koleksiParameter.push(
-        new ParameterOperasi({
-          nama: nama,
-          tipe: tipe
-        })
-      )
-    })
+        koleksiParameter.push(
+          new ParameterOperasi({
+            nama: nama,
+            tipe: tipe
+          })
+        )
+      })
+    }
 
     // tipe keluaran
     let tipeKeluaran: string | undefined = undefined
