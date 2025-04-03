@@ -1,11 +1,13 @@
 import { GalatNamaSama } from '../galat/GalatNamaSama'
 import { KlasPb } from '../proto/kri'
 import { TipeElemen } from '../tipe/TipeElemen'
+import { Asosiasi } from './Asosiasi'
 import { Atribut, ParameterBuatAtribut } from './Atribut'
 import { Komponen } from './Komponen'
 
 export class Klas extends Komponen {
   public koleksiAtribut: Atribut[]
+  public koleksiAsosiasi: Asosiasi[]
 
   constructor(parameter: ParameterBuatKlas = {}) {
     super({
@@ -13,6 +15,7 @@ export class Klas extends Komponen {
       nama: parameter.nama || 'KlasBaru'
     })
     this.koleksiAtribut = parameter.koleksiAtribut ?? []
+    this.koleksiAsosiasi = parameter.koleksiAsosiasi ?? []
   }
 
   tambahAtributBaru(parameter: ParameterBuatAtribut): Atribut {
@@ -46,6 +49,24 @@ export class Klas extends Komponen {
     }
   }
 
+  tambahAsosiasi(tujuan: Klas): Asosiasi {
+    const asosiasiBaru = new Asosiasi({
+      asal: this,
+      tujuan: tujuan
+    })
+    this.koleksiAsosiasi.push(asosiasiBaru)
+
+    if (tujuan !== this) {
+      tujuan.tambahAsosiasiTerkait(asosiasiBaru)
+    }
+
+    return asosiasiBaru
+  }
+
+  tambahAsosiasiTerkait(asosiasi: Asosiasi): void {
+    this.koleksiAsosiasi.push(asosiasi)
+  }
+
   static bongkarBungkusanData(data: any): Klas {
     return new Klas({
       id: data.id,
@@ -75,4 +96,5 @@ interface ParameterBuatKlas {
   id?: number
   nama?: string
   koleksiAtribut?: Atribut[]
+  koleksiAsosiasi?: Asosiasi[]
 }

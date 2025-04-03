@@ -28,6 +28,8 @@
     mulaiBuatAsosiasi: (titikAwal: Koordinat, elemen: ElemenKlas) => void
     akhiriBuatAsosiasi: () => void
     elemenMembuatAsosiasi: ElemenKlas | null
+    tetapkanTujuanAsosiasi: (tujuan: ElemenKlas) => void
+    batalkanPenetapanTujuanAsosiasi: () => void
   }
   let {
     elemenKlas,
@@ -43,7 +45,9 @@
     tampilkanPesan,
     mulaiBuatAsosiasi,
     akhiriBuatAsosiasi,
-    elemenMembuatAsosiasi
+    elemenMembuatAsosiasi,
+    tetapkanTujuanAsosiasi,
+    batalkanPenetapanTujuanAsosiasi
   }: Properti = $props()
 
   let nama = $state(elemenKlas.klas.nama)
@@ -96,6 +100,11 @@
     window.removeEventListener('mouseup', tanganiMouseNaikSaatMemindahElemen)
     window.removeEventListener('mousemove', tanganiMousePindahSaatMemindahElemen)
     bedaTitikKursorDanElemenSaatAwalMemindah = null
+  }
+
+  // posisi elemen
+  export function dapatkanTitikTengahKiri(): Koordinat {
+    return new Koordinat(posisi.x, posisi.y + Math.floor(elemenTampilanElemenKlas.clientHeight / 2))
   }
 
   // Edit nama klas
@@ -282,12 +291,14 @@
   function tanganiMouseMasukKeElemenKlas(): void {
     if (elemenMembuatAsosiasi) {
       sebagaiTargetBuatAsosiasi = true
+      tetapkanTujuanAsosiasi(elemenKlas)
     }
   }
 
   function tanganiMouseKeluarDariElemenKlas(): void {
     if (elemenMembuatAsosiasi) {
       sebagaiTargetBuatAsosiasi = false
+      batalkanPenetapanTujuanAsosiasi()
     }
   }
 

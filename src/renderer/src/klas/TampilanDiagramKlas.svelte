@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Asosiasi } from '../../../umum/entitas/Asosiasi'
   import type { DiagramKlas } from '../../../umum/entitas/DiagramKlas'
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import type { Klas } from '../../../umum/entitas/Klas'
@@ -34,10 +35,14 @@
 
   let elemenKlasDipilih = $state(-1)
 
+  // asosiasi
+  let koleksiAsosiasi: Asosiasi[] = $state([])
+
   // buat asosisasi
   let titikAsalBuatAsosiasi: Koordinat | null = $state(null)
   let titikTujuanBuatAsosiasi: Koordinat | null = $state(null)
   let elemenMembuatAsosiasi: ElemenKlas | null = $state(null)
+  let elemenTujuanMembuatAsosiasi: ElemenKlas | null = null
 
   // === OPERASI ===
 
@@ -125,8 +130,17 @@
 
   function akhiriBuatAsosiasi(): void {
     window.removeEventListener('mousemove', tanganiMouseGerakSaatBuatAsosiasi)
+
+    if (elemenTujuanMembuatAsosiasi) {
+      const asosiasiBaru = elemenMembuatAsosiasi.klas.tambahAsosiasi(
+        elemenTujuanMembuatAsosiasi.klas
+      )
+      koleksiAsosiasi.push(asosiasiBaru)
+    }
+
     titikAsalBuatAsosiasi = null
     elemenMembuatAsosiasi = null
+    elemenTujuanMembuatAsosiasi = null
   }
 
   function tanganiMouseGerakSaatBuatAsosiasi(e: MouseEvent): void {
@@ -136,6 +150,14 @@
     const posisiKursorKiri = e.pageX - posisiKanvas.x
     const posisiKursorAtas = e.pageY - posisiKanvas.y
     titikTujuanBuatAsosiasi = new Koordinat(posisiKursorKiri, posisiKursorAtas)
+  }
+
+  function tetapkanTujuanAsosiasi(tujuan: ElemenKlas): void {
+    elemenTujuanMembuatAsosiasi = tujuan
+  }
+
+  function batalkanPenetapanTujuanAsosiasi(): void {
+    elemenTujuanMembuatAsosiasi = null
   }
 </script>
 
@@ -169,6 +191,16 @@
       {mulaiBuatAsosiasi}
       {akhiriBuatAsosiasi}
       {elemenMembuatAsosiasi}
+      {tetapkanTujuanAsosiasi}
+      {batalkanPenetapanTujuanAsosiasi}
+    />
+  {/each}
+
+  {#each koleksiAsosiasi as asosiasi}
+    <TampilanAsosiasi
+      posisiAsal={koleksiElemenKlas.find((elemenKlas) => elemenKlas.klas == asosiasi.asal).posisi}
+      posisiTujuan={koleksiElemenKlas.find((elemenKlas) => elemenKlas.klas == asosiasi.tujuan)
+        .posisi}
     />
   {/each}
 
