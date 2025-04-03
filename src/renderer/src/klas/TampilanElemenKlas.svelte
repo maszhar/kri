@@ -25,7 +25,6 @@
     akhiriMengedit: () => void
     hapus: () => void
     tampilkanPesan: (pesan: string) => void
-    dapatkanPosisiKanvas: () => Koordinat
     mulaiBuatAsosiasi: (titikAwal: Koordinat, elemen: ElemenKlas) => void
     akhiriBuatAsosiasi: () => void
     elemenMembuatAsosiasi: ElemenKlas | null
@@ -42,7 +41,6 @@
     akhiriMengedit,
     hapus,
     tampilkanPesan,
-    dapatkanPosisiKanvas,
     mulaiBuatAsosiasi,
     akhiriBuatAsosiasi,
     elemenMembuatAsosiasi
@@ -211,17 +209,31 @@
 
   function tanganiMouseGerakDiTitikSentuhAsosiasi(e: MouseEvent): void {
     if (titikSentuhAsosiasiDisentuh) {
-      const posisiKanvas = dapatkanPosisiKanvas()
+      const posisiKursorKiri = e.offsetX
+      const posisiKursorAtas = e.offsetY
 
-      const titikAtas = posisi.y + posisiKanvas.y
-      const titikBawah = titikAtas + elemenTampilanElemenKlas.clientHeight
-      const titikKiri = posisi.x + posisiKanvas.x
-      const titikKanan = titikKiri + elemenTampilanElemenKlas.clientWidth
+      const styleTitikSentuh = window.getComputedStyle(elemenTitikSentuhAsosiasi, null)
 
-      posisiKursorMulaiAsosiasi = new Koordinat(
-        Math.max(titikKiri, Math.min(titikKanan, e.clientX)),
-        Math.max(titikAtas, Math.min(titikBawah, e.clientY))
+      const jarakTitikSentuhAtas = parseFloat(
+        styleTitikSentuh.getPropertyValue('top').replace('px', '')
       )
+      const jarakTitikSentuhKiri = parseFloat(
+        styleTitikSentuh.getPropertyValue('left').replace('px', '')
+      )
+
+      const posisiKiri = posisiKursorKiri + jarakTitikSentuhKiri
+      const posisiAtas = posisiKursorAtas + jarakTitikSentuhAtas
+
+      const posisiKiriDikoreksi = Math.min(
+        Math.max(0, posisiKiri),
+        elemenTitikSentuhAsosiasi.clientWidth + 2 * jarakTitikSentuhKiri
+      )
+      const posisiAtasDikoreksi = Math.min(
+        Math.max(0, posisiAtas),
+        elemenTitikSentuhAsosiasi.clientHeight + 2 * jarakTitikSentuhAtas
+      )
+
+      posisiKursorMulaiAsosiasi = new Koordinat(posisiKiriDikoreksi, posisiAtasDikoreksi)
     }
   }
 

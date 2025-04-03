@@ -8,7 +8,7 @@
 </script>
 
 <div
-  class="fixed rounded-full w-4 h-4 bg-sky-200 flex justify-center items-center pointer-events-none"
+  class="absolute rounded-full w-4 h-4 bg-sky-200 flex justify-center items-center pointer-events-none"
   style={`left: ${posisi.x - 8}px; top: ${posisi.y - 8}px;`}
 >
   <div class="rounded-full w-2 h-2 bg-sky-400"></div>

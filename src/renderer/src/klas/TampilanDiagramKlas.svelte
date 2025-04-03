@@ -166,7 +166,6 @@
       {akhiriMengedit}
       hapus={(): void => hapusElemenKlas(indeks)}
       {tampilkanPesan}
-      dapatkanPosisiKanvas={(): Koordinat => elemenKanvas.dapatkanPosisi()}
       {mulaiBuatAsosiasi}
       {akhiriBuatAsosiasi}
       {elemenMembuatAsosiasi}
