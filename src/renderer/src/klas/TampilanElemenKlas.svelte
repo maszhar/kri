@@ -310,6 +310,7 @@
     onmousemove={tanganiMouseGerakDiTitikSentuhAsosiasi}
     onmouseleave={tanganiMouseKeluarDariTitikSentuhAsosiasi}
     onmousedown={tanganiMouseTurunDiTitikSentuhAsosiasi}
+    ondragstart={tanganiDrag}
     role="button"
     tabindex={(40000 + indeks) * 100000 + 90000}
   ></div>
