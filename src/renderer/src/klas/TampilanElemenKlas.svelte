@@ -287,7 +287,6 @@
 
   function tanganiDrag(e: DragEvent): void {
     e.preventDefault()
-    console.log('Drag dibatalkan')
   }
 </script>
 
