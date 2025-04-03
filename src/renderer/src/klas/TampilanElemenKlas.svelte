@@ -284,6 +284,11 @@
       sebagaiTargetBuatAsosiasi = false
     }
   })
+
+  function tanganiDrag(e: DragEvent): void {
+    e.preventDefault()
+    console.log('Drag dibatalkan')
+  }
 </script>
 
 {#if posisiMenuModifikasiKlas !== null}
@@ -320,6 +325,7 @@
     tabindex={30000 + indeks}
     onkeydown={(): void => {}}
     oncontextmenu={bukaMenuModifikasiKlas}
+    ondragstart={tanganiDrag}
     bind:this={elemenTampilanElemenKlas}
   >
     <div
