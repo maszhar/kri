@@ -15,14 +15,17 @@ export class Operasi {
     return {
       nama: this.nama,
       tipeKeluaran: this.tipeKeluaran,
-      koleksiParameter: this.koleksiParameter
+      koleksiParameter: this.koleksiParameter.map((parameter) => parameter.bungkusData())
     }
   }
 
   static bongkarBungkusanData(data: any): Operasi {
     return new Operasi({
       nama: data.nama,
-      tipeKeluaran: data.tipeKeluaran
+      tipeKeluaran: data.tipeKeluaran,
+      koleksiParameter: data.koleksiParameter.map((dataParameter) =>
+        ParameterOperasi.bongkarBungkusanData(dataParameter)
+      )
     })
   }
 }

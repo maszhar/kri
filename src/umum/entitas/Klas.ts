@@ -92,14 +92,6 @@ export class Klas extends Komponen {
     this.koleksiOperasi[indeks] = new Operasi(parameter)
   }
 
-  bungkusData(): unknown {
-    return {
-      id: this.id,
-      nama: this.nama,
-      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.bungkusData())
-    }
-  }
-
   tambahAsosiasi(tujuan: Klas): Asosiasi {
     const asosiasiBaru = new Asosiasi({
       asal: this,
@@ -118,12 +110,24 @@ export class Klas extends Komponen {
     this.koleksiAsosiasi.push(asosiasi)
   }
 
+  bungkusData(): unknown {
+    return {
+      id: this.id,
+      nama: this.nama,
+      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.bungkusData()),
+      koleksiOperasi: this.koleksiOperasi.map((operasi) => operasi.bungkusData())
+    }
+  }
+
   static bongkarBungkusanData(data: any): Klas {
     return new Klas({
       id: data.id,
       nama: data.nama,
       koleksiAtribut: data.koleksiAtribut.map((dataAtribut: any) =>
         Atribut.bongkarBungkusanData(dataAtribut)
+      ),
+      koleksiOperasi: data.koleksiOperasi.map((dataOperasi) =>
+        Operasi.bongkarBungkusanData(dataOperasi)
       )
     })
   }
