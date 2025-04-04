@@ -6,6 +6,7 @@
   import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
   import { TipeElemen } from '../../../umum/tipe/TipeElemen'
   import type { DiagramKlasLangsung } from '../umum/entitas/DiagramKlasLangsung'
+  import type { KlasLangsung } from '../umum/entitas/KlasLangsung'
   import { Ukuran2D } from '../umum/entitas/Ukuran2D'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
@@ -18,8 +19,8 @@
 
   interface Properti {
     diagramKlas: DiagramKlasLangsung
-    tambahKlasBaru: () => Klas
-    ubahNamaKlas: (klas: Klas, nama: string) => void
+    tambahKlasBaru: () => KlasLangsung
+    ubahNamaKlas: (idKlas: number, nama: string) => void
     hapusKlas: (klas: Klas) => void
     tampilkanPesan: (pesan: string) => void
   }
@@ -55,7 +56,7 @@
   }
 
   // modifikasi klas
-  function tambahElemenKlasBaru(): void {
+  function tambahElemenKlasDariKlasBaru(): void {
     const klasBaru = tambahKlasBaru()
     diagramKlas.tambahElemenKlasBaru(
       klasBaru,
@@ -67,7 +68,7 @@
   }
 
   function tanganiTambahElemenKlasBaru(): void {
-    tambahElemenKlasBaru()
+    tambahElemenKlasDariKlasBaru()
     tutupMenuDiagramKlas()
   }
 
@@ -75,12 +76,11 @@
     elemenKlasDipilih = indeks
   }
 
-  function ubahNamaElemenKlas(indeks: number, klas: Klas, nama: string): void {
+  function ubahNamaElemenKlas(idKlas: number, nama: string): void {
     try {
-      ubahNamaKlas(klas, nama)
-      diagramKlas.terapkanPerubahanKlas(indeks)
+      ubahNamaKlas(idKlas, nama)
     } catch (e: any) {
-      if (e instanceof GalatNamaSama && e.tipe === TipeElemen.Klas) {
+      if (e instanceof GalatNamaSama && e.tipe === TipeElemen.KLAS) {
         tampilkanPesan(`Nama klas '${e.nama}' telah dipakai.`)
       }
     }
@@ -176,8 +176,7 @@
       mintaDipilih={(): void => pilihElemenKlas(indeks)}
       dipilih={elemenKlasDipilih === indeks}
       {dapatkanKoordinatPojokKiriAtasKanvas}
-      ubahNamaElemenKlas={(klas: Klas, nama: string): void =>
-        ubahNamaElemenKlas(indeks, klas, nama)}
+      {ubahNamaElemenKlas}
       {mulaiMengedit}
       {akhiriMengedit}
       hapus={(): void => hapusElemenKlas(indeks)}
@@ -190,13 +189,13 @@
     />
   {/each}
 
-  {#each koleksiAsosiasi as asosiasi}
+  <!-- {#each koleksiAsosiasi as asosiasi}
     <TampilanAsosiasi
       posisiAsal={koleksiElemenKlas.find((elemenKlas) => elemenKlas.klas == asosiasi.asal).posisi}
       posisiTujuan={koleksiElemenKlas.find((elemenKlas) => elemenKlas.klas == asosiasi.tujuan)
         .posisi}
     />
-  {/each}
+  {/each} -->
 
   {#if titikAsalBuatAsosiasi !== null}
     <TampilanAsosiasi posisiAsal={titikAsalBuatAsosiasi} posisiTujuan={titikTujuanBuatAsosiasi} />

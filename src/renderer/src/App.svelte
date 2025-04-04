@@ -13,6 +13,7 @@
   import { ProyekLangsung } from './umum/entitas/ProyekLangsung'
   import { get } from 'svelte/store'
   import { DiagramKlasLangsung } from './umum/entitas/DiagramKlasLangsung'
+  import type { KlasLangsung } from './umum/entitas/KlasLangsung'
 
   // === Atribut ===
 
@@ -53,12 +54,12 @@
   }
 
   // Klas
-  function tambahKlasBaru(): Klas {
+  function tambahKlasBaru(): KlasLangsung {
     return proyek.tambahKlasBaru()
   }
 
-  function ubahNamaKlas(klas: Klas, nama: string): void {
-    proyek.ubahNamaKlas(klas, nama)
+  function ubahNamaKlas(idKlas: number, nama: string): void {
+    proyek.ubahNamaKlas(idKlas, nama)
   }
 
   function hapusKlas(klas: Klas): void {

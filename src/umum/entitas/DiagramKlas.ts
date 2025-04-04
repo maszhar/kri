@@ -11,10 +11,6 @@ export class DiagramKlas extends Model {
     this.koleksiElemenKlas = parameter.koleksiElemenKlas ?? []
   }
 
-  terapkanPerubahanKlas(indeks: number): void {
-    this.koleksiElemenKlas[indeks] = this.koleksiElemenKlas[indeks].buatKlona()
-  }
-
   // hapus
   hapusElemenKlas(indeks: number): void {
     this.koleksiElemenKlas.splice(indeks, 1)

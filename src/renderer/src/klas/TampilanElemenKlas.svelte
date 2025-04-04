@@ -1,12 +1,13 @@
 <script lang="ts">
+  import { get } from 'svelte/store'
   import type { ParameterBuatAtribut } from '../../../umum/entitas/Atribut'
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
-  import type { Klas } from '../../../umum/entitas/Klas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
   import type { ParameterBuatOperasi } from '../../../umum/entitas/Operasi'
   import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
   import { TipeElemen } from '../../../umum/tipe/TipeElemen'
   import TampilanKursorMulaiKoneksi from '../sequence/ui/TampilanKursorMulaiKoneksi.svelte'
+  import type { ElemenKlasLangsung } from '../umum/entitas/ElemenKlasLangsung'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
@@ -17,13 +18,13 @@
   // === ATRIBUT ===
 
   interface Properti {
-    elemenKlas: ElemenKlas
+    elemenKlas: ElemenKlasLangsung
     adaYangMengedit: boolean
     dipilih: boolean
     mintaDipilih: () => void
     indeks: number
     dapatkanKoordinatPojokKiriAtasKanvas: () => Koordinat
-    ubahNamaElemenKlas: (klas: Klas, nama: string) => void
+    ubahNamaElemenKlas: (idKlas: number, nama: string) => void
     mulaiMengedit: () => void
     akhiriMengedit: () => void
     hapus: () => void
@@ -53,7 +54,9 @@
     batalkanPenetapanTujuanAsosiasi
   }: Properti = $props()
 
-  let nama = $state(elemenKlas.klas.nama)
+  // data
+  const klasLangsung = elemenKlas.dapatkanKlasLangsung()
+  const nama = klasLangsung.dapatkanNamaLangsung()
   let posisi = $state(elemenKlas.posisi)
   let koleksiAtribut = $state(elemenKlas.klas.koleksiAtribut)
   let koleksiOperasi = $state(elemenKlas.klas.koleksiOperasi)
@@ -71,7 +74,6 @@
 
   // === OPERASI ===
   $effect(() => {
-    nama = elemenKlas.klas.nama
     koleksiAtribut = elemenKlas.klas.koleksiAtribut
   })
 
@@ -116,9 +118,9 @@
   let namaKlasSementara = $state('')
   let elemenInputNamaKlas: HTMLInputElement | null = $state(null)
 
-  function mulaiMengeditNamaKlas(): void {
+  async function mulaiMengeditNamaKlas(): Promise<void> {
+    namaKlasSementara = await get(nama)
     window.addEventListener('click', tanganiKlikSaatMengedit)
-    namaKlasSementara = nama
     mengedit = true
     mulaiMengedit()
   }
@@ -134,7 +136,7 @@
   function akhiriMengeditNamaKlas(terapkan = true): void {
     window.removeEventListener('click', tanganiKlikSaatMengedit)
     if (terapkan) {
-      ubahNamaElemenKlas(elemenKlas.klas, namaKlasSementara)
+      ubahNamaElemenKlas(klasLangsung.dapatkanId(), namaKlasSementara)
     }
     namaKlasSementara = ''
     mengedit = false
@@ -432,7 +434,7 @@
         />
       {/if}
       <span class={mengedit ? 'opacity-0' : ''}>
-        {nama}
+        {$nama}
       </span>
     </div>
 

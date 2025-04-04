@@ -22,34 +22,6 @@ export class Proyek {
   }
 
   // klas
-  tambahKlasBaru(): Klas {
-    let nomorKlasBaru = 1
-    const frasaKlasBaru = 'KlasBaru'
-    this.koleksiKlas.forEach((klas) => {
-      if (new RegExp('^' + frasaKlasBaru).test(klas.nama)) {
-        const nomorKlasBaruSekarang = parseInt(klas.nama.slice(frasaKlasBaru.length))
-        if (!isNaN(nomorKlasBaruSekarang)) {
-          nomorKlasBaru = nomorKlasBaruSekarang + 1
-        }
-      }
-    })
-    const klas = new Klas({ nama: frasaKlasBaru + nomorKlasBaru.toString() })
-    this.koleksiKlas.push(klas)
-    return klas
-  }
-
-  ubahNamaKlas(klas: Klas, nama: string): void {
-    const klasSelainTerkait = this.koleksiKlas.filter((itemKlas) => itemKlas != klas)
-    if (this.koleksiKlas.length - 1 == klasSelainTerkait.length) {
-      const namaSama = klasSelainTerkait.find((itemKlas) => itemKlas.nama == nama)
-      if (!namaSama) {
-        klas.nama = nama
-      } else {
-        throw new GalatNamaSama(nama, TipeElemen.Klas)
-      }
-    }
-  }
-
   hapusKlas(klas: Klas): void {
     const indeksKlasTerkait = this.koleksiKlas.findIndex((itemKlas: Klas) => itemKlas === klas)
     if (indeksKlasTerkait > -1) {

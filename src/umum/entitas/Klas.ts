@@ -3,10 +3,10 @@ import { KlasPb } from '../proto/kri'
 import { TipeElemen } from '../tipe/TipeElemen'
 import { Asosiasi } from './Asosiasi'
 import { Atribut, ParameterBuatAtribut } from './Atribut'
-import { Komponen } from './Komponen'
+import { ElemenBernama } from './ElemenBernama'
 import { Operasi, ParameterBuatOperasi } from './Operasi'
 
-export class Klas extends Komponen {
+export class Klas extends ElemenBernama {
   public koleksiAtribut: Atribut[]
   public koleksiOperasi: Operasi[]
   public koleksiAsosiasi: Asosiasi[]
