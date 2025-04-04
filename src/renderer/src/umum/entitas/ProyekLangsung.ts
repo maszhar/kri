@@ -23,6 +23,7 @@ export class ProyekLangsung extends Proyek {
       koleksiSekarang.push(diagramKlasLangsung)
       return koleksiSekarang
     })
+    this.koleksiDiagramKlas.push(diagramKlasLangsung)
     return diagramKlasLangsung
   }
 }
