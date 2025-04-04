@@ -1,15 +1,15 @@
 <script lang="ts">
-  import type { DiagramKlas } from '../../../../../umum/entitas/DiagramKlas'
   import type { Model } from '../../../../../umum/entitas/Model'
   import type { SequenceDiagram } from '../../../../../umum/entitas/SequenceDiagram'
   import { Koordinat } from '../../../../../umum/entitas/Koordinat'
   import ItemMenuKonteks from '../ItemMenuKonteks.svelte'
   import MenuKonteks from '../MenuKonteks.svelte'
   import TampilanItemKomponenProyek from './komponen/TampilanItemKomponenProyek.svelte'
+  import type { DiagramKlasLangsung } from '../../entitas/DiagramKlasLangsung'
 
   interface Properti {
     koleksiSequenceDiagram: SequenceDiagram[]
-    koleksiDiagramKlas: DiagramKlas[]
+    koleksiDiagramKlasLangsung: DiagramKlasLangsung[]
     modelAktif: Model | null
     saatBuatSequenceDiagram: () => void
     saatBukaSequenceDiagram: (indeks: number) => void
@@ -18,7 +18,7 @@
   }
   const {
     koleksiSequenceDiagram,
-    koleksiDiagramKlas,
+    koleksiDiagramKlasLangsung,
     modelAktif,
     saatBuatSequenceDiagram,
     saatBukaSequenceDiagram,
@@ -100,7 +100,7 @@
     Diagram Klas
   </TampilanItemKomponenProyek>
 
-  {#each koleksiDiagramKlas as diagramKlas, indeks}
+  {#each koleksiDiagramKlasLangsung as diagramKlas, indeks}
     <TampilanItemKomponenProyek
       level={2}
       saatDipilih={(): void => pilih(indeks + 2)}
@@ -115,9 +115,9 @@
 
   <TampilanItemKomponenProyek
     level={1}
-    saatDipilih={(): void => pilih(koleksiDiagramKlas.length + 3)}
-    indeks={koleksiDiagramKlas.length + 3}
-    dipilih={itemDipilih === koleksiDiagramKlas.length + 3}
+    saatDipilih={(): void => pilih(koleksiDiagramKlasLangsung.length + 3)}
+    indeks={koleksiDiagramKlasLangsung.length + 3}
+    dipilih={itemDipilih === koleksiDiagramKlasLangsung.length + 3}
     saatMenuKonteks={tampilkanMenuKonteksSequenceDiagram}
   >
     Sequence Diagram
@@ -126,9 +126,9 @@
   {#each koleksiSequenceDiagram as sequenceDiagram, indeks}
     <TampilanItemKomponenProyek
       level={2}
-      saatDipilih={(): void => pilih(koleksiDiagramKlas.length + 4 + indeks)}
-      indeks={koleksiDiagramKlas.length + 4 + indeks}
-      dipilih={itemDipilih === koleksiDiagramKlas.length + 4 + indeks}
+      saatDipilih={(): void => pilih(koleksiDiagramKlasLangsung.length + 4 + indeks)}
+      indeks={koleksiDiagramKlasLangsung.length + 4 + indeks}
+      dipilih={itemDipilih === koleksiDiagramKlasLangsung.length + 4 + indeks}
       aktif={modelAktif === sequenceDiagram}
       saatBuka={(): void => saatBukaSequenceDiagram(indeks)}
     >

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Proyek } from '../../umum/entitas/Proyek'
   import Dasar from './umum/ui/Dasar.svelte'
   import Jendela from './umum/ui/Jendela.svelte'
   import PanelAtas from './umum/ui/panel-atas/PanelAtas.svelte'
@@ -9,27 +8,35 @@
   import { SequenceDiagram } from '../../umum/entitas/SequenceDiagram'
   import type { Klas } from '../../umum/entitas/Klas'
   import PanelKiri from './umum/ui/panel-kiri/PanelKiri.svelte'
-  import { DiagramKlas } from '../../umum/entitas/DiagramKlas'
   import TampilanDiagramKlas from './klas/TampilanDiagramKlas.svelte'
   import TampilanPesan from './umum/ui/TampilanPesan.svelte'
+  import { ProyekLangsung } from './umum/entitas/ProyekLangsung'
+  import { get } from 'svelte/store'
+  import { DiagramKlasLangsung } from './umum/entitas/DiagramKlasLangsung'
 
-  let proyek: Proyek = new Proyek()
+  // === Atribut ===
+
+  // proyek
+  let proyek = new ProyekLangsung()
+
+  // penyimpanan
   let lokasiPenyimpananProyek = ''
 
+  // klas
+  const koleksiDiagramKlasLangsung = proyek.dapatkanKoleksiDiagramKlasLangsung()
   let koleksiSequenceDiagram: SequenceDiagram[] = $state([])
-  let koleksiDiagramKlas: DiagramKlas[] = $state([])
   let modelAktif: Model | null = $state(null)
 
   let pesan: string | null = $state(null)
 
   async function bukaProyek(): Promise<void> {
-    const dataProyek = await window.mesin.bukaProyek()
-    if (!dataProyek) {
-      return
-    }
-    proyek = Proyek.bongkarBungkusanData(dataProyek.data)
-    lokasiPenyimpananProyek = dataProyek.lokasi
-    modelAktif = proyek.koleksiSequenceDiagram[0]
+    // const dataProyek = await window.mesin.bukaProyek()
+    // if (!dataProyek) {
+    //   return
+    // }
+    // proyek = Proyek.bongkarBungkusanData(dataProyek.data)
+    // lokasiPenyimpananProyek = dataProyek.lokasi
+    // modelAktif = proyek.koleksiSequenceDiagram[0]
   }
 
   async function simpanProyek(): Promise<void> {
@@ -81,13 +88,12 @@
     modelAktif = koleksiSequenceDiagram[indeksSequenceDiagramLamaTerkait]
   }
 
-  function bukaDiagramKlas(indeks: number): void {
-    modelAktif = koleksiDiagramKlas[indeks]
+  async function bukaDiagramKlas(indeks: number): Promise<void> {
+    modelAktif = (await get(koleksiDiagramKlasLangsung))[indeks]
   }
 
   function buatDiagramKlas(): void {
     const diagramKlas = proyek.tambahDiagramKlasBaru()
-    koleksiDiagramKlas = proyek.koleksiDiagramKlas
     modelAktif = diagramKlas
   }
 
@@ -106,7 +112,6 @@
 
   onMount(() => {
     koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
-    koleksiDiagramKlas = proyek.koleksiDiagramKlas
   })
 </script>
 
@@ -122,7 +127,7 @@
       saatBuatSequenceDiagram={buatSequenceDiagram}
       {modelAktif}
       saatBukaSequenceDiagram={bukaSequenceDiagram}
-      {koleksiDiagramKlas}
+      koleksiDiagramKlasLangsung={$koleksiDiagramKlasLangsung}
       saatBuatDiagramKlas={buatDiagramKlas}
       saatBukaDiagramKlas={bukaDiagramKlas}
     />
@@ -133,7 +138,7 @@
           sequenceDiagram={modelAktif}
           saatSequenceDiagramDiperbarui={perbaruiSequenceDiagram}
         />
-      {:else if modelAktif instanceof DiagramKlas}
+      {:else if modelAktif instanceof DiagramKlasLangsung}
         <TampilanDiagramKlas
           diagramKlas={modelAktif}
           {tambahKlasBaru}

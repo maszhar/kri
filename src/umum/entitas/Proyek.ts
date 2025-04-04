@@ -58,12 +58,6 @@ export class Proyek {
   }
 
   // diagram urutan
-  tambahDiagramKlasBaru(): DiagramKlas {
-    const diagramKlas = new DiagramKlas()
-    this.koleksiDiagramKlas.push(diagramKlas)
-    return diagramKlas
-  }
-
   tambahSequenceDiagramBaru(): SequenceDiagram {
     const sequenceDiagram = new SequenceDiagram()
     this.koleksiSequenceDiagram.push(sequenceDiagram)
@@ -125,7 +119,7 @@ export class Proyek {
   }
 }
 
-interface ParameterBuatProyek {
+export interface ParameterBuatProyek {
   koleksiKlas?: Klas[]
   koleksiSequenceDiagram?: SequenceDiagram[]
   koleksiDiagramKlas?: DiagramKlas[]

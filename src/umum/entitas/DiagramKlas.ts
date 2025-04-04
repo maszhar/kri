@@ -29,7 +29,7 @@ export class DiagramKlas extends Model {
   }
 }
 
-interface ParameterBuatDiagramKlas {
+export interface ParameterBuatDiagramKlas {
   nama?: string
   koleksiElemenKlas?: ElemenKlas[]
 }

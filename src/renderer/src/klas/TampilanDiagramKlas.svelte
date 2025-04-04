@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { Asosiasi } from '../../../umum/entitas/Asosiasi'
-  import type { DiagramKlas } from '../../../umum/entitas/DiagramKlas'
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import type { Klas } from '../../../umum/entitas/Klas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
   import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
   import { TipeElemen } from '../../../umum/tipe/TipeElemen'
+  import type { DiagramKlasLangsung } from '../umum/entitas/DiagramKlasLangsung'
   import { Ukuran2D } from '../umum/entitas/Ukuran2D'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
@@ -17,7 +17,7 @@
   // === ATRIBUT ===
 
   interface Properti {
-    diagramKlas: DiagramKlas
+    diagramKlas: DiagramKlasLangsung
     tambahKlasBaru: () => Klas
     ubahNamaKlas: (klas: Klas, nama: string) => void
     hapusKlas: (klas: Klas) => void

@@ -20,7 +20,7 @@ export class ElemenKlas extends Elemen {
   }
 }
 
-interface ParameterBuatElemenKlas {
+export interface ParameterBuatElemenKlas {
   klas: Klas
   posisi?: Koordinat
 }
