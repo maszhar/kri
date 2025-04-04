@@ -29,7 +29,7 @@
   // elemen web
   let elemenKanvas: Kanvas
   let ukuranKanvas = $state(new Ukuran2D(800, 600))
-  let koleksiElemenKlas: ElemenKlas[] = $state([])
+  let koleksiElemenKlas = diagramKlas.dapatkanKoleksiElemenKlasLangsung()
 
   let posisiMenuDiagramKlas: Koordinat | null = $state(null)
 
@@ -64,7 +64,6 @@
         posisiMenuDiagramKlas.y - elemenKanvas.getYAbsolut()
       )
     )
-    koleksiElemenKlas = diagramKlas.koleksiElemenKlas
   }
 
   function tanganiTambahElemenKlasBaru(): void {
@@ -80,7 +79,6 @@
     try {
       ubahNamaKlas(klas, nama)
       diagramKlas.terapkanPerubahanKlas(indeks)
-      koleksiElemenKlas = diagramKlas.koleksiElemenKlas
     } catch (e: any) {
       if (e instanceof GalatNamaSama && e.tipe === TipeElemen.Klas) {
         tampilkanPesan(`Nama klas '${e.nama}' telah dipakai.`)
@@ -99,15 +97,6 @@
     }
   }
 
-  $effect(() => {
-    koleksiElemenKlas = diagramKlas.koleksiElemenKlas
-    koleksiAsosiasi = diagramKlas.koleksiElemenKlas
-      .map((elemenKlas) => elemenKlas.klas.koleksiAsosiasi)
-      .reduce((pre, cur) => {
-        return [...pre, ...cur]
-      }, [])
-  })
-
   // kunci saat ada yang mengedit
   let adaYangMengedit = $state(false)
   function mulaiMengedit(): void {
@@ -119,10 +108,10 @@
 
   // hapus klas
   function hapusElemenKlas(indeks: number): void {
-    const klasTerkait = diagramKlas.koleksiElemenKlas[indeks].klas
-    diagramKlas.hapusElemenKlas(indeks)
-    hapusKlas(klasTerkait)
-    koleksiElemenKlas = diagramKlas.koleksiElemenKlas
+    // const klasTerkait = diagramKlas.koleksiElemenKlas[indeks].klas
+    // diagramKlas.hapusElemenKlas(indeks)
+    // hapusKlas(klasTerkait)
+    // koleksiElemenKlas = diagramKlas.koleksiElemenKlas
   }
 
   // tangani buat asosiasi
@@ -179,7 +168,7 @@
   saatBukaMenuKonteks={bukaMenuDiagramKlas}
   saatDiklik={tanganiKanvasDiklik}
 >
-  {#each koleksiElemenKlas as elemenKlas, indeks}
+  {#each $koleksiElemenKlas as elemenKlas, indeks}
     <TampilanElemenKlas
       {elemenKlas}
       {indeks}
