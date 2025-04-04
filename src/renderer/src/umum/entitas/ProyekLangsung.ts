@@ -46,12 +46,12 @@ export class ProyekLangsung extends Proyek {
     return klas
   }
 
-  ubahNamaKlas(idKlas: number, namaBaru: string): void {
-    const klasSelainTerkait = this.koleksiKlas.filter((itemKlas) => itemKlas.id !== idKlas)
+  ubahNamaKlas(klasTerkait: KlasLangsung, namaBaru: string): void {
+    const klasSelainTerkait = this.koleksiKlas.filter((itemKlas) => itemKlas !== klasTerkait)
+
     if (this.koleksiKlas.length - 1 == klasSelainTerkait.length) {
       const namaSama = klasSelainTerkait.find((itemKlas) => itemKlas.dapatkanNama() == namaBaru)
       if (!namaSama) {
-        const klasTerkait = this.koleksiKlas.find((klas) => klas.id == idKlas) as KlasLangsung
         klasTerkait.aturNama(namaBaru)
       } else {
         throw new GalatNamaSama(namaBaru, TipeElemen.KLAS)

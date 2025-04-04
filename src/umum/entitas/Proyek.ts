@@ -2,8 +2,6 @@ import { ProyekPb } from '../proto/kri'
 import { DiagramKlas } from './DiagramKlas'
 import { Klas } from './Klas'
 import { SequenceDiagram } from './SequenceDiagram'
-import { GalatNamaSama } from '../galat/GalatNamaSama'
-import { TipeElemen } from '../tipe/TipeElemen'
 
 export class Proyek {
   koleksiKlas: Klas[]

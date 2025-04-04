@@ -3,6 +3,7 @@
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import type { Klas } from '../../../umum/entitas/Klas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
+  import type { Proyek } from '../../../umum/entitas/Proyek'
   import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
   import { TipeElemen } from '../../../umum/tipe/TipeElemen'
   import type { DiagramKlasLangsung } from '../umum/entitas/DiagramKlasLangsung'
@@ -20,7 +21,7 @@
   interface Properti {
     diagramKlas: DiagramKlasLangsung
     tambahKlasBaru: () => KlasLangsung
-    ubahNamaKlas: (idKlas: number, nama: string) => void
+    ubahNamaKlas: (klas: Klas, nama: string) => void
     hapusKlas: (klas: Klas) => void
     tampilkanPesan: (pesan: string) => void
   }

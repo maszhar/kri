@@ -14,6 +14,7 @@
   import TampilanAtribut from './TampilanAtribut.svelte'
   import TampilanKompartemen from './TampilanKompartemen.svelte'
   import TampilanOperasi from './TampilanOperasi.svelte'
+  import type { KlasLangsung } from '../umum/entitas/KlasLangsung'
 
   // === ATRIBUT ===
 
@@ -24,7 +25,7 @@
     mintaDipilih: () => void
     indeks: number
     dapatkanKoordinatPojokKiriAtasKanvas: () => Koordinat
-    ubahNamaElemenKlas: (idKlas: number, nama: string) => void
+    ubahNamaElemenKlas: (idKlas: KlasLangsung, nama: string) => void
     mulaiMengedit: () => void
     akhiriMengedit: () => void
     hapus: () => void
@@ -136,7 +137,7 @@
   function akhiriMengeditNamaKlas(terapkan = true): void {
     window.removeEventListener('click', tanganiKlikSaatMengedit)
     if (terapkan) {
-      ubahNamaElemenKlas(klasLangsung.dapatkanId(), namaKlasSementara)
+      ubahNamaElemenKlas(klasLangsung, namaKlasSementara)
     }
     namaKlasSementara = ''
     mengedit = false

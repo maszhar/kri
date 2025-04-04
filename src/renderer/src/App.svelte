@@ -58,8 +58,8 @@
     return proyek.tambahKlasBaru()
   }
 
-  function ubahNamaKlas(idKlas: number, nama: string): void {
-    proyek.ubahNamaKlas(idKlas, nama)
+  function ubahNamaKlas(klas: KlasLangsung, nama: string): void {
+    proyek.ubahNamaKlas(klas, nama)
   }
 
   function hapusKlas(klas: Klas): void {

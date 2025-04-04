@@ -3,21 +3,20 @@ import { KlasLangsung } from './KlasLangsung'
 import { KoordinatLangsung } from './KoordinatLangsung'
 
 export class ElemenKlasLangsung extends ElemenKlas {
-  private klasLangsung: KlasLangsung
-  private posisiLangsung: KoordinatLangsung
-
   constructor(parameter: ParameterBuatElemenKlas) {
     super(parameter)
-
-    this.klasLangsung = new KlasLangsung(parameter.klas)
-    this.posisiLangsung = new KoordinatLangsung(this.posisi.x, this.posisi.y)
   }
 
   dapatkanKlasLangsung(): KlasLangsung {
-    return this.klasLangsung
+    return this.klas as KlasLangsung
   }
 
   dapatkanPosisiLangsung(): KoordinatLangsung {
-    return this.posisiLangsung
+    return this.posisi as KoordinatLangsung
   }
+}
+
+export interface ParameterBuatElemenKlasLangsung {
+  klas: KlasLangsung
+  posisi?: KoordinatLangsung
 }
