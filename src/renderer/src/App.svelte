@@ -14,6 +14,7 @@
   import { get } from 'svelte/store'
   import { DiagramKlasLangsung } from './umum/entitas/DiagramKlasLangsung'
   import type { KlasLangsung } from './umum/entitas/KlasLangsung'
+  import PanelKanan from './umum/ui/panel-kanan/PanelKanan.svelte'
 
   // === Atribut ===
 
@@ -149,5 +150,6 @@
         />
       {/if}
     </Jendela>
+    <PanelKanan />
   </div>
 </Dasar>
