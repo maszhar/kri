@@ -2,25 +2,30 @@
   import type { Snippet } from 'svelte'
 
   interface Properti {
-    indeks: number
     children?: Snippet
+    indeks: number
+    itemDipilih: number
     level?: number
-    dipilih?: boolean
     aktif?: boolean
-    saatDipilih: () => void
+    pilih: (indeks: number) => void
     saatMenuKonteks?: (e: MouseEvent) => void
     saatBuka?: () => void
   }
   const {
     children,
     indeks,
-    saatDipilih,
+    itemDipilih,
+    pilih,
     level = 0,
-    dipilih = false,
     aktif = false,
     saatMenuKonteks,
     saatBuka
   }: Properti = $props()
+
+  let dipilih = $state(itemDipilih === indeks)
+  $effect(() => {
+    dipilih = itemDipilih === indeks
+  })
 
   function saatKeyboardTurun(e: KeyboardEvent): void {
     if (e.key === 'Enter') {
@@ -29,15 +34,15 @@
   }
 
   function tanganiMenuKonteks(e: MouseEvent): void {
-    saatDipilih()
+    pilih(indeks)
     saatMenuKonteks?.(e)
   }
 </script>
 
 <button
   class={`flex flex-nowrap justify-start ${dipilih ? 'bg-blue-300' : ''}`}
-  tabindex={4000 + indeks}
-  onclick={saatDipilih}
+  tabindex={10000 + indeks}
+  onclick={(): void => pilih(indeks)}
   oncontextmenu={tanganiMenuKonteks}
   ondblclick={saatBuka}
   onkeydown={saatKeyboardTurun}

@@ -1,6 +1,6 @@
 :GLOBAL
-11          = Panel Kiri
-4000 - 4999 = Item di Panel Kiri
+10000         = Panel Kiri
+10001 - 19999 = Item di Panel Kiri
 20000         = Kanvas
 
 :DIAGRAM URUTAN

@@ -1,17 +1,25 @@
-import { writable, type Readable, type Writable } from 'svelte/store'
+import { readonly, writable, type Readable, type Writable } from 'svelte/store'
 import { Proyek } from '../../../../umum/entitas/Proyek'
 import { DiagramKlasLangsung } from './DiagramKlasLangsung'
 import { KlasLangsung } from './KlasLangsung'
 import type { SequenceDiagram } from '../../../../umum/entitas/SequenceDiagram'
 import { GalatNamaSama } from '../../../../umum/galat/GalatNamaSama'
 import { TipeElemen } from '../../../../umum/tipe/TipeElemen'
+import { DiagramKasusGunaLangsung } from './DiagramKasusGunaLangsung'
 
 export class ProyekLangsung extends Proyek {
   private koleksiDiagramKlasLangsung: Writable<DiagramKlasLangsung[]> = writable([])
+  private koleksiDiagramKasusGunaLangsung: Writable<DiagramKasusGunaLangsung[]> = writable([])
 
   constructor(parameter: ParameterBuatProyekLangsung = {}) {
-    super(parameter)
+    super({
+      koleksiKlas: parameter.koleksiKlasLangsung,
+      koleksiDiagramKasusGuna: parameter.koleksiDiagramKasusGuna,
+      koleksiDiagramKlas: parameter.koleksiDiagramKlasLangsung,
+      koleksiSequenceDiagram: parameter.koleksiSequenceDiagram
+    })
 
+    this.koleksiDiagramKasusGunaLangsung.set(parameter.koleksiDiagramKasusGuna ?? [])
     this.koleksiDiagramKlasLangsung.set(parameter.koleksiDiagramKlasLangsung ?? [])
   }
 
@@ -59,6 +67,21 @@ export class ProyekLangsung extends Proyek {
     }
   }
 
+  // diagram kasus guna
+  buatDiagramKasusGuna(): DiagramKasusGunaLangsung {
+    const diagramBaru = new DiagramKasusGunaLangsung({ nama: 'DiagramBaru' })
+    this.koleksiDiagramKasusGuna.push(diagramBaru)
+    this.koleksiDiagramKasusGunaLangsung.update((koleksiLama) => {
+      koleksiLama.push(diagramBaru)
+      return koleksiLama
+    })
+    return diagramBaru
+  }
+
+  dapatkanKoleksiDiagramKasusGuna(): Readable<DiagramKasusGunaLangsung[]> {
+    return readonly(this.koleksiDiagramKasusGunaLangsung)
+  }
+
   // diagram klas
   dapatkanKoleksiDiagramKlasLangsung(): Readable<DiagramKlasLangsung[]> {
     return this.koleksiDiagramKlasLangsung
@@ -79,4 +102,5 @@ export interface ParameterBuatProyekLangsung {
   koleksiKlasLangsung?: KlasLangsung[]
   koleksiSequenceDiagram?: SequenceDiagram[]
   koleksiDiagramKlasLangsung?: DiagramKlasLangsung[]
+  koleksiDiagramKasusGuna?: DiagramKasusGunaLangsung[]
 }

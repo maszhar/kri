@@ -29,6 +29,9 @@
   let koleksiSequenceDiagram: SequenceDiagram[] = $state([])
   let modelAktif: Model | null = $state(null)
 
+  // diagram kasus guna
+  const koleksiDiagramKasusGuna = proyek.dapatkanKoleksiDiagramKasusGuna()
+
   let pesan: string | null = $state(null)
 
   async function bukaProyek(): Promise<void> {
@@ -65,6 +68,11 @@
 
   function hapusKlas(klas: Klas): void {
     proyek.hapusKlas(klas)
+  }
+
+  // Diagram kasus guna
+  function buatDiagramKasusGuna(): void {
+    proyek.buatDiagramKasusGuna()
   }
 
   // Diagram urutan
@@ -125,6 +133,7 @@
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} {hasilkanKode} />
   <div class="flex-grow flex items-stretch">
     <PanelKiri
+      koleksiDiagramKasusGuna={$koleksiDiagramKasusGuna}
       {koleksiSequenceDiagram}
       saatBuatSequenceDiagram={buatSequenceDiagram}
       {modelAktif}
@@ -132,6 +141,7 @@
       koleksiDiagramKlasLangsung={$koleksiDiagramKlasLangsung}
       saatBuatDiagramKlas={buatDiagramKlas}
       saatBukaDiagramKlas={bukaDiagramKlas}
+      {buatDiagramKasusGuna}
     />
     <Jendela>
       {#if modelAktif instanceof SequenceDiagram}
