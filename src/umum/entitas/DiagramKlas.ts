@@ -15,6 +15,16 @@ export class DiagramKlas extends Model {
   hapusElemenKlas(indeks: number): void {
     this.koleksiElemenKlas.splice(indeks, 1)
   }
+
+  bungkusUntukAi(): any {
+    /**
+     * Daftar Kunci :
+     * k = koleksi elemen klas
+     */
+    return {
+      k: this.koleksiElemenKlas.map((elemenKlas) => elemenKlas.bungkusUntukAi())
+    }
+  }
 }
 
 export interface ParameterBuatDiagramKlas {

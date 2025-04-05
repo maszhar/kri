@@ -6,6 +6,10 @@ import { Proyek } from '../umum/entitas/Proyek'
 import { ProyekPb } from '../umum/proto/kri'
 import { writeFile, readFile } from 'fs/promises'
 import { PenghasilKode } from './penghasil-kode/PenghasilKode'
+import { KontrolChatAi } from './chat-ai/KontrolChatAi'
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 function createWindow(): void {
   // Create the browser window.
@@ -27,6 +31,15 @@ function createWindow(): void {
     name: 'Proyek Kri',
     extensions: ['kri']
   }
+
+  const kontrolChatAi = new KontrolChatAi(
+    (idPesan: string, potonganPesan: string): void => {
+      mainWindow.webContents.send('laporkanKemajuanChatAi', idPesan, potonganPesan)
+    },
+    (idPesan: string) => mainWindow.webContents.send('laporkanSelesaiChatAi', idPesan),
+    (idPesan: string, galat: string) =>
+      mainWindow.webContents.send('laporkanGalatChatAi', idPesan, galat)
+  )
 
   ipcMain.handle('bukaProyek', async (): Promise<{ lokasi: string; data: unknown } | null> => {
     const hasilBukaBerkas = await dialog.showOpenDialog({
@@ -84,6 +97,10 @@ function createWindow(): void {
     }
 
     await writeFile(lokasiBerkas, binaryProyekKri)
+  })
+
+  ipcMain.on('chatAi', (_, idPesan: string, koleksiPesan: any[]) => {
+    kontrolChatAi.chat(idPesan, koleksiPesan)
   })
 
   const penghasilKode = new PenghasilKode()

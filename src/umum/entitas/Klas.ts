@@ -145,6 +145,18 @@ export class Klas extends ElemenBernama {
       nama: proto.nama
     })
   }
+
+  bungkusUntukAi(): any {
+    /**
+     * Daftar Kunci :
+     * i = id
+     * n = nama
+     */
+    return {
+      i: this.id,
+      n: this.nama
+    }
+  }
 }
 
 interface ParameterBuatKlas {

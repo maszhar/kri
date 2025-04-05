@@ -84,6 +84,16 @@ export class Proyek {
     })
   }
 
+  bungkusUntukAi(): any {
+    /**
+     * Daftar Kunci :
+     * dk = koleksi diagram klas
+     */
+    return {
+      dk: this.koleksiDiagramKlas.map((diagramKlas) => diagramKlas.bungkusUntukAi())
+    }
+  }
+
   buatKlonaSequenceDiagram(indeks: number): void {
     this.koleksiSequenceDiagram[indeks] = this.koleksiSequenceDiagram[indeks].buatKlona()
   }

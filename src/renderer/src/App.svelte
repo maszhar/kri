@@ -19,7 +19,7 @@
   // === Atribut ===
 
   // proyek
-  let proyek = new ProyekLangsung()
+  let proyek = $state(new ProyekLangsung())
 
   // penyimpanan
   let lokasiPenyimpananProyek = ''
@@ -150,6 +150,6 @@
         />
       {/if}
     </Jendela>
-    <PanelKanan />
+    <PanelKanan {proyek} />
   </div>
 </Dasar>

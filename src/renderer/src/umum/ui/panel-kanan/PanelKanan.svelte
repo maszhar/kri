@@ -1,7 +1,13 @@
 <script lang="ts">
   import TampilanChatAi from '../../../chat-ai/TampilanChatAi.svelte'
+  import type { ProyekLangsung } from '../../entitas/ProyekLangsung'
   import { OpsiMenuKanan } from '../../tipe/OpsiMenuKanan'
   import DaftarItemPanelKanan from './DaftarItemPanelKanan.svelte'
+
+  interface Properti {
+    proyek: ProyekLangsung
+  }
+  const { proyek }: Properti = $props()
 
   let menuAktif: OpsiMenuKanan | null = $state(null)
 
@@ -18,6 +24,6 @@
   <DaftarItemPanelKanan pilihAiChat={bukaTutupChatAi} />
 
   {#if menuAktif === OpsiMenuKanan.AI_CHAT}
-    <TampilanChatAi />
+    <TampilanChatAi {proyek} />
   {/if}
 </div>

@@ -18,6 +18,17 @@ export class ElemenKlas extends Elemen {
       posisi: this.posisi
     })
   }
+
+  bungkusUntukAi(): any {
+    /**
+     * Daftar kunci :
+     * p = posisi
+     */
+    return {
+      ...this.klas.bungkusUntukAi(),
+      p: this.posisi.bungkus()
+    }
+  }
 }
 
 export interface ParameterBuatElemenKlas {
