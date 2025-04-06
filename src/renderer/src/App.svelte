@@ -15,6 +15,7 @@
   import { DiagramKlasLangsung } from './umum/entitas/DiagramKlasLangsung'
   import type { KlasLangsung } from './umum/entitas/KlasLangsung'
   import PanelKanan from './umum/ui/panel-kanan/PanelKanan.svelte'
+  import type { CeritaPenggunaLangsung } from './umum/entitas/CeritaPenggunaLangsung'
 
   // === Atribut ===
 
@@ -61,6 +62,10 @@
   }
 
   // cerita pengguna
+  function bukaCeritaPengguna(ceritaPengguna: CeritaPenggunaLangsung): void {
+    modelAktif = ceritaPengguna
+  }
+
   function buatCeritaPengguna(): void {
     const ceritaBaru = proyek.buatCeritaPengguna()
     modelAktif = ceritaBaru
@@ -146,6 +151,7 @@
       koleksiCeritaPengguna={$koleksiCeritaPengguna}
       koleksiDiagramKasusGuna={$koleksiDiagramKasusGuna}
       {koleksiSequenceDiagram}
+      {bukaCeritaPengguna}
       {buatCeritaPengguna}
       saatBuatSequenceDiagram={buatSequenceDiagram}
       saatBukaSequenceDiagram={bukaSequenceDiagram}

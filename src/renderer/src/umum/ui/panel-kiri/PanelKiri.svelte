@@ -15,6 +15,7 @@
     koleksiDiagramKasusGuna: DiagramKasusGunaLangsung[]
     koleksiSequenceDiagram: SequenceDiagram[]
     koleksiDiagramKlasLangsung: DiagramKlasLangsung[]
+    bukaCeritaPengguna: (cerita: CeritaPenggunaLangsung) => void
     buatCeritaPengguna: () => void
     saatBuatSequenceDiagram: () => void
     saatBukaSequenceDiagram: (indeks: number) => void
@@ -28,6 +29,7 @@
     koleksiDiagramKasusGuna,
     koleksiSequenceDiagram,
     koleksiDiagramKlasLangsung,
+    bukaCeritaPengguna,
     buatCeritaPengguna,
     saatBuatSequenceDiagram,
     saatBukaSequenceDiagram,
@@ -128,14 +130,14 @@
     Cerita Pengguna
   </TampilanItemKomponenProyek>
 
-  {#each koleksiCeritaPengguna as ceritaPengguna, indeks}
+  {#each koleksiCeritaPengguna as ceritaPengguna}
     <TampilanItemKomponenProyek
       level={2}
       {pilih}
       indeks={dapatkanIndeks()}
       {itemDipilih}
       aktif={modelAktif === ceritaPengguna}
-      saatBuka={(): void => saatBukaSequenceDiagram(indeks)}
+      saatBuka={(): void => bukaCeritaPengguna(ceritaPengguna)}
     >
       {ceritaPengguna.nama}
     </TampilanItemKomponenProyek>
