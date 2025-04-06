@@ -13,6 +13,7 @@
   import IkonKlas from '../ikon/IkonKlas.svelte'
   import IkonKasusGuna from '../ikon/IkonKasusGuna.svelte'
   import IkonDiagramUrutan from '../ikon/IkonDiagramUrutan.svelte'
+  import IkonProyek from '../ikon/IkonProyek.svelte'
 
   interface Properti {
     modelAktif: Model | null
@@ -121,7 +122,11 @@
   onkeydown={tanganiKeyboardTurunDiPanel}
   bind:this={elemenPanel}
 >
+  <!-- Proyek -->
   <TampilanItemKomponenProyek {pilih} indeks={dapatkanIndeks()} {itemDipilih}>
+    {#snippet ikon()}
+      <IkonProyek class="w-full h-full" />
+    {/snippet}
     Proyek
   </TampilanItemKomponenProyek>
 
