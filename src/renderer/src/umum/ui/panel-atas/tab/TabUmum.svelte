@@ -1,4 +1,5 @@
 <script lang="ts">
+  import IkonBuka from '../../ikon/IkonBuka.svelte'
   import IkonSimpan from '../../ikon/IkonSimpan.svelte'
   import KelompokTombolPanelAtas from '../komponen/KelompokTombolPanelAtas.svelte'
   import TombolBesarPanelAtas from '../komponen/TombolBesarPanelAtas.svelte'
@@ -19,5 +20,10 @@
     Simpan
   </TombolBesarPanelAtas>
   <TombolKecilPanelAtas>Proyek Baru</TombolKecilPanelAtas>
-  <TombolKecilPanelAtas saatDiklik={saatBukaProyekDiklik}>Buka Proyek</TombolKecilPanelAtas>
+  <TombolKecilPanelAtas saatDiklik={saatBukaProyekDiklik}>
+    {#snippet icon()}
+      <IkonBuka class="w-full h-full" />
+    {/snippet}
+    Buka Proyek
+  </TombolKecilPanelAtas>
 </KelompokTombolPanelAtas>
