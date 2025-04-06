@@ -1,7 +1,9 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte'
   import type { IModelLangsung } from '../../../entitas/IModelLangsung'
 
   interface Properti {
+    ikon?: Snippet
     model: IModelLangsung
     indeks: number
     itemDipilih: number
@@ -12,6 +14,7 @@
     saatBuka?: () => void
   }
   const {
+    ikon,
     model,
     indeks,
     itemDipilih,
@@ -52,7 +55,9 @@
   {#if level > 0}
     <svg class="h-4 flex-none" style={`width: ${18 * level}px`}></svg>
   {/if}
-  <div class="w-4 h-4 bg-red-500 mt-0.5 flex-none"></div>
+  <div class="w-4 h-4 mt-0.5 flex-none">
+    {@render ikon?.()}
+  </div>
   <div class={`text-sm text-left ms-1 text-nowrap ${aktif ? 'font-bold' : ''}`}>
     {$nama}
   </div>

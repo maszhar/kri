@@ -9,6 +9,7 @@
   import type { DiagramKasusGunaLangsung } from '../../entitas/DiagramKasusGunaLangsung'
   import type { CeritaPenggunaLangsung } from '../../entitas/CeritaPenggunaLangsung'
   import TampilanItemModel from './komponen/TampilanItemModel.svelte'
+  import IkonCerita from '../ikon/IkonCerita.svelte'
 
   interface Properti {
     modelAktif: Model | null
@@ -129,6 +130,9 @@
     {itemDipilih}
     saatMenuKonteks={tampilkanMenuKonteksCeritaPengguna}
   >
+    {#snippet ikon()}
+      <IkonCerita class="w-full h-full" />
+    {/snippet}
     Cerita Pengguna
   </TampilanItemKomponenProyek>
 
@@ -141,7 +145,11 @@
       aktif={modelAktif === ceritaPengguna}
       saatBuka={(): void => bukaCeritaPengguna(ceritaPengguna)}
       model={ceritaPengguna}
-    />
+    >
+      {#snippet ikon()}
+        <IkonCerita class="w-full h-full" />
+      {/snippet}
+    </TampilanItemModel>
   {/each}
 
   <!-- Diagram Kasus Guna -->
