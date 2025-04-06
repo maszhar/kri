@@ -12,6 +12,7 @@
   import IkonCerita from '../ikon/IkonCerita.svelte'
   import IkonKlas from '../ikon/IkonKlas.svelte'
   import IkonKasusGuna from '../ikon/IkonKasusGuna.svelte'
+  import IkonDiagramUrutan from '../ikon/IkonDiagramUrutan.svelte'
 
   interface Properti {
     modelAktif: Model | null
@@ -214,6 +215,7 @@
     </TampilanItemKomponenProyek>
   {/each}
 
+  <!-- Diagram urutan -->
   <TampilanItemKomponenProyek
     level={1}
     {pilih}
@@ -221,7 +223,10 @@
     {itemDipilih}
     saatMenuKonteks={tampilkanMenuKonteksSequenceDiagram}
   >
-    Sequence Diagram
+    {#snippet ikon()}
+      <IkonDiagramUrutan class="w-full h-full fill-white stroke-black" />
+    {/snippet}
+    Diagram Urutan
   </TampilanItemKomponenProyek>
 
   {#each koleksiSequenceDiagram as sequenceDiagram, indeks}
@@ -233,6 +238,9 @@
       aktif={modelAktif === sequenceDiagram}
       saatBuka={(): void => saatBukaSequenceDiagram(indeks)}
     >
+      {#snippet ikon()}
+        <IkonDiagramUrutan class="w-full h-full fill-white stroke-black" />
+      {/snippet}
       {sequenceDiagram.nama}
     </TampilanItemKomponenProyek>
   {/each}
