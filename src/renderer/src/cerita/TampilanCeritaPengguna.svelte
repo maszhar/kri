@@ -8,8 +8,13 @@
   }
   const { ceritaPengguna }: Properti = $props()
 
-  const namaLangsung = ceritaPengguna.dapatkanNamaLangsung()
-  const ceritaLangsung = ceritaPengguna.dapatkanCeritaLangsung()
+  let namaLangsung = $state(ceritaPengguna.dapatkanNamaLangsung())
+  let ceritaLangsung = $state(ceritaPengguna.dapatkanCeritaLangsung())
+
+  $effect(() => {
+    namaLangsung = ceritaPengguna.dapatkanNamaLangsung()
+    ceritaLangsung = ceritaPengguna.dapatkanCeritaLangsung()
+  })
 </script>
 
 <Kanvas ukuran={new Ukuran2D(800, 600)}>
