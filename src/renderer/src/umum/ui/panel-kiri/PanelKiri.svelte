@@ -10,6 +10,7 @@
   import type { CeritaPenggunaLangsung } from '../../entitas/CeritaPenggunaLangsung'
   import TampilanItemModel from './komponen/TampilanItemModel.svelte'
   import IkonCerita from '../ikon/IkonCerita.svelte'
+  import IkonKlas from '../ikon/IkonKlas.svelte'
 
   interface Properti {
     modelAktif: Model | null
@@ -184,6 +185,9 @@
     {itemDipilih}
     saatMenuKonteks={tampilkanMenuKonteksDiagramKlas}
   >
+    {#snippet ikon()}
+      <IkonKlas class="w-full h-full fill-white stroke-black" />
+    {/snippet}
     Diagram Klas
   </TampilanItemKomponenProyek>
 
@@ -196,6 +200,9 @@
       aktif={modelAktif === diagramKlas}
       saatBuka={(): void => saatBukaDiagramKlas(indeks)}
     >
+      {#snippet ikon()}
+        <IkonKlas class="w-full h-full fill-white stroke-black" />
+      {/snippet}
       {diagramKlas.nama}
     </TampilanItemKomponenProyek>
   {/each}
