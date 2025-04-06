@@ -7,12 +7,15 @@
   import TampilanItemKomponenProyek from './komponen/TampilanItemKomponenProyek.svelte'
   import type { DiagramKlasLangsung } from '../../entitas/DiagramKlasLangsung'
   import type { DiagramKasusGunaLangsung } from '../../entitas/DiagramKasusGunaLangsung'
+  import type { CeritaPenggunaLangsung } from '../../entitas/CeritaPenggunaLangsung'
 
   interface Properti {
+    modelAktif: Model | null
+    koleksiCeritaPengguna: CeritaPenggunaLangsung[]
     koleksiDiagramKasusGuna: DiagramKasusGunaLangsung[]
     koleksiSequenceDiagram: SequenceDiagram[]
     koleksiDiagramKlasLangsung: DiagramKlasLangsung[]
-    modelAktif: Model | null
+    buatCeritaPengguna: () => void
     saatBuatSequenceDiagram: () => void
     saatBukaSequenceDiagram: (indeks: number) => void
     saatBuatDiagramKlas: () => void
@@ -20,10 +23,12 @@
     buatDiagramKasusGuna: () => void
   }
   const {
+    modelAktif,
+    koleksiCeritaPengguna,
     koleksiDiagramKasusGuna,
     koleksiSequenceDiagram,
     koleksiDiagramKlasLangsung,
-    modelAktif,
+    buatCeritaPengguna,
     saatBuatSequenceDiagram,
     saatBukaSequenceDiagram,
     saatBuatDiagramKlas,
@@ -34,11 +39,13 @@
   let itemDipilih = $state(-1)
   let elemenPanel: HTMLDivElement
 
-  const JENIS_MENU_KONTEKS_DIAGRAM_KASUS_GUNA = 1
-  const JENIS_MENU_KONTEKS_DIAGRAM_KLAS = 2
-  const JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM = 3
+  const JENIS_MENU_KONTEKS_CERITA_PENGGUNA = 1
+  const JENIS_MENU_KONTEKS_DIAGRAM_KASUS_GUNA = 2
+  const JENIS_MENU_KONTEKS_DIAGRAM_KLAS = 3
+  const JENIS_MENU_KONTEKS_SEQUENCE_DIAGRAM = 4
   let dataMenuKonteks: { jenis: number; posisi: Koordinat } | null = $state(null)
 
+  // === OPERASI ===
   // indeks
   let indeksTerakhir = -1
 
@@ -60,6 +67,11 @@
 
   function pilih(indeks: number): void {
     itemDipilih = indeks
+  }
+
+  // cerita pengguna
+  function tampilkanMenuKonteksCeritaPengguna(e: MouseEvent): void {
+    bukaMenuKonteks(e, JENIS_MENU_KONTEKS_CERITA_PENGGUNA)
   }
 
   function tampilkanMenuKonteksSequenceDiagram(e: MouseEvent): void {
@@ -104,6 +116,30 @@
   <TampilanItemKomponenProyek {pilih} indeks={dapatkanIndeks()} {itemDipilih}>
     Proyek
   </TampilanItemKomponenProyek>
+
+  <!-- Cerita Pengguna -->
+  <TampilanItemKomponenProyek
+    level={1}
+    {pilih}
+    indeks={dapatkanIndeks()}
+    {itemDipilih}
+    saatMenuKonteks={tampilkanMenuKonteksCeritaPengguna}
+  >
+    Cerita Pengguna
+  </TampilanItemKomponenProyek>
+
+  {#each koleksiCeritaPengguna as ceritaPengguna, indeks}
+    <TampilanItemKomponenProyek
+      level={2}
+      {pilih}
+      indeks={dapatkanIndeks()}
+      {itemDipilih}
+      aktif={modelAktif === ceritaPengguna}
+      saatBuka={(): void => saatBukaSequenceDiagram(indeks)}
+    >
+      {ceritaPengguna.nama}
+    </TampilanItemKomponenProyek>
+  {/each}
 
   <!-- Diagram Kasus Guna -->
   <TampilanItemKomponenProyek
@@ -178,7 +214,11 @@
 </div>
 
 {#if dataMenuKonteks !== null}
-  {#if dataMenuKonteks.jenis === JENIS_MENU_KONTEKS_DIAGRAM_KASUS_GUNA}
+  {#if dataMenuKonteks.jenis === JENIS_MENU_KONTEKS_CERITA_PENGGUNA}
+    <MenuKonteks posisi={dataMenuKonteks.posisi}>
+      <ItemMenuKonteks saatDiklik={buatCeritaPengguna}>Buat cerita pengguna</ItemMenuKonteks>
+    </MenuKonteks>
+  {:else if dataMenuKonteks.jenis === JENIS_MENU_KONTEKS_DIAGRAM_KASUS_GUNA}
     <MenuKonteks posisi={dataMenuKonteks.posisi}>
       <ItemMenuKonteks saatDiklik={buatDiagramKasusGuna}>Buat Diagram Kasus Guna</ItemMenuKonteks>
     </MenuKonteks>

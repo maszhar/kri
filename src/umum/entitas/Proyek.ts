@@ -1,28 +1,28 @@
 import { ProyekPb } from '../proto/kri'
+import { CeritaPengguna } from './CeritaPengguna'
 import { DiagramKasusGuna } from './DiagramKasusGuna'
 import { DiagramKlas } from './DiagramKlas'
 import { Klas } from './Klas'
 import { SequenceDiagram } from './SequenceDiagram'
 
 export class Proyek {
+  // === ATRIBUT ===
+  koleksiCeritaPengguna: CeritaPengguna[]
   koleksiKlas: Klas[]
   koleksiSequenceDiagram: SequenceDiagram[]
   koleksiDiagramKlas: DiagramKlas[]
   protected koleksiDiagramKasusGuna: DiagramKasusGuna[]
 
+  // === KONSTRUKTOR ===
   constructor(parameter: ParameterBuatProyek = {}) {
-    // klas
+    this.koleksiCeritaPengguna = parameter.koleksiCeritaPengguna ?? []
     this.koleksiKlas = parameter.koleksiKlas ?? []
-
     this.koleksiDiagramKasusGuna = parameter.koleksiDiagramKasusGuna ?? []
-
-    // diagram klas
     this.koleksiDiagramKlas = parameter.koleksiDiagramKlas ?? []
-
-    // sequence diagram
     this.koleksiSequenceDiagram = parameter.koleksiSequenceDiagram ?? []
   }
 
+  // === OPERASI ===
   // klas
   hapusKlas(klas: Klas): void {
     const indeksKlasTerkait = this.koleksiKlas.findIndex((itemKlas: Klas) => itemKlas === klas)
@@ -104,6 +104,7 @@ export class Proyek {
 }
 
 export interface ParameterBuatProyek {
+  koleksiCeritaPengguna?: CeritaPengguna[]
   koleksiKlas?: Klas[]
   koleksiSequenceDiagram?: SequenceDiagram[]
   koleksiDiagramKlas?: DiagramKlas[]

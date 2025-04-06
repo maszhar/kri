@@ -6,24 +6,44 @@ import type { SequenceDiagram } from '../../../../umum/entitas/SequenceDiagram'
 import { GalatNamaSama } from '../../../../umum/galat/GalatNamaSama'
 import { TipeElemen } from '../../../../umum/tipe/TipeElemen'
 import { DiagramKasusGunaLangsung } from './DiagramKasusGunaLangsung'
+import { CeritaPenggunaLangsung } from './CeritaPenggunaLangsung'
 
 export class ProyekLangsung extends Proyek {
+  // === ATRIBUT ===
+  private koleksiCeritaPenggunaLangsung: Writable<CeritaPenggunaLangsung[]> = writable([])
   private koleksiDiagramKlasLangsung: Writable<DiagramKlasLangsung[]> = writable([])
   private koleksiDiagramKasusGunaLangsung: Writable<DiagramKasusGunaLangsung[]> = writable([])
 
+  // === KONSTRUKTOR ===
   constructor(parameter: ParameterBuatProyekLangsung = {}) {
     super({
+      koleksiCeritaPengguna: parameter.koleksiCeritaPenggunaLangsung,
       koleksiKlas: parameter.koleksiKlasLangsung,
       koleksiDiagramKasusGuna: parameter.koleksiDiagramKasusGuna,
       koleksiDiagramKlas: parameter.koleksiDiagramKlasLangsung,
       koleksiSequenceDiagram: parameter.koleksiSequenceDiagram
     })
 
+    this.koleksiCeritaPenggunaLangsung.set(parameter.koleksiCeritaPenggunaLangsung ?? [])
     this.koleksiDiagramKasusGunaLangsung.set(parameter.koleksiDiagramKasusGuna ?? [])
     this.koleksiDiagramKlasLangsung.set(parameter.koleksiDiagramKlasLangsung ?? [])
   }
 
   // === OPERASI ===
+  // cerita pengguna
+  dapatkanKoleksiCeritaPenggunaLangsung(): Readable<CeritaPenggunaLangsung[]> {
+    return readonly(this.koleksiCeritaPenggunaLangsung)
+  }
+
+  buatCeritaPengguna(): CeritaPenggunaLangsung {
+    const ceritaBaru = new CeritaPenggunaLangsung({ nama: 'Cerita baru' })
+    this.koleksiCeritaPengguna.push(ceritaBaru)
+    this.koleksiCeritaPenggunaLangsung.update((koleksiLama) => {
+      koleksiLama.push(ceritaBaru)
+      return koleksiLama
+    })
+    return ceritaBaru
+  }
 
   // klas
   tambahKlasBaru(): KlasLangsung {
@@ -99,6 +119,7 @@ export class ProyekLangsung extends Proyek {
 }
 
 export interface ParameterBuatProyekLangsung {
+  koleksiCeritaPenggunaLangsung?: CeritaPenggunaLangsung[]
   koleksiKlasLangsung?: KlasLangsung[]
   koleksiSequenceDiagram?: SequenceDiagram[]
   koleksiDiagramKlasLangsung?: DiagramKlasLangsung[]

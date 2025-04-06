@@ -24,6 +24,9 @@
   // penyimpanan
   let lokasiPenyimpananProyek = ''
 
+  // cerita pengguna
+  const koleksiCeritaPengguna = proyek.dapatkanKoleksiCeritaPenggunaLangsung()
+
   // klas
   const koleksiDiagramKlasLangsung = proyek.dapatkanKoleksiDiagramKlasLangsung()
   let koleksiSequenceDiagram: SequenceDiagram[] = $state([])
@@ -55,6 +58,12 @@
     }
 
     await window.mesin.simpanProyek(lokasiPenyimpananProyek, proyek.bungkusData())
+  }
+
+  // cerita pengguna
+  function buatCeritaPengguna(): void {
+    const ceritaBaru = proyek.buatCeritaPengguna()
+    modelAktif = ceritaBaru
   }
 
   // Klas
@@ -133,10 +142,12 @@
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} {hasilkanKode} />
   <div class="flex-grow flex items-stretch">
     <PanelKiri
+      {modelAktif}
+      koleksiCeritaPengguna={$koleksiCeritaPengguna}
       koleksiDiagramKasusGuna={$koleksiDiagramKasusGuna}
       {koleksiSequenceDiagram}
+      {buatCeritaPengguna}
       saatBuatSequenceDiagram={buatSequenceDiagram}
-      {modelAktif}
       saatBukaSequenceDiagram={bukaSequenceDiagram}
       koleksiDiagramKlasLangsung={$koleksiDiagramKlasLangsung}
       saatBuatDiagramKlas={buatDiagramKlas}
