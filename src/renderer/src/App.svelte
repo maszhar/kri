@@ -15,7 +15,8 @@
   import { DiagramKlasLangsung } from './umum/entitas/DiagramKlasLangsung'
   import type { KlasLangsung } from './umum/entitas/KlasLangsung'
   import PanelKanan from './umum/ui/panel-kanan/PanelKanan.svelte'
-  import type { CeritaPenggunaLangsung } from './umum/entitas/CeritaPenggunaLangsung'
+  import { CeritaPenggunaLangsung } from './umum/entitas/CeritaPenggunaLangsung'
+  import TampilanCeritaPengguna from './cerita/TampilanCeritaPengguna.svelte'
 
   // === Atribut ===
 
@@ -161,7 +162,9 @@
       {buatDiagramKasusGuna}
     />
     <Jendela>
-      {#if modelAktif instanceof SequenceDiagram}
+      {#if modelAktif instanceof CeritaPenggunaLangsung}
+        <TampilanCeritaPengguna ceritaPengguna={modelAktif} />
+      {:else if modelAktif instanceof SequenceDiagram}
         <TampilanSequenceDiagram
           {tambahKlasBaru}
           sequenceDiagram={modelAktif}
