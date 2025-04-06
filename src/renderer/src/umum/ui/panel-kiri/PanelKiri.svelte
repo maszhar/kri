@@ -11,6 +11,7 @@
   import TampilanItemModel from './komponen/TampilanItemModel.svelte'
   import IkonCerita from '../ikon/IkonCerita.svelte'
   import IkonKlas from '../ikon/IkonKlas.svelte'
+  import IkonKasusGuna from '../ikon/IkonKasusGuna.svelte'
 
   interface Properti {
     modelAktif: Model | null
@@ -161,6 +162,9 @@
     {itemDipilih}
     saatMenuKonteks={tampilkanMenuKonteksKasusGuna}
   >
+    {#snippet ikon()}
+      <IkonKasusGuna class="w-full h-full stroke-black fill-white" />
+    {/snippet}
     Diagram Kasus Guna
   </TampilanItemKomponenProyek>
 
@@ -173,6 +177,9 @@
       aktif={modelAktif === diagramKasusGuna}
       saatBuka={(): void => saatBukaSequenceDiagram(indeks)}
     >
+      {#snippet ikon()}
+        <IkonKasusGuna class="w-full h-full stroke-black fill-white" />
+      {/snippet}
       {diagramKasusGuna.nama}
     </TampilanItemKomponenProyek>
   {/each}
