@@ -8,6 +8,7 @@
   import type { DiagramKlasLangsung } from '../../entitas/DiagramKlasLangsung'
   import type { DiagramKasusGunaLangsung } from '../../entitas/DiagramKasusGunaLangsung'
   import type { CeritaPenggunaLangsung } from '../../entitas/CeritaPenggunaLangsung'
+  import TampilanItemModel from './komponen/TampilanItemModel.svelte'
 
   interface Properti {
     modelAktif: Model | null
@@ -41,6 +42,7 @@
   let itemDipilih = $state(-1)
   let elemenPanel: HTMLDivElement
 
+  // menu konteks
   const JENIS_MENU_KONTEKS_CERITA_PENGGUNA = 1
   const JENIS_MENU_KONTEKS_DIAGRAM_KASUS_GUNA = 2
   const JENIS_MENU_KONTEKS_DIAGRAM_KLAS = 3
@@ -131,16 +133,15 @@
   </TampilanItemKomponenProyek>
 
   {#each koleksiCeritaPengguna as ceritaPengguna}
-    <TampilanItemKomponenProyek
+    <TampilanItemModel
       level={2}
       {pilih}
       indeks={dapatkanIndeks()}
       {itemDipilih}
       aktif={modelAktif === ceritaPengguna}
       saatBuka={(): void => bukaCeritaPengguna(ceritaPengguna)}
-    >
-      {ceritaPengguna.nama}
-    </TampilanItemKomponenProyek>
+      model={ceritaPengguna}
+    />
   {/each}
 
   <!-- Diagram Kasus Guna -->

@@ -1,10 +1,11 @@
-import { writable, type Writable } from 'svelte/store'
+import { readonly, writable, type Readable } from 'svelte/store'
 import {
   CeritaPengguna,
   type ParameterBuatCeritaPengguna
 } from '../../../../umum/entitas/CeritaPengguna'
+import type { IModelLangsung } from './IModelLangsung'
 
-export class CeritaPenggunaLangsung extends CeritaPengguna {
+export class CeritaPenggunaLangsung extends CeritaPengguna implements IModelLangsung {
   private namaLangsung = writable('')
   private ceritaLangsung = writable('')
 
@@ -15,11 +16,21 @@ export class CeritaPenggunaLangsung extends CeritaPengguna {
     this.ceritaLangsung.set(this.cerita)
   }
 
-  dapatkanNamaLangsung(): Writable<string> {
-    return this.namaLangsung
+  dapatkanNamaLangsung(): Readable<string> {
+    return readonly(this.namaLangsung)
   }
 
-  dapatkanCeritaLangsung(): Writable<string> {
+  aturNama(nama: string): void {
+    super.aturNama(nama)
+    this.namaLangsung.set(nama)
+  }
+
+  dapatkanCeritaLangsung(): Readable<string> {
     return this.ceritaLangsung
+  }
+
+  aturCerita(cerita: string): void {
+    this.cerita = cerita
+    this.ceritaLangsung.set(cerita)
   }
 }

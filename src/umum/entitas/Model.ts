@@ -4,6 +4,10 @@ export class Model {
   constructor(parameter: ParameterBuatModel = {}) {
     this.nama = parameter.nama ?? ''
   }
+
+  aturNama(nama: string): void {
+    this.nama = nama
+  }
 }
 
 interface ParameterBuatModel {
