@@ -14,6 +14,7 @@
   import IkonKasusGuna from '../ikon/IkonKasusGuna.svelte'
   import IkonDiagramUrutan from '../ikon/IkonDiagramUrutan.svelte'
   import IkonProyek from '../ikon/IkonProyek.svelte'
+  import IkonKebutuhan from '../ikon/IkonKebutuhan.svelte'
 
   interface Properti {
     modelAktif: Model | null
@@ -159,6 +160,20 @@
       {/snippet}
     </TampilanItemModel>
   {/each}
+
+  <!-- Kebutuhan sistem -->
+  <TampilanItemKomponenProyek
+    level={1}
+    {pilih}
+    indeks={dapatkanIndeks()}
+    {itemDipilih}
+    saatMenuKonteks={(): void => {}}
+  >
+    {#snippet ikon()}
+      <IkonKebutuhan class="w-full h-full" />
+    {/snippet}
+    Kebutuhan Sistem
+  </TampilanItemKomponenProyek>
 
   <!-- Diagram Kasus Guna -->
   <TampilanItemKomponenProyek
