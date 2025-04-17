@@ -45,7 +45,7 @@
         {idAktif}
         {pilih}
         bukaMenu={(posisiKlik: Koordinat): void =>
-          bukaMenu(posisiKlik, JenisMenuPanelKiri.SISTEM, sistem)}
+          bukaMenu(posisiKlik, JenisMenuPanelKiri.JUDUL_SISTEM, sistem)}
         punyaChildren={true}
       >
         {#snippet ikon()}

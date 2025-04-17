@@ -137,16 +137,16 @@
     }
   ])
 
-  petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [
-    {
-      label: 'Buat subsistem',
-      aksi: (): void => {
-        if (refMenu instanceof Sistem) {
-          refMenu.buatSubsistem()
-        }
+  const menuBuatSubsistem = {
+    label: 'Buat subsistem',
+    aksi: (): void => {
+      if (refMenu instanceof Sistem) {
+        refMenu.buatSubsistem()
       }
     }
-  ])
+  }
+  petaItemMenu.set(JenisMenuPanelKiri.JUDUL_SISTEM, [menuBuatSubsistem])
+  petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [menuBuatSubsistem])
 
   let posisiMenu: Koordinat | null = $state(null)
   let menuAktif: ItemMenu[] | null = $state(null)
