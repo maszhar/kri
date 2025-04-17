@@ -2,14 +2,27 @@ import { Sistem, type ParameterBuatSistem } from '../../../../umum/entitas/Siste
 
 export class SistemLangsung extends Sistem {
   private namaLangsung = $state('')
+  private koleksiSubsistemLangsung: SistemLangsung[] = $state([])
 
   constructor(parameter: ParameterBuatSistem = {}) {
     super(parameter)
 
     this.namaLangsung = this.nama
+    this.koleksiSubsistemLangsung = this.koleksiSubsistem as SistemLangsung[]
   }
 
   dapatkanNamaLangsung(): string {
     return this.namaLangsung
+  }
+
+  dapatkanKoleksiSubsistemLangsung(): SistemLangsung[] {
+    return this.koleksiSubsistemLangsung
+  }
+
+  override buatSubsistem(parameter?: ParameterBuatSistem): SistemLangsung {
+    const subsistemBaru = new SistemLangsung(parameter)
+    super.buatSubsistem({}, subsistemBaru)
+    this.koleksiSubsistemLangsung.push(subsistemBaru)
+    return subsistemBaru
   }
 }

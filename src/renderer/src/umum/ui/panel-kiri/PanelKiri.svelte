@@ -19,6 +19,7 @@
   import ItemPanelKiriProyek from './komponen/ItemPanelKiriProyek.svelte'
   import { JenisMenuPanelKiri } from './JenisMenuPanelKiri'
   import type { IsiProyek } from '../../../../../umum/entitas/IsiProyek'
+  import { Sistem } from '../../../../../umum/entitas/Sistem'
 
   interface Properti {
     proyek: ProyekLangsung
@@ -126,11 +127,23 @@
   }
 
   const petaItemMenu: Map<JenisMenuPanelKiri, ItemMenu[]> = new Map()
+
   petaItemMenu.set(JenisMenuPanelKiri.PROYEK, [
     {
       label: 'Buat sistem',
       aksi: (): void => {
         proyek.buatSistem()
+      }
+    }
+  ])
+
+  petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [
+    {
+      label: 'Buat subsistem',
+      aksi: (): void => {
+        if (refMenu instanceof Sistem) {
+          refMenu.buatSubsistem()
+        }
       }
     }
   ])

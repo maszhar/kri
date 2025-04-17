@@ -5,6 +5,7 @@
   import IkonSistem from '../../ikon/IkonSistem.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
+  import ItemPanelKiriSistem from './ItemPanelKiriSistem.svelte'
 
   interface Properti {
     level: number
@@ -17,6 +18,8 @@
   const { level, sistem, idAktif, pilih, bukaMenu, idPrefix }: Properti = $props()
 
   const id = parseInt(`${idPrefix}${sistem.dapatkanId()}`)
+
+  const koleksiSubsistem = sistem.dapatkanKoleksiSubsistemLangsung()
 </script>
 
 <ItemPanelKiri
@@ -27,8 +30,40 @@
   bukaMenu={(posisiKlik: Koordinat): void =>
     bukaMenu(posisiKlik, JenisMenuPanelKiri.SISTEM, sistem)}
   {id}
+  punyaChildren={koleksiSubsistem.length > 0}
 >
   {#snippet ikon()}
     <IkonSistem class="w-full h-full" />
+  {/snippet}
+
+  {#snippet itemChildren(level: number)}
+    {#if koleksiSubsistem.length > 0}
+      <ItemPanelKiri
+        id={parseInt(`${id}0`)}
+        {level}
+        label="Subsistem"
+        {idAktif}
+        {pilih}
+        bukaMenu={(posisiKlik: Koordinat): void =>
+          bukaMenu(posisiKlik, JenisMenuPanelKiri.SISTEM, sistem)}
+        punyaChildren={true}
+      >
+        {#snippet ikon()}
+          <IkonSistem class="w-full h-full" />
+        {/snippet}
+        {#snippet itemChildren(levelDalam: number)}
+          {#each koleksiSubsistem as subsistem}
+            <ItemPanelKiriSistem
+              {bukaMenu}
+              {idAktif}
+              level={levelDalam}
+              idPrefix={parseInt(`${id}0`)}
+              sistem={subsistem}
+              {pilih}
+            />
+          {/each}
+        {/snippet}
+      </ItemPanelKiri>
+    {/if}
   {/snippet}
 </ItemPanelKiri>

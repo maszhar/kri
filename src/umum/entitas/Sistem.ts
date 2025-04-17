@@ -6,10 +6,10 @@ import { TargetSistem } from '../tipe/TargetSistem'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 
 export class Sistem extends IsiProyek {
-  private target: TargetSistem = TargetSistem.TidakDiatur
-  private framework: Framework = Framework.TidakDiatur
-  private bahasaPemrograman: BahasaPemrograman = BahasaPemrograman.TidakDiatur
-  private koleksiSubsistem: Sistem[]
+  protected target: TargetSistem = TargetSistem.TidakDiatur
+  protected framework: Framework = Framework.TidakDiatur
+  protected bahasaPemrograman: BahasaPemrograman = BahasaPemrograman.TidakDiatur
+  protected koleksiSubsistem: Sistem[]
 
   constructor(parameter: ParameterBuatSistem = {}) {
     super({
@@ -81,14 +81,14 @@ export class Sistem extends IsiProyek {
     return this.koleksiSubsistem
   }
 
-  buatSubsistem(parameter: ParameterBuatSistem): Sistem {
+  buatSubsistem(parameter: ParameterBuatSistem = {}, objekLama?: Sistem): Sistem {
     let idSubsistemTerbesar = 0
     if (this.koleksiSubsistem.length > 0) {
       idSubsistemTerbesar = Math.max(...this.koleksiSubsistem.map((subsistem) => subsistem.id))
     }
-    parameter.id = idSubsistemTerbesar + 1
 
-    const subsistem = new Sistem(parameter)
+    const subsistem = objekLama ?? new Sistem(parameter)
+    subsistem.aturId(idSubsistemTerbesar + 1)
     this.koleksiSubsistem.push(subsistem)
     return subsistem
   }
