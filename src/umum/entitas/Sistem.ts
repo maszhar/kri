@@ -13,7 +13,7 @@ import {
 } from './PetaDukunganSistem'
 
 export class Sistem extends IsiProyek {
-  protected target: TargetSistem = TargetSistem.TIDAK_DIATUR
+  protected targetSistem: TargetSistem = TargetSistem.TIDAK_DIATUR
   protected platform: Platform = Platform.TIDAK_DIATUR
   protected framework: Framework = Framework.TIDAK_DIATUR
   protected bahasaPemrograman: BahasaPemrograman = BahasaPemrograman.TIDAK_DIATUR
@@ -24,30 +24,21 @@ export class Sistem extends IsiProyek {
       nama: parameter.nama ?? 'Sistem baru'
     })
 
-    this.aturTarget(parameter.target ?? TargetSistem.TIDAK_DIATUR)
-
-    if (parameter.platform !== undefined) {
-      this.aturPlatform(parameter.platform)
-    }
-
-    if (parameter.framework !== undefined) {
-      this.aturFramework(parameter.framework)
-    }
-
-    if (parameter.bahasaPemrograman !== undefined) {
-      this.aturBahasaPemrograman(parameter.bahasaPemrograman)
-    }
+    this.targetSistem = parameter.target ?? TargetSistem.TIDAK_DIATUR
+    this.platform = parameter.platform ?? Platform.TIDAK_DIATUR
+    this.framework = parameter.framework ?? Framework.TIDAK_DIATUR
+    this.bahasaPemrograman = parameter.bahasaPemrograman ?? BahasaPemrograman.TIDAK_DIATUR
 
     this.koleksiSubsistem = parameter.koleksiSubsistem ?? []
   }
 
   dapatkanTarget(): TargetSistem {
-    return this.target
+    return this.targetSistem
   }
 
-  aturTarget(target: TargetSistem): void {
-    this.target = target
-    this.platform = dukunganPlatform[this.target][0]
+  aturTargetSistem(target: TargetSistem): void {
+    this.targetSistem = target
+    this.platform = dukunganPlatform[this.targetSistem][0]
     this.framework = dukunganFramework[this.platform][0]
     this.bahasaPemrograman = dukunganBahasaPemrograman[this.framework][0]
   }
@@ -57,8 +48,8 @@ export class Sistem extends IsiProyek {
   }
 
   aturPlatform(platform: Platform): void {
-    if (!dukunganPlatform[this.target].includes(platform)) {
-      throw new GalatPlatformTidakDidukung(this.target, platform)
+    if (!dukunganPlatform[this.targetSistem].includes(platform)) {
+      throw new GalatPlatformTidakDidukung(this.targetSistem, platform)
     }
 
     this.platform = platform
