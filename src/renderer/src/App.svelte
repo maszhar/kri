@@ -18,6 +18,9 @@
   import { CeritaPenggunaLangsung } from './umum/entitas/CeritaPenggunaLangsung'
   import TampilanCeritaPengguna from './cerita/TampilanCeritaPengguna.svelte'
   import { ProyekLangsung } from './umum/entitas/ProyekLangsung.svelte'
+  import type { IsiProyek } from '../../umum/entitas/IsiProyek'
+  import { SistemLangsung } from './umum/entitas/SistemLangsung.svelte'
+  import TampilanKonfigurasiSistem from './sistem/TampilanKonfigurasiSistem.svelte'
 
   // === Atribut ===
 
@@ -36,6 +39,7 @@
   const koleksiDiagramKlasLangsung = proyekLama.dapatkanKoleksiDiagramKlasLangsung()
   let koleksiSequenceDiagram: SequenceDiagram[] = $state([])
   let modelAktif: Model | null = $state(null)
+  let isiProyekAktif: IsiProyek | null = $state(null)
 
   // diagram kasus guna
   const koleksiDiagramKasusGuna = proyekLama.dapatkanKoleksiDiagramKasusGuna()
@@ -138,6 +142,11 @@
     pesan = null
   }
 
+  // isi proyek aktif
+  function bukaIsiProyek(isiProyek: IsiProyek): void {
+    isiProyekAktif = isiProyek
+  }
+
   onMount(() => {
     koleksiSequenceDiagram = proyekLama.koleksiSequenceDiagram
   })
@@ -157,6 +166,7 @@
     <PanelKiri
       {proyek}
       {modelAktif}
+      {isiProyekAktif}
       koleksiCeritaPengguna={$koleksiCeritaPengguna}
       koleksiDiagramKasusGuna={$koleksiDiagramKasusGuna}
       {koleksiSequenceDiagram}
@@ -168,6 +178,7 @@
       saatBuatDiagramKlas={buatDiagramKlas}
       saatBukaDiagramKlas={bukaDiagramKlas}
       {buatDiagramKasusGuna}
+      bukaSistem={(sistem: SistemLangsung): void => bukaIsiProyek(sistem)}
     />
     <Jendela>
       {#if modelAktif instanceof CeritaPenggunaLangsung}
@@ -186,6 +197,8 @@
           {hapusKlas}
           {tampilkanPesan}
         />
+      {:else if isiProyekAktif instanceof SistemLangsung}
+        <TampilanKonfigurasiSistem sistem={isiProyekAktif} />
       {/if}
     </Jendela>
     <PanelKanan proyek={proyekLama} />

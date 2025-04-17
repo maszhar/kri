@@ -15,6 +15,11 @@ export class SistemLangsung extends Sistem {
     return this.namaLangsung
   }
 
+  override aturNama(nama: string): void {
+    super.aturNama(nama)
+    this.namaLangsung = nama
+  }
+
   dapatkanKoleksiSubsistemLangsung(): SistemLangsung[] {
     return this.koleksiSubsistemLangsung
   }

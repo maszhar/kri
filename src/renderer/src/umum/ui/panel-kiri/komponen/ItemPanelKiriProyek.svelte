@@ -2,6 +2,7 @@
   import type { IsiProyek } from '../../../../../../umum/entitas/IsiProyek'
   import type { Koordinat } from '../../../../../../umum/entitas/Koordinat'
   import type { ProyekLangsung } from '../../../entitas/ProyekLangsung.svelte'
+  import type { SistemLangsung } from '../../../entitas/SistemLangsung.svelte'
   import IkonProyek from '../../ikon/IkonProyek.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
@@ -12,8 +13,9 @@
     pilih: (id: number) => void
     proyek: ProyekLangsung
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref?: IsiProyek) => void
+    bukaSistem: (sistem: SistemLangsung) => void
   }
-  const { proyek, idAktif, pilih, bukaMenu }: Properti = $props()
+  const { proyek, idAktif, pilih, bukaMenu, bukaSistem }: Properti = $props()
 
   const idProyek = 1
   const koleksiSistem = proyek.dapatkanKoleksiSistemLangsung()
@@ -32,7 +34,15 @@
   {/snippet}
   {#snippet itemChildren(level: number)}
     {#each koleksiSistem as sistem, _i (sistem.dapatkanId())}
-      <ItemPanelKiriSistem {level} {sistem} {idAktif} {pilih} {bukaMenu} idPrefix={idProyek} />
+      <ItemPanelKiriSistem
+        {level}
+        {sistem}
+        {idAktif}
+        {pilih}
+        {bukaMenu}
+        idPrefix={idProyek}
+        {bukaSistem}
+      />
     {/each}
   {/snippet}
 </ItemPanelKiri>

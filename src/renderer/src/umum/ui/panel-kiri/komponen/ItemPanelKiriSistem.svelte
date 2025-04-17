@@ -14,8 +14,9 @@
     pilih: (id: number) => void
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref: IsiProyek) => void
     idPrefix: number
+    bukaSistem: (sistem: SistemLangsung) => void
   }
-  const { level, sistem, idAktif, pilih, bukaMenu, idPrefix }: Properti = $props()
+  const { level, sistem, idAktif, pilih, bukaMenu, idPrefix, bukaSistem }: Properti = $props()
 
   const id = parseInt(`${idPrefix}${sistem.dapatkanId()}`)
 
@@ -31,6 +32,7 @@
     bukaMenu(posisiKlik, JenisMenuPanelKiri.SISTEM, sistem)}
   {id}
   punyaChildren={koleksiSubsistem.length > 0}
+  buka={(): void => bukaSistem(sistem)}
 >
   {#snippet ikon()}
     <IkonSistem class="w-full h-full" />
@@ -60,6 +62,7 @@
               idPrefix={parseInt(`${id}0`)}
               sistem={subsistem}
               {pilih}
+              {bukaSistem}
             />
           {/each}
         {/snippet}

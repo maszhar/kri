@@ -14,6 +14,7 @@
     punyaChildren?: boolean
     bukaMenu: (posisiKlik: Koordinat) => void
     id: number
+    buka?: () => void
   }
   const {
     level = 0,
@@ -24,7 +25,8 @@
     ikon,
     pilih,
     bukaMenu,
-    id
+    id,
+    buka
   }: Properti = $props()
 
   let childrenTampil = $state(false)
@@ -54,6 +56,7 @@
     class="flex items-center gap-1.5 px-1 {idAktif === id ? 'bg-sky-200' : 'hover:bg-sky-100'}"
     onclick={(): void => pilih(id)}
     oncontextmenu={tanganiBukaMenu}
+    ondblclick={buka}
   >
     <div class="w-4">
       {@render ikon?.()}

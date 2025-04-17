@@ -18,6 +18,10 @@ export class IsiProyek {
   dapatkanNama(): string {
     return this.nama
   }
+
+  aturNama(nama: string): void {
+    this.nama = nama
+  }
 }
 export interface ParameterBuatIsiProyek {
   id?: number

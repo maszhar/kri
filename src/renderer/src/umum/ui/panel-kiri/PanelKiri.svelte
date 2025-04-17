@@ -20,9 +20,11 @@
   import { JenisMenuPanelKiri } from './JenisMenuPanelKiri'
   import type { IsiProyek } from '../../../../../umum/entitas/IsiProyek'
   import { Sistem } from '../../../../../umum/entitas/Sistem'
+  import type { SistemLangsung } from '../../entitas/SistemLangsung.svelte'
 
   interface Properti {
     proyek: ProyekLangsung
+    isiProyekAktif: IsiProyek | null
     modelAktif: Model | null
     koleksiCeritaPengguna: CeritaPenggunaLangsung[]
     koleksiDiagramKasusGuna: DiagramKasusGunaLangsung[]
@@ -35,10 +37,12 @@
     saatBuatDiagramKlas: () => void
     saatBukaDiagramKlas: (indeks: number) => void
     buatDiagramKasusGuna: () => void
+    bukaSistem: (sistem: SistemLangsung) => void
   }
   const {
     proyek,
     modelAktif,
+    isiProyekAktif,
     koleksiCeritaPengguna,
     koleksiDiagramKasusGuna,
     koleksiSequenceDiagram,
@@ -49,7 +53,8 @@
     saatBukaSequenceDiagram,
     saatBuatDiagramKlas,
     saatBukaDiagramKlas,
-    buatDiagramKasusGuna
+    buatDiagramKasusGuna,
+    bukaSistem
   }: Properti = $props()
 
   let idItemAktif = $state(-1)
@@ -183,7 +188,7 @@
   bind:this={elemenPanel}
 >
   <!-- Proyek -->
-  <ItemPanelKiriProyek {proyek} idAktif={idItemAktif} {pilih} {bukaMenu} />
+  <ItemPanelKiriProyek {proyek} idAktif={idItemAktif} {pilih} {bukaMenu} {bukaSistem} />
 
   <TampilanItemKomponenProyek {pilih} indeks={dapatkanIndeks()} {itemDipilih}>
     {#snippet ikon()}
