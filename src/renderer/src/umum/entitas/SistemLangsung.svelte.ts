@@ -86,6 +86,8 @@ export class SistemLangsung extends Sistem {
 
   static deserialisasi(data: any): SistemLangsung {
     return new SistemLangsung({
+      id: data.id,
+      nama: data.nama,
       target: data.targetSistem as TargetSistem,
       platform: data.platform as Platform,
       framework: data.framework as Framework,
