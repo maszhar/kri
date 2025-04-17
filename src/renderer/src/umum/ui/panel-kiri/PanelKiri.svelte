@@ -13,7 +13,7 @@
   import IkonKlas from '../ikon/IkonKlas.svelte'
   import IkonKasusGuna from '../ikon/IkonKasusGuna.svelte'
   import IkonDiagramUrutan from '../ikon/IkonDiagramUrutan.svelte'
-  import IkonProyek from '../ikon/IkonProyek.svelte'
+  import IkonSistem from '../ikon/IkonSistem.svelte'
   import IkonKebutuhan from '../ikon/IkonKebutuhan.svelte'
   import type { ProyekLangsung } from '../../entitas/ProyekLangsung.svelte'
   import ItemPanelKiriProyek from './komponen/ItemPanelKiriProyek.svelte'
@@ -174,7 +174,7 @@
 
   <TampilanItemKomponenProyek {pilih} indeks={dapatkanIndeks()} {itemDipilih}>
     {#snippet ikon()}
-      <IkonProyek class="w-full h-full" />
+      <IkonSistem class="w-full h-full" />
     {/snippet}
     Proyek
   </TampilanItemKomponenProyek>

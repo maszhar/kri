@@ -2,6 +2,7 @@
   import type { IsiProyek } from '../../../../../../umum/entitas/IsiProyek'
   import type { Koordinat } from '../../../../../../umum/entitas/Koordinat'
   import type { SistemLangsung } from '../../../entitas/SistemLangsung.svelte'
+  import IkonSistem from '../../ikon/IkonSistem.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
 
@@ -26,4 +27,8 @@
   bukaMenu={(posisiKlik: Koordinat): void =>
     bukaMenu(posisiKlik, JenisMenuPanelKiri.SISTEM, sistem)}
   {id}
-/>
+>
+  {#snippet ikon()}
+    <IkonSistem class="w-full h-full" />
+  {/snippet}
+</ItemPanelKiri>

@@ -8,6 +8,7 @@
     level?: number
     label?: string
     itemChildren?: Snippet<[number]>
+    ikon?: Snippet
     punyaChildren?: boolean
     bukaMenu: (posisiKlik: Koordinat) => void
     id: number
@@ -18,6 +19,7 @@
     itemChildren,
     punyaChildren = false,
     idAktif,
+    ikon,
     pilih,
     bukaMenu,
     id
@@ -47,11 +49,13 @@
     {/if}
   </button>
   <button
-    class="flex px-1 {idAktif === id ? 'bg-sky-200' : 'hover:bg-sky-100'}"
+    class="flex items-center gap-1.5 px-1 {idAktif === id ? 'bg-sky-200' : 'hover:bg-sky-100'}"
     onclick={(): void => pilih(id)}
     oncontextmenu={tanganiBukaMenu}
   >
-    <div class="w-6">L</div>
+    <div class="w-4">
+      {@render ikon?.()}
+    </div>
     <div>{label}</div>
   </button>
 </div>
