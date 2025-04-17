@@ -10,6 +10,7 @@
     itemChildren?: Snippet<[number]>
     punyaChildren?: boolean
     bukaMenu: (posisiKlik: Koordinat) => void
+    id: number
   }
   const {
     level = 0,
@@ -18,10 +19,9 @@
     punyaChildren = false,
     idAktif,
     pilih,
-    bukaMenu
+    bukaMenu,
+    id
   }: Properti = $props()
-
-  const id = parseInt(`${new Date().getTime()}${Math.floor(Math.random() * 4)}`)
 
   let childrenTampil = $state(false)
 

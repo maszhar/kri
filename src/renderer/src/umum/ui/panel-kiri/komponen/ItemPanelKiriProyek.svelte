@@ -14,6 +14,7 @@
   }
   const { proyek, idAktif, pilih, bukaMenu }: Properti = $props()
 
+  const idProyek = 1
   const koleksiSistem = proyek.dapatkanKoleksiSistemLangsung()
 </script>
 
@@ -23,10 +24,11 @@
   {idAktif}
   {pilih}
   bukaMenu={(posisi: Koordinat): void => bukaMenu(posisi, JenisMenuPanelKiri.PROYEK)}
+  id={idProyek}
 >
   {#snippet itemChildren(level: number)}
     {#each koleksiSistem as sistem, _i (sistem.dapatkanId())}
-      <ItemPanelKiriSistem {level} {sistem} {idAktif} {pilih} {bukaMenu} />
+      <ItemPanelKiriSistem {level} {sistem} {idAktif} {pilih} {bukaMenu} idPrefix={idProyek} />
     {/each}
   {/snippet}
 </ItemPanelKiri>

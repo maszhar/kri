@@ -11,8 +11,11 @@
     idAktif: number
     pilih: (id: number) => void
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref: IsiProyek) => void
+    idPrefix: number
   }
-  const { level, sistem, idAktif, pilih, bukaMenu }: Properti = $props()
+  const { level, sistem, idAktif, pilih, bukaMenu, idPrefix }: Properti = $props()
+
+  const id = parseInt(`${idPrefix}${sistem.dapatkanId()}`)
 </script>
 
 <ItemPanelKiri
@@ -22,4 +25,5 @@
   {pilih}
   bukaMenu={(posisiKlik: Koordinat): void =>
     bukaMenu(posisiKlik, JenisMenuPanelKiri.SISTEM, sistem)}
+  {id}
 />
