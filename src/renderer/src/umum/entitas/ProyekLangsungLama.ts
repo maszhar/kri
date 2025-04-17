@@ -8,7 +8,7 @@ import { TipeElemen } from '../../../../umum/tipe/TipeElemen'
 import { DiagramKasusGunaLangsung } from './DiagramKasusGunaLangsung'
 import { CeritaPenggunaLangsung } from './CeritaPenggunaLangsung'
 
-export class ProyekLangsung extends ProyekLama {
+export class ProyekLangsungLama extends ProyekLama {
   // === ATRIBUT ===
   private koleksiCeritaPenggunaLangsung: Writable<CeritaPenggunaLangsung[]> = writable([])
   private koleksiDiagramKlasLangsung: Writable<DiagramKlasLangsung[]> = writable([])

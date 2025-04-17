@@ -1,14 +1,14 @@
 <script lang="ts">
-  import type { ProyekLangsung } from '../umum/entitas/ProyekLangsung'
+  import type { ProyekLangsungLama } from '../umum/entitas/ProyekLangsungLama'
   import IsiPanelKanan from '../umum/ui/panel-kanan/IsiPanelKanan.svelte'
   import { ManajerChatAi } from './ManajerChatAi'
 
   interface Properti {
-    proyek: ProyekLangsung
+    proyek: ProyekLangsungLama
   }
   const { proyek }: Properti = $props()
 
-  const manajerChatAi = ManajerChatAi.getInstance((): ProyekLangsung => {
+  const manajerChatAi = ManajerChatAi.getInstance((): ProyekLangsungLama => {
     return proyek
   })
 

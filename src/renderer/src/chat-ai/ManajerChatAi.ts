@@ -1,4 +1,4 @@
-import type { ProyekLangsung } from '../umum/entitas/ProyekLangsung'
+import type { ProyekLangsungLama } from '../umum/entitas/ProyekLangsungLama'
 import { ChatAi } from './ChatAi'
 import { ChatAiPengguna } from './ChatAiPengguna'
 
@@ -27,7 +27,7 @@ export class ManajerChatAi {
   })
 
   private koleksiPendengar: Map<string, (pesan: string) => void> = new Map()
-  private dapatkanProyek?: () => ProyekLangsung
+  private dapatkanProyek?: () => ProyekLangsungLama
 
   private constructor() {
     window.web.chatai.laporkanKemajuan((idPesan: string, pesan: string): void => {
@@ -54,7 +54,7 @@ export class ManajerChatAi {
   }
 
   static instance?: ManajerChatAi
-  static getInstance(dapatkanProyek: () => ProyekLangsung): ManajerChatAi {
+  static getInstance(dapatkanProyek: () => ProyekLangsungLama): ManajerChatAi {
     if (!this.instance) {
       this.instance = new ManajerChatAi()
     }

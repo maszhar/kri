@@ -1,7 +1,7 @@
-import type { ProyekLangsung } from '../umum/entitas/ProyekLangsung'
+import type { ProyekLangsungLama } from '../umum/entitas/ProyekLangsungLama'
 
 export class ChatAiPengguna {
-  private proyek: ProyekLangsung
+  private proyek: ProyekLangsungLama
   private pesan: string
 
   constructor(parameter: ParameterBuatChatAiPengguna) {
@@ -18,6 +18,6 @@ export class ChatAiPengguna {
 }
 
 interface ParameterBuatChatAiPengguna {
-  proyek: ProyekLangsung
+  proyek: ProyekLangsungLama
   pesan: string
 }

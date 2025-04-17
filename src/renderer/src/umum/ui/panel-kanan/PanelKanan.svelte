@@ -1,11 +1,11 @@
 <script lang="ts">
   import TampilanChatAi from '../../../chat-ai/TampilanChatAi.svelte'
-  import type { ProyekLangsung } from '../../entitas/ProyekLangsung'
+  import type { ProyekLangsungLama } from '../../entitas/ProyekLangsungLama'
   import { OpsiMenuKanan } from '../../tipe/OpsiMenuKanan'
   import DaftarItemPanelKanan from './DaftarItemPanelKanan.svelte'
 
   interface Properti {
-    proyek: ProyekLangsung
+    proyek: ProyekLangsungLama
   }
   const { proyek }: Properti = $props()
 

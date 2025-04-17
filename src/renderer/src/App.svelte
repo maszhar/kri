@@ -10,7 +10,7 @@
   import PanelKiri from './umum/ui/panel-kiri/PanelKiri.svelte'
   import TampilanDiagramKlas from './klas/TampilanDiagramKlas.svelte'
   import TampilanPesan from './umum/ui/TampilanPesan.svelte'
-  import { ProyekLangsung } from './umum/entitas/ProyekLangsung'
+  import { ProyekLangsungLama } from './umum/entitas/ProyekLangsungLama'
   import { get } from 'svelte/store'
   import { DiagramKlasLangsung } from './umum/entitas/DiagramKlasLangsung'
   import type { KlasLangsung } from './umum/entitas/KlasLangsung'
@@ -24,7 +24,7 @@
   // proyek
   let proyek = $state(new Proyek())
 
-  let proyekLama = $state(new ProyekLangsung())
+  let proyekLama = $state(new ProyekLangsungLama())
 
   // penyimpanan
   let lokasiPenyimpananProyek = ''
