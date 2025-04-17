@@ -44,7 +44,11 @@ export interface SistemPb {
      */
     framework: FrameworkPb;
     /**
-     * @generated from protobuf field: repeated SistemPb koleksi_subsistem = 5;
+     * @generated from protobuf field: BahasaPemrogramanPb bahasa_pemrograman = 5;
+     */
+    bahasaPemrograman: BahasaPemrogramanPb;
+    /**
+     * @generated from protobuf field: repeated SistemPb koleksi_subsistem = 6;
      */
     koleksiSubsistem: SistemPb[];
 }
@@ -135,6 +139,19 @@ export enum FrameworkPb {
     ELECTRON = 1
 }
 /**
+ * @generated from protobuf enum BahasaPemrogramanPb
+ */
+export enum BahasaPemrogramanPb {
+    /**
+     * @generated from protobuf enum value: BAHASA_PEMROGRAMAN_PB_TIDAK_DIATUR = 0;
+     */
+    TIDAK_DIATUR = 0,
+    /**
+     * @generated from protobuf enum value: BAHASA_PEMROGRAMAN_PB_TYPESCRIPT = 1;
+     */
+    TYPESCRIPT = 1
+}
+/**
  * @generated from protobuf enum JenisKomponenSequenceDiagramPb
  */
 export enum JenisKomponenSequenceDiagramPb {
@@ -206,7 +223,8 @@ class SistemPb$Type extends MessageType<SistemPb> {
             { no: 2, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "target", kind: "enum", T: () => ["TargetSistemPb", TargetSistemPb, "TARGET_SISTEM_PB_"] },
             { no: 4, name: "framework", kind: "enum", T: () => ["FrameworkPb", FrameworkPb, "FRAMEWORK_PB_"] },
-            { no: 5, name: "koleksi_subsistem", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SistemPb }
+            { no: 5, name: "bahasa_pemrograman", kind: "enum", T: () => ["BahasaPemrogramanPb", BahasaPemrogramanPb, "BAHASA_PEMROGRAMAN_PB_"] },
+            { no: 6, name: "koleksi_subsistem", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SistemPb }
         ]);
     }
     create(value?: PartialMessage<SistemPb>): SistemPb {
@@ -215,6 +233,7 @@ class SistemPb$Type extends MessageType<SistemPb> {
         message.nama = "";
         message.target = 0;
         message.framework = 0;
+        message.bahasaPemrograman = 0;
         message.koleksiSubsistem = [];
         if (value !== undefined)
             reflectionMergePartial<SistemPb>(this, message, value);
@@ -237,7 +256,10 @@ class SistemPb$Type extends MessageType<SistemPb> {
                 case /* FrameworkPb framework */ 4:
                     message.framework = reader.int32();
                     break;
-                case /* repeated SistemPb koleksi_subsistem */ 5:
+                case /* BahasaPemrogramanPb bahasa_pemrograman */ 5:
+                    message.bahasaPemrograman = reader.int32();
+                    break;
+                case /* repeated SistemPb koleksi_subsistem */ 6:
                     message.koleksiSubsistem.push(SistemPb.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -264,9 +286,12 @@ class SistemPb$Type extends MessageType<SistemPb> {
         /* FrameworkPb framework = 4; */
         if (message.framework !== 0)
             writer.tag(4, WireType.Varint).int32(message.framework);
-        /* repeated SistemPb koleksi_subsistem = 5; */
+        /* BahasaPemrogramanPb bahasa_pemrograman = 5; */
+        if (message.bahasaPemrograman !== 0)
+            writer.tag(5, WireType.Varint).int32(message.bahasaPemrograman);
+        /* repeated SistemPb koleksi_subsistem = 6; */
         for (let i = 0; i < message.koleksiSubsistem.length; i++)
-            SistemPb.internalBinaryWrite(message.koleksiSubsistem[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            SistemPb.internalBinaryWrite(message.koleksiSubsistem[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -10,7 +10,8 @@ message SistemPb {
   string nama = 2;
   TargetSistemPb target = 3;
   FrameworkPb framework = 4;
-  repeated SistemPb koleksi_subsistem = 5;
+  BahasaPemrogramanPb bahasa_pemrograman = 5;
+  repeated SistemPb koleksi_subsistem = 6;
 }
 
 enum TargetSistemPb {
@@ -21,6 +22,11 @@ enum TargetSistemPb {
 enum FrameworkPb {
   FRAMEWORK_PB_TIDAK_DIATUR = 0;
   FRAMEWORK_PB_ELECTRON = 1;
+}
+
+enum BahasaPemrogramanPb {
+  BAHASA_PEMROGRAMAN_PB_TIDAK_DIATUR = 0;
+  BAHASA_PEMROGRAMAN_PB_TYPESCRIPT = 1;
 }
 
 message KlasPb {

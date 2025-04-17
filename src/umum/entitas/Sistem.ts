@@ -1,4 +1,6 @@
+import { GalatBahasaPemrogramanTidakDidukung } from '../galat/GalatBahasaPemrogramanTidakDidukung'
 import { GalatFrameworkTidakDidukung } from '../galat/GalatFrameworkTidakDidukung'
+import { BahasaPemrograman } from '../tipe/BahasaPemrograman'
 import { Framework } from '../tipe/Framework'
 import { TargetSistem } from '../tipe/TargetSistem'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
@@ -6,6 +8,7 @@ import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 export class Sistem extends IsiProyek {
   private target: TargetSistem = TargetSistem.TidakDiatur
   private framework: Framework = Framework.TidakDiatur
+  private bahasaPemrograman: BahasaPemrograman = BahasaPemrograman.TidakDiatur
   private koleksiSubsistem: Sistem[]
 
   constructor(parameter: ParameterBuatSistem) {
@@ -16,6 +19,10 @@ export class Sistem extends IsiProyek {
     this.aturTarget(parameter.target ?? TargetSistem.TidakDiatur)
     if (parameter.framework !== undefined) {
       this.aturFramework(parameter.framework)
+    }
+
+    if (parameter.bahasaPemrograman !== undefined) {
+      this.aturBahasaPemrograman(parameter.bahasaPemrograman)
     }
 
     this.koleksiSubsistem = parameter.koleksiSubsistem ?? []
@@ -48,9 +55,26 @@ export class Sistem extends IsiProyek {
         if (this.target !== TargetSistem.CrossPlatformDesktop) {
           throw new GalatFrameworkTidakDidukung(this.target, framework)
         }
+        this.bahasaPemrograman = BahasaPemrograman.Typescript
+        break
     }
 
     this.framework = framework
+  }
+
+  dapatkanBahasaPemrograman(): BahasaPemrograman {
+    return this.bahasaPemrograman
+  }
+
+  aturBahasaPemrograman(bahasa: BahasaPemrograman): void {
+    switch (bahasa) {
+      case BahasaPemrograman.TidakDiatur:
+        if (this.framework === Framework.Electron) {
+          throw new GalatBahasaPemrogramanTidakDidukung(this.framework, bahasa)
+        }
+        break
+    }
+    this.bahasaPemrograman = bahasa
   }
 
   dapatkanKoleksiSubsistem(): Sistem[] {
@@ -72,5 +96,6 @@ export class Sistem extends IsiProyek {
 interface ParameterBuatSistem extends ParameterBuatIsiProyek {
   target?: TargetSistem
   framework?: Framework
+  bahasaPemrograman?: BahasaPemrograman
   koleksiSubsistem?: Sistem[]
 }
