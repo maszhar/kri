@@ -6,7 +6,7 @@
   import TampilanSequenceDiagram from './sequence/ui/TampilanSequenceDiagram.svelte'
   import type { Model } from '../../umum/entitas/Model'
   import { SequenceDiagram } from '../../umum/entitas/SequenceDiagram'
-  import type { Klas } from '../../umum/entitas/Klas'
+  import type { Kelas } from '../../umum/entitas/Kelas'
   import PanelKiri from './umum/ui/panel-kiri/PanelKiri.svelte'
   import TampilanDiagramKlas from './klas/TampilanDiagramKlas.svelte'
   import TampilanPesan from './umum/ui/TampilanPesan.svelte'
@@ -72,7 +72,7 @@
     modelAktif = ceritaBaru
   }
 
-  // Klas
+  // Kelas
   function tambahKlasBaru(): KlasLangsung {
     return proyek.tambahKlasBaru()
   }
@@ -81,7 +81,7 @@
     proyek.ubahNamaKlas(klas, nama)
   }
 
-  function hapusKlas(klas: Klas): void {
+  function hapusKlas(klas: Kelas): void {
     proyek.hapusKlas(klas)
   }
 

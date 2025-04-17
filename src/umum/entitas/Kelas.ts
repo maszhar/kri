@@ -6,7 +6,7 @@ import { Atribut, ParameterBuatAtribut } from './Atribut'
 import { ElemenBernama } from './ElemenBernama'
 import { Operasi, ParameterBuatOperasi } from './Operasi'
 
-export class Klas extends ElemenBernama {
+export class Kelas extends ElemenBernama {
   public koleksiAtribut: Atribut[]
   public koleksiOperasi: Operasi[]
   public koleksiAsosiasi: Asosiasi[]
@@ -92,7 +92,7 @@ export class Klas extends ElemenBernama {
     this.koleksiOperasi[indeks] = new Operasi(parameter)
   }
 
-  tambahAsosiasi(tujuan: Klas): Asosiasi {
+  tambahAsosiasi(tujuan: Kelas): Asosiasi {
     const asosiasiBaru = new Asosiasi({
       asal: this,
       tujuan: tujuan
@@ -119,8 +119,8 @@ export class Klas extends ElemenBernama {
     }
   }
 
-  static bongkarBungkusanData(data: any): Klas {
-    return new Klas({
+  static bongkarBungkusanData(data: any): Kelas {
+    return new Kelas({
       id: data.id,
       nama: data.nama,
       koleksiAtribut: data.koleksiAtribut.map((dataAtribut: any) =>
@@ -139,8 +139,8 @@ export class Klas extends ElemenBernama {
     }
   }
 
-  static dariProto(proto: KlasPb): Klas {
-    return new Klas({
+  static dariProto(proto: KlasPb): Kelas {
+    return new Kelas({
       id: proto.id,
       nama: proto.nama
     })

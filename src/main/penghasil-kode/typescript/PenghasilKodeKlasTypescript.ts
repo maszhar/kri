@@ -1,11 +1,11 @@
-import { Klas } from '../../../umum/entitas/Klas'
+import { Kelas } from '../../../umum/entitas/Kelas'
 import { PenghasilKodeAtributKlasTypescript } from './PenghasilKodeAtributKlasTypescript'
 import { PenghasilKodeOperasiKlasTypescript } from './PenghasilKodeOperasiKlasTypescript'
 
 export class PenghasilKodeKlasTypescript {
   private penghasilKodeOperasi = new PenghasilKodeOperasiKlasTypescript()
 
-  constructor(private klas: Klas) {}
+  constructor(private klas: Kelas) {}
 
   private hasilkanKodePembukaKlas(): string {
     return `export class ${this.klas.nama} {\n`

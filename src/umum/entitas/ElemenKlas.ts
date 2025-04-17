@@ -1,9 +1,9 @@
 import { Elemen } from './Elemen'
-import { Klas } from './Klas'
+import { Kelas } from './Kelas'
 import { Koordinat } from './Koordinat'
 
 export class ElemenKlas extends Elemen {
-  klas: Klas
+  klas: Kelas
 
   constructor(parameter: ParameterBuatElemenKlas) {
     super({
@@ -32,6 +32,6 @@ export class ElemenKlas extends Elemen {
 }
 
 export interface ParameterBuatElemenKlas {
-  klas: Klas
+  klas: Kelas
   posisi?: Koordinat
 }

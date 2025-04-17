@@ -1,9 +1,8 @@
 <script lang="ts">
   import type { Asosiasi } from '../../../umum/entitas/Asosiasi'
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
-  import type { Klas } from '../../../umum/entitas/Klas'
+  import type { Kelas } from '../../../umum/entitas/Kelas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
-  import type { Proyek } from '../../../umum/entitas/Proyek'
   import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
   import { TipeElemen } from '../../../umum/tipe/TipeElemen'
   import type { DiagramKlasLangsung } from '../umum/entitas/DiagramKlasLangsung'
@@ -21,8 +20,8 @@
   interface Properti {
     diagramKlas: DiagramKlasLangsung
     tambahKlasBaru: () => KlasLangsung
-    ubahNamaKlas: (klas: Klas, nama: string) => void
-    hapusKlas: (klas: Klas) => void
+    ubahNamaKlas: (klas: Kelas, nama: string) => void
+    hapusKlas: (klas: Kelas) => void
     tampilkanPesan: (pesan: string) => void
   }
   const { diagramKlas, tambahKlasBaru, hapusKlas, ubahNamaKlas, tampilkanPesan }: Properti =
@@ -158,7 +157,7 @@
 
 {#if posisiMenuDiagramKlas !== null}
   <MenuKonteks posisi={posisiMenuDiagramKlas} saatSelesai={tutupMenuDiagramKlas}>
-    <JudulMenuKonteks>Tambah Klas</JudulMenuKonteks>
+    <JudulMenuKonteks>Tambah Kelas</JudulMenuKonteks>
     <ItemMenuKonteks saatDiklik={tanganiTambahElemenKlasBaru}>Buat klas baru</ItemMenuKonteks>
   </MenuKonteks>
 {/if}

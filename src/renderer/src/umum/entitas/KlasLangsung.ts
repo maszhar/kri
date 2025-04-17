@@ -1,10 +1,10 @@
 import type { Asosiasi } from '../../../../umum/entitas/Asosiasi'
 import type { Atribut } from '../../../../umum/entitas/Atribut'
-import { Klas } from '../../../../umum/entitas/Klas'
+import { Kelas } from '../../../../umum/entitas/Kelas'
 import { readonly, writable, type Readable } from 'svelte/store'
 import type { Operasi } from '../../../../umum/entitas/Operasi'
 
-export class KlasLangsung extends Klas {
+export class KlasLangsung extends Kelas {
   private namaLangsung = writable(this.nama)
 
   constructor(parameter: ParameterBuatKlasLangsung) {

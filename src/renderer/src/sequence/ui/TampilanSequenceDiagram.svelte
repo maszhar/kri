@@ -10,12 +10,12 @@
   import TampilanObjek from './TampilanObjek.svelte'
   import TampilanPesanSinkron from './TampilanPesanSinkron.svelte'
   import TampilanFrame from './TampilanFrame.svelte'
-  import type { Klas } from '../../../../umum/entitas/Klas'
+  import type { Kelas } from '../../../../umum/entitas/Kelas'
   import { Objek } from '../../../../umum/entitas/Objek'
 
   interface Properti {
     sequenceDiagram: SequenceDiagram
-    tambahKlasBaru: () => Klas
+    tambahKlasBaru: () => Kelas
     saatSequenceDiagramDiperbarui: () => void
   }
   const { sequenceDiagram, tambahKlasBaru, saatSequenceDiagramDiperbarui }: Properti = $props()

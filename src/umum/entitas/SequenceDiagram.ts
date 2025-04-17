@@ -4,7 +4,7 @@ import {
   ObjekPb,
   SequenceDiagramPb
 } from '../proto/kri'
-import { Klas } from './Klas'
+import { Kelas } from './Kelas'
 import type { KomponenSequenceDiagram } from './KomponenSequenceDiagram'
 import { Model } from './Model'
 import { Objek } from './Objek'
@@ -28,7 +28,7 @@ export class SequenceDiagram extends Model {
     return this.koleksiKomponen
   }
 
-  tambahObjek(klas: Klas): KomponenSequenceDiagram[] {
+  tambahObjek(klas: Kelas): KomponenSequenceDiagram[] {
     this.koleksiKomponen.push(
       new Objek({
         klas: klas
@@ -65,7 +65,7 @@ export class SequenceDiagram extends Model {
     }
   }
 
-  static bongkarBungkusanData(data: any, koleksiKlas?: Klas[]): SequenceDiagram {
+  static bongkarBungkusanData(data: any, koleksiKlas?: Kelas[]): SequenceDiagram {
     return new SequenceDiagram({
       nama: data.nama,
       koleksiKomponen: data.koleksiKomponen.map((dataKomponen) => {
@@ -95,7 +95,7 @@ export class SequenceDiagram extends Model {
     }
   }
 
-  static dariProto(proto: SequenceDiagramPb, koleksiKlas: Klas[] = []): SequenceDiagram {
+  static dariProto(proto: SequenceDiagramPb, koleksiKlas: Kelas[] = []): SequenceDiagram {
     const koleksiKomponen: KomponenSequenceDiagram[] = []
 
     proto.koleksiKomponen.forEach((protoKoleksiKomponen) => {

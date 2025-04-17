@@ -1,8 +1,8 @@
-import { Klas } from './Klas'
+import { Kelas } from './Kelas'
 
 export class Asosiasi {
-  asal: Klas
-  tujuan: Klas
+  asal: Kelas
+  tujuan: Kelas
 
   constructor(parameter: ParameterBuatAsosiasi) {
     this.asal = parameter.asal
@@ -10,6 +10,6 @@ export class Asosiasi {
   }
 }
 interface ParameterBuatAsosiasi {
-  asal: Klas
-  tujuan: Klas
+  asal: Kelas
+  tujuan: Kelas
 }

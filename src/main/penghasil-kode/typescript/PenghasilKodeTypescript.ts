@@ -1,4 +1,4 @@
-import { Klas } from '../../../umum/entitas/Klas'
+import { Kelas } from '../../../umum/entitas/Kelas'
 import { Proyek } from '../../../umum/entitas/Proyek'
 import { PenghasilKodeKlasTypescript } from './PenghasilKodeKlasTypescript'
 import { writeFile } from 'fs/promises'
@@ -7,7 +7,7 @@ import * as path from 'path'
 export class PenghasilKodeTypescript {
   private async simpanKodeKlas(
     folderHasilKode: string,
-    klas: Klas,
+    klas: Kelas,
     hasilKode: string
   ): Promise<void> {
     await writeFile(path.resolve(folderHasilKode, `${klas.nama}.ts`), hasilKode)

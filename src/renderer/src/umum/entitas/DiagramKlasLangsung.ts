@@ -1,6 +1,6 @@
 import { readonly, writable, type Readable, type Writable } from 'svelte/store'
 import { DiagramKlas } from '../../../../umum/entitas/DiagramKlas'
-import type { Klas } from '../../../../umum/entitas/Klas'
+import type { Kelas } from '../../../../umum/entitas/Kelas'
 import type { Koordinat } from '../../../../umum/entitas/Koordinat'
 import { ElemenKlasLangsung } from './ElemenKlasLangsung'
 
@@ -20,7 +20,7 @@ export class DiagramKlasLangsung extends DiagramKlas {
     return readonly(this.koleksiElemenKlasLangsung)
   }
 
-  tambahElemenKlasBaru(klas: Klas, posisi: Koordinat): ElemenKlasLangsung {
+  tambahElemenKlasBaru(klas: Kelas, posisi: Koordinat): ElemenKlasLangsung {
     const elemenKlas = new ElemenKlasLangsung({ klas: klas, posisi })
     this.koleksiElemenKlasLangsung.update((koleksiLama) => {
       koleksiLama.push(elemenKlas)

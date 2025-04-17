@@ -2,13 +2,13 @@ import { ProyekPb } from '../proto/kri'
 import { CeritaPengguna } from './CeritaPengguna'
 import { DiagramKasusGuna } from './DiagramKasusGuna'
 import { DiagramKlas } from './DiagramKlas'
-import { Klas } from './Klas'
+import { Kelas } from './Kelas'
 import { SequenceDiagram } from './SequenceDiagram'
 
 export class Proyek {
   // === ATRIBUT ===
   koleksiCeritaPengguna: CeritaPengguna[]
-  koleksiKlas: Klas[]
+  koleksiKlas: Kelas[]
   koleksiSequenceDiagram: SequenceDiagram[]
   koleksiDiagramKlas: DiagramKlas[]
   protected koleksiDiagramKasusGuna: DiagramKasusGuna[]
@@ -24,8 +24,8 @@ export class Proyek {
 
   // === OPERASI ===
   // klas
-  hapusKlas(klas: Klas): void {
-    const indeksKlasTerkait = this.koleksiKlas.findIndex((itemKlas: Klas) => itemKlas === klas)
+  hapusKlas(klas: Kelas): void {
+    const indeksKlasTerkait = this.koleksiKlas.findIndex((itemKlas: Kelas) => itemKlas === klas)
     if (indeksKlasTerkait > -1) {
       this.koleksiKlas.splice(indeksKlasTerkait, 1)
     }
@@ -56,7 +56,7 @@ export class Proyek {
   }
 
   static bongkarBungkusanData(data: any): Proyek {
-    const koleksiKlas = data.koleksiKlas.map((dataKlas) => Klas.bongkarBungkusanData(dataKlas))
+    const koleksiKlas = data.koleksiKlas.map((dataKlas) => Kelas.bongkarBungkusanData(dataKlas))
     return new Proyek({
       koleksiKlas: koleksiKlas,
       koleksiSequenceDiagram: data.koleksiSequenceDiagram.map(
@@ -78,7 +78,7 @@ export class Proyek {
   }
 
   static dariProto(proto: ProyekPb): Proyek {
-    const koleksiKlas = proto.koleksiKlas.map((protoKlas) => Klas.dariProto(protoKlas))
+    const koleksiKlas = proto.koleksiKlas.map((protoKlas) => Kelas.dariProto(protoKlas))
 
     return new Proyek({
       koleksiKlas: koleksiKlas,
@@ -105,7 +105,7 @@ export class Proyek {
 
 export interface ParameterBuatProyek {
   koleksiCeritaPengguna?: CeritaPengguna[]
-  koleksiKlas?: Klas[]
+  koleksiKlas?: Kelas[]
   koleksiSequenceDiagram?: SequenceDiagram[]
   koleksiDiagramKlas?: DiagramKlas[]
   koleksiDiagramKasusGuna?: DiagramKasusGuna[]

@@ -1,9 +1,9 @@
 import { ObjekPb } from '../proto/kri'
-import { Klas } from './Klas'
+import { Kelas } from './Kelas'
 import { KomponenSequenceDiagram } from './KomponenSequenceDiagram'
 
 export class Objek extends KomponenSequenceDiagram {
-  public klas?: Klas
+  public klas?: Kelas
 
   constructor(parameter: ParameterBuatObjek = {}) {
     super({
@@ -30,7 +30,7 @@ export class Objek extends KomponenSequenceDiagram {
     }
   }
 
-  static bongkarBungkusanData(data: any, koleksiKlas?: Klas[]): Objek {
+  static bongkarBungkusanData(data: any, koleksiKlas?: Kelas[]): Objek {
     return new Objek({
       id: data.id,
       nama: data.nama,
@@ -47,7 +47,7 @@ export class Objek extends KomponenSequenceDiagram {
     }
   }
 
-  static dariProto(proto: ObjekPb, koleksiKlas: Klas[] = []): Objek {
+  static dariProto(proto: ObjekPb, koleksiKlas: Kelas[] = []): Objek {
     const klas =
       proto.idKlas > 0 && koleksiKlas.length > 0
         ? koleksiKlas.find((klas) => klas.id == proto.idKlas)
@@ -63,5 +63,5 @@ export class Objek extends KomponenSequenceDiagram {
 interface ParameterBuatObjek {
   id?: number
   nama?: string
-  klas?: Klas
+  klas?: Kelas
 }
