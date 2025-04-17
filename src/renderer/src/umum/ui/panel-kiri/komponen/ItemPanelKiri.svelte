@@ -36,7 +36,7 @@
   }
 </script>
 
-<div class="flex text-sm">
+<div class="flex text-sm" style="padding-left: {level * 10}px;">
   <button class="w-4" onclick={aturKebalikanChildrenTampil}>
     {#if punyaChildren}
       {#if childrenTampil}
