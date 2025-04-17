@@ -15,8 +15,11 @@
   import IkonDiagramUrutan from '../ikon/IkonDiagramUrutan.svelte'
   import IkonProyek from '../ikon/IkonProyek.svelte'
   import IkonKebutuhan from '../ikon/IkonKebutuhan.svelte'
+  import type { ProyekLangsung } from '../../entitas/ProyekLangsung.svelte'
+  import ItemPanelKiriProyek from './komponen/ItemPanelKiriProyek.svelte'
 
   interface Properti {
+    proyek: ProyekLangsung
     modelAktif: Model | null
     koleksiCeritaPengguna: CeritaPenggunaLangsung[]
     koleksiDiagramKasusGuna: DiagramKasusGunaLangsung[]
@@ -31,6 +34,7 @@
     buatDiagramKasusGuna: () => void
   }
   const {
+    proyek,
     modelAktif,
     koleksiCeritaPengguna,
     koleksiDiagramKasusGuna,
@@ -45,6 +49,8 @@
     buatDiagramKasusGuna
   }: Properti = $props()
 
+  let idItemAktif = $state(-1)
+
   let itemDipilih = $state(-1)
   let elemenPanel: HTMLDivElement
 
@@ -56,6 +62,10 @@
   let dataMenuKonteks: { jenis: number; posisi: Koordinat } | null = $state(null)
 
   // === OPERASI ===
+  function pilih(idPilihan: number): void {
+    idItemAktif = idPilihan
+  }
+
   // indeks
   let indeksTerakhir = -1
 
@@ -73,10 +83,6 @@
 
   function hilangkanPilihan(): void {
     itemDipilih = -1
-  }
-
-  function pilih(indeks: number): void {
-    itemDipilih = indeks
   }
 
   // cerita pengguna
@@ -124,6 +130,8 @@
   bind:this={elemenPanel}
 >
   <!-- Proyek -->
+  <ItemPanelKiriProyek {proyek} idAktif={idItemAktif} {pilih} />
+
   <TampilanItemKomponenProyek {pilih} indeks={dapatkanIndeks()} {itemDipilih}>
     {#snippet ikon()}
       <IkonProyek class="w-full h-full" />

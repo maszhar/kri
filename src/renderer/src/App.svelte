@@ -17,12 +17,12 @@
   import PanelKanan from './umum/ui/panel-kanan/PanelKanan.svelte'
   import { CeritaPenggunaLangsung } from './umum/entitas/CeritaPenggunaLangsung'
   import TampilanCeritaPengguna from './cerita/TampilanCeritaPengguna.svelte'
-  import { Proyek } from '../../umum/entitas/Proyek'
+  import { ProyekLangsung } from './umum/entitas/ProyekLangsung.svelte'
 
   // === Atribut ===
 
   // proyek
-  let proyek = $state(new Proyek())
+  let proyek = $state(new ProyekLangsung())
 
   let proyekLama = $state(new ProyekLangsungLama())
 
@@ -144,7 +144,7 @@
 </script>
 
 <svelte:head>
-  <title>{proyek.nama} | Kri</title>
+  <title>{proyek.dapatkanNamaLangsung()} | Kri</title>
 </svelte:head>
 
 {#if pesan}
@@ -155,6 +155,7 @@
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} {hasilkanKode} />
   <div class="flex-grow flex items-stretch">
     <PanelKiri
+      {proyek}
       {modelAktif}
       koleksiCeritaPengguna={$koleksiCeritaPengguna}
       koleksiDiagramKasusGuna={$koleksiDiagramKasusGuna}

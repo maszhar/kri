@@ -93,7 +93,7 @@ export class Sistem extends IsiProyek {
     return subsistem
   }
 }
-interface ParameterBuatSistem extends ParameterBuatIsiProyek {
+export interface ParameterBuatSistem extends ParameterBuatIsiProyek {
   target?: TargetSistem
   framework?: Framework
   bahasaPemrograman?: BahasaPemrograman

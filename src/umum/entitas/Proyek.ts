@@ -1,16 +1,20 @@
 import { Sistem } from './Sistem'
 
 export class Proyek {
-  nama: string
-  koleksiSistem: Sistem[]
+  protected nama: string
+  protected koleksiSistem: Sistem[]
 
   constructor(parameter: ParameterBuatProyek = {}) {
     this.nama = parameter.nama ?? 'Proyek Baru'
     this.koleksiSistem = parameter.koleksiSistem ?? []
   }
+
+  aturNama(nama: string): void {
+    this.nama = nama
+  }
 }
 
-interface ParameterBuatProyek {
+export interface ParameterBuatProyek {
   nama?: string
   koleksiSistem?: Sistem[]
 }
