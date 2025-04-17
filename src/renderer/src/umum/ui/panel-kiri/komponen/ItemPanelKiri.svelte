@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { Snippet } from 'svelte'
   import { Koordinat } from '../../../../../../umum/entitas/Koordinat'
+  import IkonPanahBawah from '../../ikon/IkonPanahBawah.svelte'
+  import IkonPanahKanan from '../../ikon/IkonPanahKanan.svelte'
 
   interface Properti {
     idAktif: number
@@ -42,9 +44,9 @@
   <button class="w-4" onclick={aturKebalikanChildrenTampil}>
     {#if punyaChildren}
       {#if childrenTampil}
-        &downarrow;
+        <IkonPanahBawah class="w-full h-full" />
       {:else}
-        &rightarrow;
+        <IkonPanahKanan class="w-full h-full" />
       {/if}
     {/if}
   </button>
