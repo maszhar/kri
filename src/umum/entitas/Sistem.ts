@@ -105,6 +105,8 @@ export class Sistem extends IsiProyek {
 
   serialisasi(): any {
     return {
+      id: this.id,
+      nama: this.nama,
       targetSistem: this.targetSistem,
       platform: this.platform,
       framework: this.framework,
@@ -115,6 +117,8 @@ export class Sistem extends IsiProyek {
 
   static deserialisasi(data: any): Sistem {
     return new Sistem({
+      id: data.id,
+      nama: data.nama,
       target: data.targetSistem as TargetSistem,
       platform: data.platform as Platform,
       framework: data.framework as Framework,
