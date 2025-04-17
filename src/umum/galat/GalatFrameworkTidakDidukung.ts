@@ -1,13 +1,11 @@
 import { Framework } from '../tipe/Framework'
-import { TargetSistem } from '../tipe/TargetSistem'
+import { Platform } from '../tipe/Platform'
 
 export class GalatFrameworkTidakDidukung extends Error {
   constructor(
-    public target: TargetSistem,
+    public platform: Platform,
     public framework: Framework
   ) {
-    super(
-      `Target sistem '${target.toString()}' tidak mendukung framework '${framework.toString()}'`
-    )
+    super(`Platform '${platform.toString()}' tidak mendukung framework '${framework.toString()}'`)
   }
 }

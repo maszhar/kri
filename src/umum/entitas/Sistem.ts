@@ -1,14 +1,22 @@
 import { GalatBahasaPemrogramanTidakDidukung } from '../galat/GalatBahasaPemrogramanTidakDidukung'
 import { GalatFrameworkTidakDidukung } from '../galat/GalatFrameworkTidakDidukung'
+import { GalatPlatformTidakDidukung } from '../galat/GalatPlatformTidakDidukung'
 import { BahasaPemrograman } from '../tipe/BahasaPemrograman'
 import { Framework } from '../tipe/Framework'
+import { Platform } from '../tipe/Platform'
 import { TargetSistem } from '../tipe/TargetSistem'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
+import {
+  dukunganBahasaPemrograman,
+  dukunganFramework,
+  dukunganPlatform
+} from './PetaDukunganSistem'
 
 export class Sistem extends IsiProyek {
-  protected target: TargetSistem = TargetSistem.TidakDiatur
-  protected framework: Framework = Framework.TidakDiatur
-  protected bahasaPemrograman: BahasaPemrograman = BahasaPemrograman.TidakDiatur
+  protected target: TargetSistem = TargetSistem.TIDAK_DIATUR
+  protected platform: Platform = Platform.TIDAK_DIATUR
+  protected framework: Framework = Framework.TIDAK_DIATUR
+  protected bahasaPemrograman: BahasaPemrograman = BahasaPemrograman.TIDAK_DIATUR
   protected koleksiSubsistem: Sistem[]
 
   constructor(parameter: ParameterBuatSistem = {}) {
@@ -16,7 +24,12 @@ export class Sistem extends IsiProyek {
       nama: parameter.nama ?? 'Sistem baru'
     })
 
-    this.aturTarget(parameter.target ?? TargetSistem.TidakDiatur)
+    this.aturTarget(parameter.target ?? TargetSistem.TIDAK_DIATUR)
+
+    if (parameter.platform !== undefined) {
+      this.aturPlatform(parameter.platform)
+    }
+
     if (parameter.framework !== undefined) {
       this.aturFramework(parameter.framework)
     }
@@ -33,16 +46,24 @@ export class Sistem extends IsiProyek {
   }
 
   aturTarget(target: TargetSistem): void {
-    switch (target) {
-      case TargetSistem.CrossPlatformDesktop:
-        this.framework = Framework.Electron
-        break
-      case TargetSistem.TidakDiatur:
-        this.framework = Framework.TidakDiatur
-        break
+    this.target = target
+    this.platform = dukunganPlatform[this.target][0]
+    this.framework = dukunganFramework[this.platform][0]
+    this.bahasaPemrograman = dukunganBahasaPemrograman[this.framework][0]
+  }
+
+  dapatkanPlatform(): Platform {
+    return this.platform
+  }
+
+  aturPlatform(platform: Platform): void {
+    if (!dukunganPlatform[this.target].includes(platform)) {
+      throw new GalatPlatformTidakDidukung(this.target, platform)
     }
 
-    this.target = target
+    this.platform = platform
+    this.framework = dukunganFramework[this.platform][0]
+    this.bahasaPemrograman = dukunganBahasaPemrograman[this.framework][0]
   }
 
   dapatkanFramework(): Framework {
@@ -50,16 +71,12 @@ export class Sistem extends IsiProyek {
   }
 
   aturFramework(framework: Framework): void {
-    switch (framework) {
-      case Framework.Electron:
-        if (this.target !== TargetSistem.CrossPlatformDesktop) {
-          throw new GalatFrameworkTidakDidukung(this.target, framework)
-        }
-        this.bahasaPemrograman = BahasaPemrograman.Typescript
-        break
+    if (!dukunganFramework[this.platform].includes(framework)) {
+      throw new GalatFrameworkTidakDidukung(this.platform, framework)
     }
 
     this.framework = framework
+    this.bahasaPemrograman = dukunganBahasaPemrograman[this.framework][0]
   }
 
   dapatkanBahasaPemrograman(): BahasaPemrograman {
@@ -67,13 +84,10 @@ export class Sistem extends IsiProyek {
   }
 
   aturBahasaPemrograman(bahasa: BahasaPemrograman): void {
-    switch (bahasa) {
-      case BahasaPemrograman.TidakDiatur:
-        if (this.framework === Framework.Electron) {
-          throw new GalatBahasaPemrogramanTidakDidukung(this.framework, bahasa)
-        }
-        break
+    if (!dukunganBahasaPemrograman[this.framework].includes(bahasa)) {
+      throw new GalatBahasaPemrogramanTidakDidukung(this.framework, bahasa)
     }
+
     this.bahasaPemrograman = bahasa
   }
 
@@ -95,6 +109,7 @@ export class Sistem extends IsiProyek {
 }
 export interface ParameterBuatSistem extends ParameterBuatIsiProyek {
   target?: TargetSistem
+  platform?: Platform
   framework?: Framework
   bahasaPemrograman?: BahasaPemrograman
   koleksiSubsistem?: Sistem[]

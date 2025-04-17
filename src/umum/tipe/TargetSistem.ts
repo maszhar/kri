@@ -1,4 +1,5 @@
 export enum TargetSistem {
-  TidakDiatur = 0,
-  CrossPlatformDesktop = 1
+  TIDAK_DIATUR = 0,
+  DESKTOP = 1,
+  SERVER = 2
 }

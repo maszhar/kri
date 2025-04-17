@@ -1,4 +1,4 @@
 export enum Framework {
-  TidakDiatur = 0,
-  Electron = 1
+  TIDAK_DIATUR = 0,
+  ELECTRON = 1
 }

@@ -1,4 +1,4 @@
 export enum BahasaPemrograman {
-  TidakDiatur = 0,
-  Typescript = 1
+  TIDAK_DIATUR = 0,
+  TYPESCRIPT = 1
 }
