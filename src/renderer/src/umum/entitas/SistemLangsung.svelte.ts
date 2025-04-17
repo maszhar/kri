@@ -83,4 +83,16 @@ export class SistemLangsung extends Sistem {
     this.koleksiSubsistemLangsung.push(subsistemBaru)
     return subsistemBaru
   }
+
+  static deserialisasi(data: any): SistemLangsung {
+    return new SistemLangsung({
+      target: data.targetSistem as TargetSistem,
+      platform: data.platform as Platform,
+      framework: data.framework as Framework,
+      bahasaPemrograman: data.bahasaPemrograman as BahasaPemrograman,
+      koleksiSubsistem: data.koleksiSubsistem.map((dataSubsistem) =>
+        Sistem.deserialisasi(dataSubsistem)
+      )
+    })
+  }
 }

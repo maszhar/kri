@@ -18,12 +18,11 @@
   const { proyek, idAktif, pilih, bukaMenu, bukaSistem }: Properti = $props()
 
   const idProyek = 1
-  const koleksiSistem = proyek.dapatkanKoleksiSistemLangsung()
 </script>
 
 <ItemPanelKiri
   label={proyek.dapatkanNamaLangsung()}
-  punyaChildren={koleksiSistem.length > 0}
+  punyaChildren={proyek.dapatkanKoleksiSistemLangsung().length > 0}
   {idAktif}
   {pilih}
   bukaMenu={(posisi: Koordinat): void => bukaMenu(posisi, JenisMenuPanelKiri.PROYEK)}
@@ -33,7 +32,7 @@
     <IkonProyek class="w-full h-full" />
   {/snippet}
   {#snippet itemChildren(level: number)}
-    {#each koleksiSistem as sistem, _i (sistem.dapatkanId())}
+    {#each proyek.dapatkanKoleksiSistemLangsung() as sistem, _i (sistem.dapatkanId())}
       <ItemPanelKiriSistem
         {level}
         {sistem}

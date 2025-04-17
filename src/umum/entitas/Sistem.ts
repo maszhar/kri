@@ -1,10 +1,15 @@
 import { GalatBahasaPemrogramanTidakDidukung } from '../galat/GalatBahasaPemrogramanTidakDidukung'
 import { GalatFrameworkTidakDidukung } from '../galat/GalatFrameworkTidakDidukung'
 import { GalatPlatformTidakDidukung } from '../galat/GalatPlatformTidakDidukung'
-import { BahasaPemrograman } from '../tipe/BahasaPemrograman'
-import { Framework } from '../tipe/Framework'
-import { Platform } from '../tipe/Platform'
-import { TargetSistem } from '../tipe/TargetSistem'
+import { SistemPb } from '../proto/kri'
+import {
+  BahasaPemrograman,
+  bahasaPemrogramanDariProto,
+  bahasaPemrogramanKeProto
+} from '../tipe/BahasaPemrograman'
+import { Framework, frameworkDariProto, frameworkKeProto } from '../tipe/Framework'
+import { Platform, platformDariProto, platformKeProto } from '../tipe/Platform'
+import { TargetSistem, targetSistemDariProto, targetSistemKeProto } from '../tipe/TargetSistem'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 import {
   dukunganBahasaPemrograman,
@@ -96,6 +101,54 @@ export class Sistem extends IsiProyek {
     subsistem.aturId(idSubsistemTerbesar + 1)
     this.koleksiSubsistem.push(subsistem)
     return subsistem
+  }
+
+  serialisasi(): any {
+    return {
+      targetSistem: this.targetSistem,
+      platform: this.platform,
+      framework: this.framework,
+      bahasaPemrograman: this.bahasaPemrograman,
+      koleksiSubsistem: this.koleksiSubsistem.map((subsistem) => subsistem.serialisasi())
+    }
+  }
+
+  static deserialisasi(data: any): Sistem {
+    return new Sistem({
+      target: data.targetSistem as TargetSistem,
+      platform: data.platform as Platform,
+      framework: data.framework as Framework,
+      bahasaPemrograman: data.bahasaPemrograman as BahasaPemrograman,
+      koleksiSubsistem: data.koleksiSubsistem.map((dataSubsistem) =>
+        Sistem.deserialisasi(dataSubsistem)
+      )
+    })
+  }
+
+  keProto(): SistemPb {
+    return {
+      id: this.id,
+      nama: this.nama,
+      targetSistem: targetSistemKeProto(this.targetSistem),
+      platform: platformKeProto(this.platform),
+      framework: frameworkKeProto(this.framework),
+      bahasaPemrograman: bahasaPemrogramanKeProto(this.bahasaPemrograman),
+      koleksiSubsistem: this.koleksiSubsistem.map((subsistem) => subsistem.keProto())
+    }
+  }
+
+  static dariProto(proto: SistemPb): Sistem {
+    return new Sistem({
+      id: proto.id,
+      nama: proto.nama,
+      target: targetSistemDariProto(proto.targetSistem),
+      platform: platformDariProto(proto.platform),
+      framework: frameworkDariProto(proto.framework),
+      bahasaPemrograman: bahasaPemrogramanDariProto(proto.bahasaPemrograman),
+      koleksiSubsistem: proto.koleksiSubsistem.map((protoSubsistem) =>
+        Sistem.dariProto(protoSubsistem)
+      )
+    })
   }
 }
 export interface ParameterBuatSistem extends ParameterBuatIsiProyek {

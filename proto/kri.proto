@@ -1,22 +1,24 @@
 syntax = "proto3";
 
+message SistemPb {
+  uint32 id = 1;
+  string nama = 2;
+  TargetSistemPb target_sistem = 3;
+  PlatformPb platform = 4;
+  FrameworkPb framework = 5;
+  BahasaPemrogramanPb bahasa_pemrograman = 6;
+  repeated SistemPb koleksi_subsistem = 7;
+}
+
 message ProyekPb {
   string nama = 1;
   repeated SistemPb koleksi_sistem = 2;
 }
 
-message SistemPb {
-  uint32 id = 1;
-  string nama = 2;
-  TargetSistemPb target = 3;
-  FrameworkPb framework = 4;
-  BahasaPemrogramanPb bahasa_pemrograman = 5;
-  repeated SistemPb koleksi_subsistem = 6;
-}
-
 enum TargetSistemPb {
   TARGET_SISTEM_PB_TIDAK_DIATUR = 0;
-  TARGET_SISTEM_PB_CROSS_PLATFORM_DESKTOP = 1;
+  TARGET_SISTEM_PB_DESKTOP = 1;
+  TARGET_SISTEM_PB_SERVER = 2;
 }
 
 enum FrameworkPb {
@@ -27,6 +29,12 @@ enum FrameworkPb {
 enum BahasaPemrogramanPb {
   BAHASA_PEMROGRAMAN_PB_TIDAK_DIATUR = 0;
   BAHASA_PEMROGRAMAN_PB_TYPESCRIPT = 1;
+}
+
+enum PlatformPb {
+  PLATFORM_PB_TIDAK_DIATUR = 0;
+  PLATFORM_PB_CROSS_PLATFORM_DESKTOP = 1;
+  PLATFORM_PB_NODE_JS = 2;
 }
 
 message KlasPb {

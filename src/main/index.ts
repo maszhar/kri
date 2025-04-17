@@ -8,6 +8,7 @@ import { writeFile, readFile } from 'fs/promises'
 import { PenghasilKode } from './penghasil-kode/PenghasilKode'
 import { KontrolChatAi } from './chat-ai/KontrolChatAi'
 import * as dotenv from 'dotenv'
+import { Proyek } from '../umum/entitas/Proyek'
 
 dotenv.config()
 
@@ -69,10 +70,10 @@ function createWindow(): void {
     }
 
     const protoProyek = ProyekPb.fromBinary(binaryProyek)
-    const proyek = ProyekLama.dariProto(protoProyek)
+    const proyek = Proyek.dariProto(protoProyek)
     return {
       lokasi: hasilBukaBerkas.filePaths[0],
-      data: proyek.bungkusData()
+      data: proyek.serialisasi()
     }
   })
 
@@ -86,7 +87,7 @@ function createWindow(): void {
   })
 
   ipcMain.handle('simpanProyek', async (_, lokasiBerkas, data): Promise<void> => {
-    const proyek = ProyekLama.bongkarBungkusanData(data)
+    const proyek = Proyek.deserialisasi(data)
     const protoProyek = proyek.keProto()
     const binaryProyek = ProyekPb.toBinary(protoProyek)
 

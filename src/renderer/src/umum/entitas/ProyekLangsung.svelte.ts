@@ -32,4 +32,13 @@ export class ProyekLangsung extends Proyek {
     this.koleksiSistemLangsung.push(sistemBaru)
     return sistemBaru
   }
+
+  static deserialisasi(data: any): ProyekLangsung {
+    return new ProyekLangsung({
+      nama: data.nama,
+      koleksiSistem: data.koleksiSistem.map((dataSistem) =>
+        SistemLangsung.deserialisasi(dataSistem)
+      )
+    })
+  }
 }

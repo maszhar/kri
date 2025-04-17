@@ -1,3 +1,4 @@
+import { ProyekPb } from '../proto/kri'
 import { Sistem } from './Sistem'
 
 export class Proyek {
@@ -23,6 +24,34 @@ export class Proyek {
     sistemBaru.aturId(idSistemTerbesar + 1)
     this.koleksiSistem.push(sistemBaru)
     return sistemBaru
+  }
+
+  serialisasi(): any {
+    return {
+      nama: this.nama,
+      koleksiSistem: this.koleksiSistem.map((sistem) => sistem.serialisasi())
+    }
+  }
+
+  static deserialisasi(data: any): Proyek {
+    return new Proyek({
+      nama: data.nama,
+      koleksiSistem: data.koleksiSistem.map((dataSistem) => Sistem.deserialisasi(dataSistem))
+    })
+  }
+
+  keProto(): ProyekPb {
+    return {
+      nama: this.nama,
+      koleksiSistem: this.koleksiSistem.map((sistem) => sistem.keProto())
+    }
+  }
+
+  static dariProto(proto: ProyekPb): Proyek {
+    return new Proyek({
+      nama: proto.nama,
+      koleksiSistem: proto.koleksiSistem.map((protoSistem) => Sistem.dariProto(protoSistem))
+    })
   }
 }
 

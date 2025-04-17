@@ -47,13 +47,12 @@
   let pesan: string | null = $state(null)
 
   async function bukaProyek(): Promise<void> {
-    // const dataProyek = await window.mesin.bukaProyek()
-    // if (!dataProyek) {
-    //   return
-    // }
-    // proyek = Proyek.bongkarBungkusanData(dataProyek.data)
-    // lokasiPenyimpananProyek = dataProyek.lokasi
-    // modelAktif = proyek.koleksiSequenceDiagram[0]
+    const dataProyek = await window.mesin.bukaProyek()
+    if (!dataProyek) {
+      return
+    }
+    proyek = ProyekLangsung.deserialisasi(dataProyek.data)
+    lokasiPenyimpananProyek = dataProyek.lokasi
   }
 
   async function simpanProyek(): Promise<void> {
@@ -63,10 +62,15 @@
         return
       }
 
+      const lokasiWindowsChunk = lokasiPenyimpananBaru.split('\\')
+      const lokasiLinuxChunk = lokasiWindowsChunk[lokasiWindowsChunk.length - 1].split('/')
+      const namaProyek = lokasiLinuxChunk[lokasiLinuxChunk.length - 1].replace('.kri', '')
+      proyek.aturNama(namaProyek)
+
       lokasiPenyimpananProyek = lokasiPenyimpananBaru
     }
 
-    await window.mesin.simpanProyek(lokasiPenyimpananProyek, proyekLama.bungkusData())
+    await window.mesin.simpanProyek(lokasiPenyimpananProyek, proyek.serialisasi())
   }
 
   // cerita pengguna
