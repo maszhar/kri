@@ -1,8 +1,26 @@
 syntax = "proto3";
 
 message ProyekPb {
-  repeated KlasPb koleksiKlas = 1;
-  repeated SequenceDiagramPb koleksiSequenceDiagram = 2;
+  string nama = 1;
+  repeated SistemPb koleksi_sistem = 2;
+}
+
+message SistemPb {
+  uint32 id = 1;
+  string nama = 2;
+  TargetSistemPb target = 3;
+  FrameworkPb framework = 4;
+  repeated SistemPb koleksi_subsistem = 5;
+}
+
+enum TargetSistemPb {
+  TARGET_SISTEM_PB_TIDAK_DIATUR = 0;
+  TARGET_SISTEM_PB_CROSS_PLATFORM_DESKTOP = 1;
+}
+
+enum FrameworkPb {
+  FRAMEWORK_PB_TIDAK_DIATUR = 0;
+  FRAMEWORK_PB_ELECTRON = 1;
 }
 
 message KlasPb {

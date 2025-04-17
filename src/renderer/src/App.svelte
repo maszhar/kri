@@ -17,25 +17,28 @@
   import PanelKanan from './umum/ui/panel-kanan/PanelKanan.svelte'
   import { CeritaPenggunaLangsung } from './umum/entitas/CeritaPenggunaLangsung'
   import TampilanCeritaPengguna from './cerita/TampilanCeritaPengguna.svelte'
+  import { Proyek } from '../../umum/entitas/Proyek'
 
   // === Atribut ===
 
   // proyek
-  let proyek = $state(new ProyekLangsung())
+  let proyek = $state(new Proyek())
+
+  let proyekLama = $state(new ProyekLangsung())
 
   // penyimpanan
   let lokasiPenyimpananProyek = ''
 
   // cerita pengguna
-  const koleksiCeritaPengguna = proyek.dapatkanKoleksiCeritaPenggunaLangsung()
+  const koleksiCeritaPengguna = proyekLama.dapatkanKoleksiCeritaPenggunaLangsung()
 
   // klas
-  const koleksiDiagramKlasLangsung = proyek.dapatkanKoleksiDiagramKlasLangsung()
+  const koleksiDiagramKlasLangsung = proyekLama.dapatkanKoleksiDiagramKlasLangsung()
   let koleksiSequenceDiagram: SequenceDiagram[] = $state([])
   let modelAktif: Model | null = $state(null)
 
   // diagram kasus guna
-  const koleksiDiagramKasusGuna = proyek.dapatkanKoleksiDiagramKasusGuna()
+  const koleksiDiagramKasusGuna = proyekLama.dapatkanKoleksiDiagramKasusGuna()
 
   let pesan: string | null = $state(null)
 
@@ -59,7 +62,7 @@
       lokasiPenyimpananProyek = lokasiPenyimpananBaru
     }
 
-    await window.mesin.simpanProyek(lokasiPenyimpananProyek, proyek.bungkusData())
+    await window.mesin.simpanProyek(lokasiPenyimpananProyek, proyekLama.bungkusData())
   }
 
   // cerita pengguna
@@ -68,26 +71,26 @@
   }
 
   function buatCeritaPengguna(): void {
-    const ceritaBaru = proyek.buatCeritaPengguna()
+    const ceritaBaru = proyekLama.buatCeritaPengguna()
     modelAktif = ceritaBaru
   }
 
   // Kelas
   function tambahKlasBaru(): KlasLangsung {
-    return proyek.tambahKlasBaru()
+    return proyekLama.tambahKlasBaru()
   }
 
   function ubahNamaKlas(klas: KlasLangsung, nama: string): void {
-    proyek.ubahNamaKlas(klas, nama)
+    proyekLama.ubahNamaKlas(klas, nama)
   }
 
   function hapusKlas(klas: Kelas): void {
-    proyek.hapusKlas(klas)
+    proyekLama.hapusKlas(klas)
   }
 
   // Diagram kasus guna
   function buatDiagramKasusGuna(): void {
-    proyek.buatDiagramKasusGuna()
+    proyekLama.buatDiagramKasusGuna()
   }
 
   // Diagram urutan
@@ -96,9 +99,9 @@
   }
 
   function buatSequenceDiagram(): void {
-    const sequenceDiagram = proyek.tambahSequenceDiagramBaru()
+    const sequenceDiagram = proyekLama.tambahSequenceDiagramBaru()
     modelAktif = sequenceDiagram
-    koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
+    koleksiSequenceDiagram = proyekLama.koleksiSequenceDiagram
   }
 
   function perbaruiSequenceDiagram(): void {
@@ -108,8 +111,8 @@
     if (indeksSequenceDiagramLamaTerkait < 0) {
       return
     }
-    proyek.buatKlonaSequenceDiagram(indeksSequenceDiagramLamaTerkait)
-    koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
+    proyekLama.buatKlonaSequenceDiagram(indeksSequenceDiagramLamaTerkait)
+    koleksiSequenceDiagram = proyekLama.koleksiSequenceDiagram
     modelAktif = koleksiSequenceDiagram[indeksSequenceDiagramLamaTerkait]
   }
 
@@ -118,12 +121,12 @@
   }
 
   function buatDiagramKlas(): void {
-    const diagramKlas = proyek.tambahDiagramKlasBaru()
+    const diagramKlas = proyekLama.tambahDiagramKlasBaru()
     modelAktif = diagramKlas
   }
 
   function hasilkanKode(): void {
-    window.mesin.hasilkanKode(proyek.bungkusData())
+    window.mesin.hasilkanKode(proyekLama.bungkusData())
   }
 
   // pesan
@@ -136,9 +139,13 @@
   }
 
   onMount(() => {
-    koleksiSequenceDiagram = proyek.koleksiSequenceDiagram
+    koleksiSequenceDiagram = proyekLama.koleksiSequenceDiagram
   })
 </script>
+
+<svelte:head>
+  <title>{proyek.nama} | Kri</title>
+</svelte:head>
 
 {#if pesan}
   <TampilanPesan {pesan} oke={tutupPesan} />
@@ -180,6 +187,6 @@
         />
       {/if}
     </Jendela>
-    <PanelKanan {proyek} />
+    <PanelKanan proyek={proyekLama} />
   </div>
 </Dasar>

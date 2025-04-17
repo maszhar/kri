@@ -15,13 +15,38 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface ProyekPb {
     /**
-     * @generated from protobuf field: repeated KlasPb koleksiKlas = 1;
+     * @generated from protobuf field: string nama = 1;
      */
-    koleksiKlas: KlasPb[];
+    nama: string;
     /**
-     * @generated from protobuf field: repeated SequenceDiagramPb koleksiSequenceDiagram = 2;
+     * @generated from protobuf field: repeated SistemPb koleksi_sistem = 2;
      */
-    koleksiSequenceDiagram: SequenceDiagramPb[];
+    koleksiSistem: SistemPb[];
+}
+/**
+ * @generated from protobuf message SistemPb
+ */
+export interface SistemPb {
+    /**
+     * @generated from protobuf field: uint32 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: string nama = 2;
+     */
+    nama: string;
+    /**
+     * @generated from protobuf field: TargetSistemPb target = 3;
+     */
+    target: TargetSistemPb;
+    /**
+     * @generated from protobuf field: FrameworkPb framework = 4;
+     */
+    framework: FrameworkPb;
+    /**
+     * @generated from protobuf field: repeated SistemPb koleksi_subsistem = 5;
+     */
+    koleksiSubsistem: SistemPb[];
 }
 /**
  * @generated from protobuf message KlasPb
@@ -84,6 +109,32 @@ export interface ObjekPb {
     idKlas: number;
 }
 /**
+ * @generated from protobuf enum TargetSistemPb
+ */
+export enum TargetSistemPb {
+    /**
+     * @generated from protobuf enum value: TARGET_SISTEM_PB_TIDAK_DIATUR = 0;
+     */
+    TIDAK_DIATUR = 0,
+    /**
+     * @generated from protobuf enum value: TARGET_SISTEM_PB_CROSS_PLATFORM_DESKTOP = 1;
+     */
+    CROSS_PLATFORM_DESKTOP = 1
+}
+/**
+ * @generated from protobuf enum FrameworkPb
+ */
+export enum FrameworkPb {
+    /**
+     * @generated from protobuf enum value: FRAMEWORK_PB_TIDAK_DIATUR = 0;
+     */
+    TIDAK_DIATUR = 0,
+    /**
+     * @generated from protobuf enum value: FRAMEWORK_PB_ELECTRON = 1;
+     */
+    ELECTRON = 1
+}
+/**
  * @generated from protobuf enum JenisKomponenSequenceDiagramPb
  */
 export enum JenisKomponenSequenceDiagramPb {
@@ -96,14 +147,14 @@ export enum JenisKomponenSequenceDiagramPb {
 class ProyekPb$Type extends MessageType<ProyekPb> {
     constructor() {
         super("ProyekPb", [
-            { no: 1, name: "koleksiKlas", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => KlasPb },
-            { no: 2, name: "koleksiSequenceDiagram", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SequenceDiagramPb }
+            { no: 1, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "koleksi_sistem", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SistemPb }
         ]);
     }
     create(value?: PartialMessage<ProyekPb>): ProyekPb {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.koleksiKlas = [];
-        message.koleksiSequenceDiagram = [];
+        message.nama = "";
+        message.koleksiSistem = [];
         if (value !== undefined)
             reflectionMergePartial<ProyekPb>(this, message, value);
         return message;
@@ -113,11 +164,11 @@ class ProyekPb$Type extends MessageType<ProyekPb> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated KlasPb koleksiKlas */ 1:
-                    message.koleksiKlas.push(KlasPb.internalBinaryRead(reader, reader.uint32(), options));
+                case /* string nama */ 1:
+                    message.nama = reader.string();
                     break;
-                case /* repeated SequenceDiagramPb koleksiSequenceDiagram */ 2:
-                    message.koleksiSequenceDiagram.push(SequenceDiagramPb.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated SistemPb koleksi_sistem */ 2:
+                    message.koleksiSistem.push(SistemPb.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -131,12 +182,12 @@ class ProyekPb$Type extends MessageType<ProyekPb> {
         return message;
     }
     internalBinaryWrite(message: ProyekPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated KlasPb koleksiKlas = 1; */
-        for (let i = 0; i < message.koleksiKlas.length; i++)
-            KlasPb.internalBinaryWrite(message.koleksiKlas[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated SequenceDiagramPb koleksiSequenceDiagram = 2; */
-        for (let i = 0; i < message.koleksiSequenceDiagram.length; i++)
-            SequenceDiagramPb.internalBinaryWrite(message.koleksiSequenceDiagram[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string nama = 1; */
+        if (message.nama !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.nama);
+        /* repeated SistemPb koleksi_sistem = 2; */
+        for (let i = 0; i < message.koleksiSistem.length; i++)
+            SistemPb.internalBinaryWrite(message.koleksiSistem[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -147,6 +198,85 @@ class ProyekPb$Type extends MessageType<ProyekPb> {
  * @generated MessageType for protobuf message ProyekPb
  */
 export const ProyekPb = new ProyekPb$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SistemPb$Type extends MessageType<SistemPb> {
+    constructor() {
+        super("SistemPb", [
+            { no: 1, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "target", kind: "enum", T: () => ["TargetSistemPb", TargetSistemPb, "TARGET_SISTEM_PB_"] },
+            { no: 4, name: "framework", kind: "enum", T: () => ["FrameworkPb", FrameworkPb, "FRAMEWORK_PB_"] },
+            { no: 5, name: "koleksi_subsistem", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SistemPb }
+        ]);
+    }
+    create(value?: PartialMessage<SistemPb>): SistemPb {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.nama = "";
+        message.target = 0;
+        message.framework = 0;
+        message.koleksiSubsistem = [];
+        if (value !== undefined)
+            reflectionMergePartial<SistemPb>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SistemPb): SistemPb {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint32 id */ 1:
+                    message.id = reader.uint32();
+                    break;
+                case /* string nama */ 2:
+                    message.nama = reader.string();
+                    break;
+                case /* TargetSistemPb target */ 3:
+                    message.target = reader.int32();
+                    break;
+                case /* FrameworkPb framework */ 4:
+                    message.framework = reader.int32();
+                    break;
+                case /* repeated SistemPb koleksi_subsistem */ 5:
+                    message.koleksiSubsistem.push(SistemPb.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SistemPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint32 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).uint32(message.id);
+        /* string nama = 2; */
+        if (message.nama !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nama);
+        /* TargetSistemPb target = 3; */
+        if (message.target !== 0)
+            writer.tag(3, WireType.Varint).int32(message.target);
+        /* FrameworkPb framework = 4; */
+        if (message.framework !== 0)
+            writer.tag(4, WireType.Varint).int32(message.framework);
+        /* repeated SistemPb koleksi_subsistem = 5; */
+        for (let i = 0; i < message.koleksiSubsistem.length; i++)
+            SistemPb.internalBinaryWrite(message.koleksiSubsistem[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SistemPb
+ */
+export const SistemPb = new SistemPb$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class KlasPb$Type extends MessageType<KlasPb> {
     constructor() {
