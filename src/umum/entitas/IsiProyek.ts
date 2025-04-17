@@ -11,6 +11,10 @@ export class IsiProyek {
     return this.id
   }
 
+  aturId(id: number): void {
+    this.id = id
+  }
+
   dapatkanNama(): string {
     return this.nama
   }

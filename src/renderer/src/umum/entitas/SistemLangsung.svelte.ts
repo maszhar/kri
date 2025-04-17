@@ -3,7 +3,7 @@ import { Sistem, type ParameterBuatSistem } from '../../../../umum/entitas/Siste
 export class SistemLangsung extends Sistem {
   private namaLangsung = $state('')
 
-  constructor(parameter: ParameterBuatSistem) {
+  constructor(parameter: ParameterBuatSistem = {}) {
     super(parameter)
 
     this.namaLangsung = this.nama

@@ -17,6 +17,8 @@
   import IkonKebutuhan from '../ikon/IkonKebutuhan.svelte'
   import type { ProyekLangsung } from '../../entitas/ProyekLangsung.svelte'
   import ItemPanelKiriProyek from './komponen/ItemPanelKiriProyek.svelte'
+  import { JenisMenuPanelKiri } from './JenisMenuPanelKiri'
+  import type { IsiProyek } from '../../../../../umum/entitas/IsiProyek'
 
   interface Properti {
     proyek: ProyekLangsung
@@ -115,6 +117,44 @@
     window.removeEventListener('click', tutupMenuKonteks)
   }
 
+  // menu
+  let refMenu: IsiProyek | null = null
+
+  interface ItemMenu {
+    label: string
+    aksi: () => void
+  }
+
+  const petaItemMenu: Map<JenisMenuPanelKiri, ItemMenu[]> = new Map()
+  petaItemMenu.set(JenisMenuPanelKiri.PROYEK, [
+    {
+      label: 'Buat sistem',
+      aksi: (): void => {
+        proyek.buatSistem()
+      }
+    }
+  ])
+
+  let posisiMenu: Koordinat | null = $state(null)
+  let menuAktif: ItemMenu[] | null = $state(null)
+
+  function bukaMenu(posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref?: IsiProyek): void {
+    if (petaItemMenu.has(jenis)) {
+      menuAktif = petaItemMenu.get(jenis)!
+      refMenu = ref ?? null
+      posisiMenu = posisiKlik
+
+      window.addEventListener('click', tutupMenu)
+    }
+  }
+
+  function tutupMenu(): void {
+    window.removeEventListener('click', tutupMenu)
+    menuAktif = null
+    refMenu = null
+    posisiMenu = null
+  }
+
   // indeks
   function dapatkanIndeks(): number {
     return ++indeksTerakhir
@@ -130,7 +170,7 @@
   bind:this={elemenPanel}
 >
   <!-- Proyek -->
-  <ItemPanelKiriProyek {proyek} idAktif={idItemAktif} {pilih} />
+  <ItemPanelKiriProyek {proyek} idAktif={idItemAktif} {pilih} {bukaMenu} />
 
   <TampilanItemKomponenProyek {pilih} indeks={dapatkanIndeks()} {itemDipilih}>
     {#snippet ikon()}
@@ -292,4 +332,12 @@
       <ItemMenuKonteks saatDiklik={saatBuatSequenceDiagram}>Buat Sequence Diagram</ItemMenuKonteks>
     </MenuKonteks>
   {/if}
+{/if}
+
+{#if menuAktif && posisiMenu}
+  <MenuKonteks posisi={posisiMenu}>
+    {#each menuAktif as itemMenuAktif}
+      <ItemMenuKonteks saatDiklik={itemMenuAktif.aksi}>{itemMenuAktif.label}</ItemMenuKonteks>
+    {/each}
+  </MenuKonteks>
 {/if}

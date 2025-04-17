@@ -11,7 +11,7 @@ export class Sistem extends IsiProyek {
   private bahasaPemrograman: BahasaPemrograman = BahasaPemrograman.TidakDiatur
   private koleksiSubsistem: Sistem[]
 
-  constructor(parameter: ParameterBuatSistem) {
+  constructor(parameter: ParameterBuatSistem = {}) {
     super({
       nama: parameter.nama ?? 'Sistem baru'
     })
@@ -81,7 +81,7 @@ export class Sistem extends IsiProyek {
     return this.koleksiSubsistem
   }
 
-  tambahSubsistem(parameter: ParameterBuatSistem): Sistem {
+  buatSubsistem(parameter: ParameterBuatSistem): Sistem {
     let idSubsistemTerbesar = 0
     if (this.koleksiSubsistem.length > 0) {
       idSubsistemTerbesar = Math.max(...this.koleksiSubsistem.map((subsistem) => subsistem.id))

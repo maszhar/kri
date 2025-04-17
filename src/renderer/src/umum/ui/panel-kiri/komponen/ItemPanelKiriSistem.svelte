@@ -1,5 +1,8 @@
 <script lang="ts">
+  import type { IsiProyek } from '../../../../../../umum/entitas/IsiProyek'
+  import type { Koordinat } from '../../../../../../umum/entitas/Koordinat'
   import type { SistemLangsung } from '../../../entitas/SistemLangsung.svelte'
+  import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
 
   interface Properti {
@@ -7,8 +10,16 @@
     sistem: SistemLangsung
     idAktif: number
     pilih: (id: number) => void
+    bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref: IsiProyek) => void
   }
-  const { level, sistem, idAktif, pilih }: Properti = $props()
+  const { level, sistem, idAktif, pilih, bukaMenu }: Properti = $props()
 </script>
 
-<ItemPanelKiri {level} label={sistem.dapatkanNamaLangsung()} {idAktif} {pilih} />
+<ItemPanelKiri
+  {level}
+  label={sistem.dapatkanNamaLangsung()}
+  {idAktif}
+  {pilih}
+  bukaMenu={(posisiKlik: Koordinat): void =>
+    bukaMenu(posisiKlik, JenisMenuPanelKiri.SISTEM, sistem)}
+/>

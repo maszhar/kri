@@ -1,6 +1,6 @@
 import { Proyek } from '../../../../umum/entitas/Proyek'
 import type { ParameterBuatProyek } from '../../../../umum/entitas/Proyek'
-import type { SistemLangsung } from './SistemLangsung.svelte'
+import { SistemLangsung } from './SistemLangsung.svelte'
 
 export class ProyekLangsung extends Proyek {
   private namaLangsung = $state('')
@@ -24,5 +24,12 @@ export class ProyekLangsung extends Proyek {
 
   dapatkanKoleksiSistemLangsung(): SistemLangsung[] {
     return this.koleksiSistemLangsung
+  }
+
+  override buatSistem(): SistemLangsung {
+    const sistemBaru = new SistemLangsung()
+    super.buatSistem(sistemBaru)
+    this.koleksiSistemLangsung.push(sistemBaru)
+    return sistemBaru
   }
 }
