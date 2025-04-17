@@ -1,5 +1,5 @@
 import { readonly, writable, type Readable, type Writable } from 'svelte/store'
-import { Proyek } from '../../../../umum/entitas/Proyek'
+import { ProyekLama } from '../../../../umum/entitas/ProyekLama'
 import { DiagramKlasLangsung } from './DiagramKlasLangsung'
 import { KlasLangsung } from './KlasLangsung'
 import type { SequenceDiagram } from '../../../../umum/entitas/SequenceDiagram'
@@ -8,7 +8,7 @@ import { TipeElemen } from '../../../../umum/tipe/TipeElemen'
 import { DiagramKasusGunaLangsung } from './DiagramKasusGunaLangsung'
 import { CeritaPenggunaLangsung } from './CeritaPenggunaLangsung'
 
-export class ProyekLangsung extends Proyek {
+export class ProyekLangsung extends ProyekLama {
   // === ATRIBUT ===
   private koleksiCeritaPenggunaLangsung: Writable<CeritaPenggunaLangsung[]> = writable([])
   private koleksiDiagramKlasLangsung: Writable<DiagramKlasLangsung[]> = writable([])

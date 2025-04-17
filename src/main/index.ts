@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain, dialog, FileFilter } from 'electron
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { Proyek } from '../umum/entitas/Proyek'
+import { ProyekLama } from '../umum/entitas/ProyekLama'
 import { ProyekPb } from '../umum/proto/kri'
 import { writeFile, readFile } from 'fs/promises'
 import { PenghasilKode } from './penghasil-kode/PenghasilKode'
@@ -69,7 +69,7 @@ function createWindow(): void {
     }
 
     const protoProyek = ProyekPb.fromBinary(binaryProyek)
-    const proyek = Proyek.dariProto(protoProyek)
+    const proyek = ProyekLama.dariProto(protoProyek)
     return {
       lokasi: hasilBukaBerkas.filePaths[0],
       data: proyek.bungkusData()
@@ -86,7 +86,7 @@ function createWindow(): void {
   })
 
   ipcMain.handle('simpanProyek', async (_, lokasiBerkas, data): Promise<void> => {
-    const proyek = Proyek.bongkarBungkusanData(data)
+    const proyek = ProyekLama.bongkarBungkusanData(data)
     const protoProyek = proyek.keProto()
     const binaryProyek = ProyekPb.toBinary(protoProyek)
 
@@ -112,7 +112,7 @@ function createWindow(): void {
     if (hasilPilihFolderHasilKode.canceled) {
       return
     }
-    const proyek = Proyek.bongkarBungkusanData(dataProyek)
+    const proyek = ProyekLama.bongkarBungkusanData(dataProyek)
     penghasilKode.hasilkanKodeTypescript({
       proyek: proyek,
       folderHasilKode: hasilPilihFolderHasilKode.filePaths[0]

@@ -1,5 +1,5 @@
 import { Kelas } from '../../../umum/entitas/Kelas'
-import { Proyek } from '../../../umum/entitas/Proyek'
+import { ProyekLama } from '../../../umum/entitas/ProyekLama'
 import { PenghasilKodeKlasTypescript } from './PenghasilKodeKlasTypescript'
 import { writeFile } from 'fs/promises'
 import * as path from 'path'
@@ -23,6 +23,6 @@ export class PenghasilKodeTypescript {
 }
 
 export interface ParameterHasilkanKode {
-  proyek: Proyek
+  proyek: ProyekLama
   folderHasilKode: string
 }
