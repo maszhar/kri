@@ -19,8 +19,7 @@
   import ItemPanelKiriProyek from './komponen/ItemPanelKiriProyek.svelte'
   import { JenisMenuPanelKiri } from './JenisMenuPanelKiri'
   import type { IsiProyek } from '../../../../../umum/entitas/IsiProyek'
-  import { Sistem } from '../../../../../umum/entitas/Sistem'
-  import type { SistemLangsung } from '../../entitas/SistemLangsung.svelte'
+  import { SistemLangsung } from '../../entitas/SistemLangsung.svelte'
 
   interface Properti {
     proyek: ProyekLangsung
@@ -145,13 +144,23 @@
   const menuBuatSubsistem = {
     label: 'Buat subsistem',
     aksi: (): void => {
-      if (refMenu instanceof Sistem) {
+      if (refMenu instanceof SistemLangsung) {
         refMenu.buatSubsistem()
       }
     }
   }
   petaItemMenu.set(JenisMenuPanelKiri.JUDUL_SISTEM, [menuBuatSubsistem])
-  petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [menuBuatSubsistem])
+  petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [
+    {
+      label: 'Buat kelas',
+      aksi: (): void => {
+        if (refMenu instanceof SistemLangsung) {
+          refMenu.buatKelas()
+        }
+      }
+    },
+    menuBuatSubsistem
+  ])
 
   let posisiMenu: Koordinat | null = $state(null)
   let menuAktif: ItemMenu[] | null = $state(null)
@@ -188,7 +197,14 @@
   bind:this={elemenPanel}
 >
   <!-- Proyek -->
-  <ItemPanelKiriProyek {proyek} idAktif={idItemAktif} {pilih} {bukaMenu} {bukaSistem} />
+  <ItemPanelKiriProyek
+    {isiProyekAktif}
+    {proyek}
+    idAktif={idItemAktif}
+    {pilih}
+    {bukaMenu}
+    {bukaSistem}
+  />
 
   <TampilanItemKomponenProyek {pilih} indeks={dapatkanIndeks()} {itemDipilih}>
     {#snippet ikon()}

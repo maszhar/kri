@@ -15,6 +15,7 @@
     bukaMenu: (posisiKlik: Koordinat) => void
     id: number
     buka?: () => void
+    aktif?: boolean
   }
   const {
     level = 0,
@@ -26,7 +27,8 @@
     pilih,
     bukaMenu,
     id,
-    buka
+    buka,
+    aktif = false
   }: Properti = $props()
 
   let childrenTampil = $state(false)
@@ -61,7 +63,7 @@
     <div class="w-4">
       {@render ikon?.()}
     </div>
-    <div>{label}</div>
+    <div class={aktif ? 'font-bold' : ''}>{label}</div>
   </button>
 </div>
 

@@ -14,8 +14,9 @@
     proyek: ProyekLangsung
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref?: IsiProyek) => void
     bukaSistem: (sistem: SistemLangsung) => void
+    isiProyekAktif: IsiProyek | null
   }
-  const { proyek, idAktif, pilih, bukaMenu, bukaSistem }: Properti = $props()
+  const { proyek, idAktif, pilih, bukaMenu, bukaSistem, isiProyekAktif }: Properti = $props()
 
   const idProyek = 1
 </script>
@@ -41,6 +42,7 @@
         {bukaMenu}
         idPrefix={idProyek}
         {bukaSistem}
+        {isiProyekAktif}
       />
     {/each}
   {/snippet}
