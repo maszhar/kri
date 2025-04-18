@@ -65,7 +65,7 @@
           <IkonSistem class="w-full h-full" />
         {/snippet}
         {#snippet itemChildren(levelDalam: number)}
-          {#each koleksiSubsistem as subsistem}
+          {#each koleksiSubsistem as subsistem, _i (subsistem.dapatkanId())}
             <ItemPanelKiriSistem
               {bukaMenu}
               {idAktif}
