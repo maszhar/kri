@@ -12,8 +12,9 @@
     proyek: ProyekLangsung
     isiProyekAktif: IsiProyek | null
     bukaSistem: (sistem: SistemLangsung) => void
+    waktuLoad: number
   }
-  const { proyek, isiProyekAktif, bukaSistem }: Properti = $props()
+  const { proyek, isiProyekAktif, bukaSistem, waktuLoad }: Properti = $props()
 
   let idItemAktif = $state(-1)
 
@@ -125,6 +126,7 @@
     {pilih}
     {bukaMenu}
     {bukaSistem}
+    {waktuLoad}
   />
 </div>
 

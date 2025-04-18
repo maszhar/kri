@@ -15,6 +15,7 @@
 
   // proyek
   let proyek = $state(new ProyekLangsung())
+  let waktuLoad = $state(new Date().getTime())
 
   let proyekLama = $state(new ProyekLangsungLama())
 
@@ -32,6 +33,7 @@
     }
     isiProyekAktif = null
     proyek = ProyekLangsung.deserialisasi(dataProyek.data)
+    waktuLoad = new Date().getTime()
     lokasiPenyimpananProyek = dataProyek.lokasi
   }
 
@@ -83,6 +85,7 @@
       {proyek}
       {isiProyekAktif}
       bukaSistem={(sistem: SistemLangsung): void => bukaIsiProyek(sistem)}
+      {waktuLoad}
     />
     <Jendela>
       {#if isiProyekAktif instanceof SistemLangsung}

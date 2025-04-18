@@ -15,8 +15,10 @@
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref?: IsiProyek) => void
     bukaSistem: (sistem: SistemLangsung) => void
     isiProyekAktif: IsiProyek | null
+    waktuLoad: number
   }
-  const { proyek, idAktif, pilih, bukaMenu, bukaSistem, isiProyekAktif }: Properti = $props()
+  const { proyek, idAktif, pilih, bukaMenu, bukaSistem, isiProyekAktif, waktuLoad }: Properti =
+    $props()
 
   const idProyek = 1
 </script>
@@ -33,7 +35,7 @@
     <IkonProyek class="w-full h-full" />
   {/snippet}
   {#snippet itemChildren(level: number)}
-    {#each proyek.dapatkanKoleksiSistemLangsung() as sistem, _i (sistem.dapatkanId())}
+    {#each proyek.dapatkanKoleksiSistemLangsung() as sistem, _i (parseInt(`${waktuLoad}${sistem.dapatkanId()}`))}
       <ItemPanelKiriSistem
         {level}
         {sistem}
