@@ -82,7 +82,7 @@ export class ProyekLangsungLama extends ProyekLama {
       if (!namaSama) {
         klasTerkait.aturNama(namaBaru)
       } else {
-        throw new GalatNamaSama(namaBaru, TipeElemen.KLAS)
+        throw new GalatNamaSama(namaBaru, TipeElemen.KELAS)
       }
     }
   }

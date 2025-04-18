@@ -1,5 +1,6 @@
 import { GalatBahasaPemrogramanTidakDidukung } from '../galat/GalatBahasaPemrogramanTidakDidukung'
 import { GalatFrameworkTidakDidukung } from '../galat/GalatFrameworkTidakDidukung'
+import { GalatNamaSama } from '../galat/GalatNamaSama'
 import { GalatPlatformTidakDidukung } from '../galat/GalatPlatformTidakDidukung'
 import { SistemPb } from '../proto/kri'
 import {
@@ -10,7 +11,9 @@ import {
 import { Framework, frameworkDariProto, frameworkKeProto } from '../tipe/Framework'
 import { Platform, platformDariProto, platformKeProto } from '../tipe/Platform'
 import { TargetSistem, targetSistemDariProto, targetSistemKeProto } from '../tipe/TargetSistem'
+import { TipeElemen } from '../tipe/TipeElemen'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
+import { Kelas, ParameterBuatKelas } from './Kelas'
 import {
   dukunganBahasaPemrograman,
   dukunganFramework,
@@ -22,6 +25,8 @@ export class Sistem extends IsiProyek {
   protected platform: Platform = Platform.TIDAK_DIATUR
   protected framework: Framework = Framework.TIDAK_DIATUR
   protected bahasaPemrograman: BahasaPemrograman = BahasaPemrograman.TIDAK_DIATUR
+
+  protected koleksiKelas: Kelas[]
   protected koleksiSubsistem: Sistem[]
 
   constructor(parameter: ParameterBuatSistem = {}) {
@@ -34,6 +39,7 @@ export class Sistem extends IsiProyek {
     this.framework = parameter.framework ?? Framework.TIDAK_DIATUR
     this.bahasaPemrograman = parameter.bahasaPemrograman ?? BahasaPemrograman.TIDAK_DIATUR
 
+    this.koleksiKelas = parameter.koleksiKelas ?? []
     this.koleksiSubsistem = parameter.koleksiSubsistem ?? []
   }
 
@@ -85,6 +91,50 @@ export class Sistem extends IsiProyek {
     }
 
     this.bahasaPemrograman = bahasa
+  }
+
+  private validasiNamaKelas(nama: string): void {
+    const kelasBernamaSama = this.koleksiKelas.find((kelas) => kelas.dapatkanNama() === nama)
+    if (kelasBernamaSama) {
+      throw new GalatNamaSama(nama, TipeElemen.KELAS)
+    }
+  }
+
+  private hasilkanNamaKelas(): string {
+    const frasa = 'KelasBaru'
+
+    let indeksNamaBaruTerakhir = 0
+    for (const kelas of this.koleksiKelas) {
+      if (new RegExp('^' + frasa).test(kelas.dapatkanNama())) {
+        const indeksNama = parseInt(kelas.dapatkanNama().slice(frasa.length))
+        if (!isNaN(indeksNama)) {
+          indeksNamaBaruTerakhir = indeksNama
+        }
+      }
+    }
+
+    return `${frasa}${indeksNamaBaruTerakhir + 1}`
+  }
+
+  buatKelas(parameter: ParameterBuatKelas = {}, objekLama?: Kelas): Kelas {
+    if (parameter.nama === undefined) {
+      parameter.nama = this.hasilkanNamaKelas()
+    }
+    this.validasiNamaKelas(parameter.nama)
+
+    let idTertinggi = 0
+    if (this.koleksiKelas.length > 0) {
+      idTertinggi = Math.max(...this.koleksiKelas.map((kelas) => kelas.dapatkanId()))
+    }
+
+    const kelasBaru = objekLama ?? new Kelas(parameter)
+    if (objekLama) {
+      kelasBaru.aturNama(parameter.nama)
+    }
+    kelasBaru.aturId(idTertinggi + 1)
+
+    this.koleksiKelas.push(kelasBaru)
+    return kelasBaru
   }
 
   dapatkanKoleksiSubsistem(): Sistem[] {
@@ -160,5 +210,6 @@ export interface ParameterBuatSistem extends ParameterBuatIsiProyek {
   platform?: Platform
   framework?: Framework
   bahasaPemrograman?: BahasaPemrograman
+  koleksiKelas?: Kelas[]
   koleksiSubsistem?: Sistem[]
 }

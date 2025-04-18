@@ -11,7 +11,7 @@ export class Kelas extends ElemenBernama {
   protected koleksiOperasi: Operasi[]
   protected koleksiAsosiasi: Asosiasi[]
 
-  constructor(parameter: ParameterBuatKlas = {}) {
+  constructor(parameter: ParameterBuatKelas = {}) {
     super({
       id: parameter.id,
       nama: parameter.nama || 'KelasBaru'
@@ -170,7 +170,7 @@ export class Kelas extends ElemenBernama {
   }
 }
 
-interface ParameterBuatKlas extends ParameterBuatElemenBernama {
+export interface ParameterBuatKelas extends ParameterBuatElemenBernama {
   koleksiAtribut?: Atribut[]
   koleksiAsosiasi?: Asosiasi[]
   koleksiOperasi?: Operasi[]

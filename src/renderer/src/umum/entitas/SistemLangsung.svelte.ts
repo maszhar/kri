@@ -1,8 +1,10 @@
+import type { ParameterBuatKelas } from '../../../../umum/entitas/Kelas'
 import { Sistem, type ParameterBuatSistem } from '../../../../umum/entitas/Sistem'
 import { BahasaPemrograman } from '../../../../umum/tipe/BahasaPemrograman'
 import { Framework } from '../../../../umum/tipe/Framework'
 import { Platform } from '../../../../umum/tipe/Platform'
 import { TargetSistem } from '../../../../umum/tipe/TargetSistem'
+import { KelasLangsung } from './KelasLangsung.svelte'
 
 export class SistemLangsung extends Sistem {
   private namaLangsung = $state('')
@@ -10,7 +12,9 @@ export class SistemLangsung extends Sistem {
   private platformLangsung = $state(Platform.TIDAK_DIATUR)
   private frameworkLangsung = $state(Framework.TIDAK_DIATUR)
   private bahasaPemrogramanLangsung = $state(BahasaPemrograman.TIDAK_DIATUR)
+
   private koleksiSubsistemLangsung: SistemLangsung[] = $state([])
+  private koleksiKelasLangsung: KelasLangsung[] = $state([])
 
   constructor(parameter: ParameterBuatSistem = {}) {
     super(parameter)
@@ -73,6 +77,17 @@ export class SistemLangsung extends Sistem {
   override aturBahasaPemrograman(bahasa: BahasaPemrograman): void {
     super.aturBahasaPemrograman(bahasa)
     this.bahasaPemrogramanLangsung = this.bahasaPemrograman
+  }
+
+  dapatkanKoleksiKelasLangsung(): KelasLangsung[] {
+    return this.koleksiKelasLangsung
+  }
+
+  override buatKelas(parameter: ParameterBuatKelas = {}): KelasLangsung {
+    const kelasBaru = new KelasLangsung(parameter)
+    super.buatKelas(parameter, kelasBaru)
+    this.koleksiKelasLangsung.push(kelasBaru)
+    return kelasBaru
   }
 
   dapatkanKoleksiSubsistemLangsung(): SistemLangsung[] {

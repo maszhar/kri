@@ -98,7 +98,7 @@
   }
 
   // kunci saat ada yang mengedit
-  let adaYangMengedit = $state(false)
+  let adaYanKELASgedit = $state(false)
   function mulaiMengedit(): void {
     adaYangMengedit = true
   }
