@@ -21,7 +21,7 @@ export class Kelas extends ElemenBernama {
     this.koleksiAsosiasi = parameter.koleksiAsosiasi ?? []
   }
 
-  private validasiNama(nama: string, elemenLama?: Atribut): void {
+  private validasiNamaAnggota(nama: string, elemenLama?: Atribut): void {
     const atributBernamaSama = this.koleksiAtribut.find((atribut) => atribut.dapatkanNama() == nama)
     if (atributBernamaSama) {
       throw new GalatNamaSama(nama, TipeElemen.ATRIBUT)
@@ -42,7 +42,7 @@ export class Kelas extends ElemenBernama {
   }
 
   buatAtribut(parameter: ParameterBuatAtribut, objekLama?: Atribut): Atribut {
-    this.validasiNama(parameter.nama)
+    this.validasiNamaAnggota(parameter.nama)
 
     const atribut = objekLama ?? new Atribut(parameter)
     const idTerbesar = this.dapatkanIdAtributTerbesar()
