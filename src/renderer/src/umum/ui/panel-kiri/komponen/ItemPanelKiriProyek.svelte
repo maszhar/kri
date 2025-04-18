@@ -43,7 +43,7 @@
         {pilih}
         {bukaMenu}
         idPrefix={idProyek}
-        {bukaSistem}
+        bukaIsiProyek={bukaSistem}
         {isiProyekAktif}
       />
     {/each}

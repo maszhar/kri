@@ -2,9 +2,11 @@
   import type { IsiProyek } from '../../../../../../umum/entitas/IsiProyek'
   import type { Koordinat } from '../../../../../../umum/entitas/Koordinat'
   import type { SistemLangsung } from '../../../entitas/SistemLangsung.svelte'
+  import IkonKelas from '../../ikon/IkonKelas.svelte'
   import IkonSistem from '../../ikon/IkonSistem.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
+  import ItemPanelKiriKelas from './ItemPanelKiriKelas.svelte'
   import ItemPanelKiriSistem from './ItemPanelKiriSistem.svelte'
 
   interface Properti {
@@ -14,7 +16,7 @@
     pilih: (id: number) => void
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref: IsiProyek) => void
     idPrefix: number
-    bukaSistem: (sistem: SistemLangsung) => void
+    bukaIsiProyek: (isiProyek: IsiProyek) => void
     isiProyekAktif: IsiProyek
   }
   const {
@@ -24,13 +26,11 @@
     pilih,
     bukaMenu,
     idPrefix,
-    bukaSistem,
+    bukaIsiProyek,
     isiProyekAktif
   }: Properti = $props()
 
   const id = parseInt(`${idPrefix}${sistem.dapatkanId()}`)
-
-  const koleksiSubsistem = sistem.dapatkanKoleksiSubsistemLangsung()
 </script>
 
 <ItemPanelKiri
@@ -41,8 +41,9 @@
   bukaMenu={(posisiKlik: Koordinat): void =>
     bukaMenu(posisiKlik, JenisMenuPanelKiri.SISTEM, sistem)}
   {id}
-  punyaChildren={koleksiSubsistem.length > 0}
-  buka={(): void => bukaSistem(sistem)}
+  punyaChildren={sistem.dapatkanKoleksiSubsistemLangsung().length > 0 ||
+    sistem.dapatkanKoleksiKelasLangsung().length > 0}
+  buka={(): void => bukaIsiProyek(sistem)}
   aktif={isiProyekAktif === sistem}
 >
   {#snippet ikon()}
@@ -50,7 +51,40 @@
   {/snippet}
 
   {#snippet itemChildren(level: number)}
-    {#if koleksiSubsistem.length > 0}
+    <!-- Kelas (1) -->
+    {#if sistem.dapatkanKoleksiKelasLangsung().length > 0}
+      <ItemPanelKiri
+        id={parseInt(`${id}1`)}
+        {level}
+        label="Kelas"
+        {idAktif}
+        {pilih}
+        bukaMenu={(posisiKlik: Koordinat): void =>
+          bukaMenu(posisiKlik, JenisMenuPanelKiri.JUDUL_KELAS, sistem)}
+        punyaChildren={true}
+      >
+        {#snippet ikon()}
+          <IkonKelas class="w-full h-full fill-transparent stroke-black" />
+        {/snippet}
+        {#snippet itemChildren(levelDalam: number)}
+          {#each sistem.dapatkanKoleksiKelasLangsung() as kelas, _i (kelas.dapatkanId())}
+            <ItemPanelKiriKelas
+              {bukaMenu}
+              {idAktif}
+              level={levelDalam}
+              idPrefix={parseInt(`${id}1`)}
+              {kelas}
+              {pilih}
+              {bukaIsiProyek}
+              {isiProyekAktif}
+            />
+          {/each}
+        {/snippet}
+      </ItemPanelKiri>
+    {/if}
+
+    <!-- Subsistem (0) -->
+    {#if sistem.dapatkanKoleksiSubsistemLangsung().length > 0}
       <ItemPanelKiri
         id={parseInt(`${id}0`)}
         {level}
@@ -65,7 +99,7 @@
           <IkonSistem class="w-full h-full" />
         {/snippet}
         {#snippet itemChildren(levelDalam: number)}
-          {#each koleksiSubsistem as subsistem, _i (subsistem.dapatkanId())}
+          {#each sistem.dapatkanKoleksiSubsistemLangsung() as subsistem, _i (subsistem.dapatkanId())}
             <ItemPanelKiriSistem
               {bukaMenu}
               {idAktif}
@@ -73,7 +107,7 @@
               idPrefix={parseInt(`${id}0`)}
               sistem={subsistem}
               {pilih}
-              {bukaSistem}
+              {bukaIsiProyek}
               {isiProyekAktif}
             />
           {/each}

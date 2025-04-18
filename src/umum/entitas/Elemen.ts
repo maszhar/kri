@@ -1,24 +1,15 @@
+import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 import { Koordinat } from './Koordinat'
 
-export class Elemen {
-  public id: number
+export class Elemen extends IsiProyek {
   public posisi: Koordinat
 
   constructor(parameter: ParameterBuatElemen = {}) {
-    this.id = parameter.id ?? 0
+    super(parameter)
     this.posisi = parameter.posisi ?? new Koordinat()
-  }
-
-  dapatkanId(): number {
-    return this.id
-  }
-
-  aturId(id: number): void {
-    this.id = id
   }
 }
 
-interface ParameterBuatElemen {
-  id?: number
+interface ParameterBuatElemen extends ParameterBuatIsiProyek {
   posisi?: Koordinat
 }
