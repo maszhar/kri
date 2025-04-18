@@ -31,6 +31,7 @@ export class Sistem extends IsiProyek {
 
   constructor(parameter: ParameterBuatSistem = {}) {
     super({
+      ...parameter,
       nama: parameter.nama ?? 'Sistem baru'
     })
 
