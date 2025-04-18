@@ -2,7 +2,6 @@
   import type { IsiProyek } from '../../../../../../umum/entitas/IsiProyek'
   import type { Koordinat } from '../../../../../../umum/entitas/Koordinat'
   import type { KelasLangsung } from '../../../entitas/KelasLangsung.svelte'
-  import IkonKelas from '../../ikon/IkonKelas.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
 
@@ -42,6 +41,6 @@
   aktif={isiProyekAktif === kelas}
 >
   {#snippet ikon()}
-    <IkonKelas class="w-full h-full fill-transparent stroke-black" />
+    <div class="font-bold text-blue-500">C</div>
   {/snippet}
 </ItemPanelKiri>

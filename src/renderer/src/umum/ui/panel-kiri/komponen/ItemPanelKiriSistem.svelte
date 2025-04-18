@@ -2,7 +2,6 @@
   import type { IsiProyek } from '../../../../../../umum/entitas/IsiProyek'
   import type { Koordinat } from '../../../../../../umum/entitas/Koordinat'
   import type { SistemLangsung } from '../../../entitas/SistemLangsung.svelte'
-  import IkonKelas from '../../ikon/IkonKelas.svelte'
   import IkonSistem from '../../ikon/IkonSistem.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
@@ -64,7 +63,7 @@
         punyaChildren={true}
       >
         {#snippet ikon()}
-          <IkonKelas class="w-full h-full fill-transparent stroke-black" />
+          <div class="font-bold text-blue-500">C</div>
         {/snippet}
         {#snippet itemChildren(levelDalam: number)}
           {#each sistem.dapatkanKoleksiKelasLangsung() as kelas, _i (kelas.dapatkanId())}
