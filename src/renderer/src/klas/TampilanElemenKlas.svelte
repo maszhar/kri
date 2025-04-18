@@ -222,7 +222,7 @@
 
   function mulaiBuatOperasiBaru(e: MouseEvent): void {
     e.stopPropagation()
-    tutupMenuModifikasiKlas()
+    // buatAtributupMenuModifikasiKlas()
     sedangMembuatOperasiBaru = true
   }
 

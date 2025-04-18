@@ -21,7 +21,7 @@ export class ElemenBernama extends Elemen {
   }
 }
 
-interface ParameterBuatElemenBernama {
+export interface ParameterBuatElemenBernama {
   id?: number
   nama?: string
   posisi?: Koordinat

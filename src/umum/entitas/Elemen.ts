@@ -12,6 +12,10 @@ export class Elemen {
   dapatkanId(): number {
     return this.id
   }
+
+  aturId(id: number): void {
+    this.id = id
+  }
 }
 
 interface ParameterBuatElemen {
