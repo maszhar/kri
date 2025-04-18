@@ -6,11 +6,11 @@ import { TargetSistem } from '../../../../umum/tipe/TargetSistem'
 
 export class SistemLangsung extends Sistem {
   private namaLangsung = $state('')
-  private koleksiSubsistemLangsung: SistemLangsung[] = $state([])
   private targetSistemLangsung = $state(TargetSistem.TIDAK_DIATUR)
   private platformLangsung = $state(Platform.TIDAK_DIATUR)
   private frameworkLangsung = $state(Framework.TIDAK_DIATUR)
   private bahasaPemrogramanLangsung = $state(BahasaPemrograman.TIDAK_DIATUR)
+  private koleksiSubsistemLangsung: SistemLangsung[] = $state([])
 
   constructor(parameter: ParameterBuatSistem = {}) {
     super(parameter)
@@ -18,6 +18,8 @@ export class SistemLangsung extends Sistem {
     this.namaLangsung = this.nama
     this.targetSistemLangsung = this.targetSistem
     this.platformLangsung = this.platform
+    this.frameworkLangsung = this.framework
+    this.bahasaPemrogramanLangsung = this.bahasaPemrograman
     this.koleksiSubsistemLangsung = this.koleksiSubsistem as SistemLangsung[]
   }
 
@@ -93,7 +95,7 @@ export class SistemLangsung extends Sistem {
       framework: data.framework as Framework,
       bahasaPemrograman: data.bahasaPemrograman as BahasaPemrograman,
       koleksiSubsistem: data.koleksiSubsistem.map((dataSubsistem) =>
-        Sistem.deserialisasi(dataSubsistem)
+        SistemLangsung.deserialisasi(dataSubsistem)
       )
     })
   }
