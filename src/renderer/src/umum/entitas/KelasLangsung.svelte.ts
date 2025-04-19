@@ -47,7 +47,7 @@ export class KelasLangsung extends Kelas {
     return this.koleksiMetodeLangsung
   }
 
-  override buatMetode(parameter?: ParameterBuatMetode): Metode {
+  override buatMetode(parameter: ParameterBuatMetode = {}): Metode {
     const metodeBaru = new MetodeLangsung(parameter, (namaBaru, elemenLama) =>
       this.validasiNamaAnggota(namaBaru, elemenLama)
     )
