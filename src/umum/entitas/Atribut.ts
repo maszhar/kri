@@ -10,6 +10,12 @@ export class Atribut extends ElemenBernama {
   protected tipe?: string
   protected bawaan?: string
 
+  protected sebagaiId: boolean
+  protected bacaSaja: boolean
+  protected unik: boolean
+  protected terurut: boolean
+  protected urutan: boolean
+
   constructor(
     parameter: ParameterBuatAtribut,
     private validasiNamaBaru: (nama: string, atribut: Atribut) => void
@@ -25,6 +31,12 @@ export class Atribut extends ElemenBernama {
     this.rentangMultiplisitas = parameter.rentangMultiplisitas ?? new RentangMultiplisitas()
     this.tipe = parameter.tipe
     this.bawaan = parameter.bawaan
+
+    this.sebagaiId = parameter.sebagaiId ?? false
+    this.bacaSaja = parameter.bacaSaja ?? false
+    this.unik = parameter.unik ?? false
+    this.terurut = parameter.terurut ?? false
+    this.urutan = parameter.urutan ?? false
   }
 
   toString(): string {
@@ -49,6 +61,23 @@ export class Atribut extends ElemenBernama {
 
     if (this.bawaan) {
       hasil += ` = ${this.bawaan}`
+    }
+
+    // pemodifikasi
+    const koleksiTeksPemodifikasi: string[] = []
+
+    if (this.bacaSaja) {
+      koleksiTeksPemodifikasi.push('readOnly')
+    }
+
+    if (this.sebagaiId) {
+      koleksiTeksPemodifikasi.push('id')
+    }
+
+    if (koleksiTeksPemodifikasi.length > 0) {
+      hasil += ' {'
+      hasil += koleksiTeksPemodifikasi.join(', ')
+      hasil += '}'
     }
 
     return hasil
@@ -78,6 +107,14 @@ export class Atribut extends ElemenBernama {
     this.tipe = tipe
   }
 
+  aturBacaSaja(bacaSaja: boolean): void {
+    this.bacaSaja = bacaSaja
+  }
+
+  aturSebagaiId(sebagaiId: boolean): void {
+    this.sebagaiId = sebagaiId
+  }
+
   aturDariTeks(teks: string): void {
     let teksTersisa = teks.trim()
 
@@ -102,6 +139,45 @@ export class Atribut extends ElemenBernama {
       teksTersisa = teksTersisa.slice(1).trim()
     } else {
       this.aturDiwariskan(false)
+    }
+
+    // deteksi pemodifikasi
+    const indeksSimbolTutupPemodifikasi = teksTersisa.lastIndexOf('}')
+    let indeksSimbolBukaPemodifikasi = -1
+    if (indeksSimbolTutupPemodifikasi !== -1) {
+      indeksSimbolBukaPemodifikasi = teksTersisa.lastIndexOf('{')
+    }
+    if (
+      indeksSimbolBukaPemodifikasi !== -1 &&
+      indeksSimbolTutupPemodifikasi !== -1 &&
+      indeksSimbolTutupPemodifikasi - indeksSimbolBukaPemodifikasi > 1
+    ) {
+      let bacaSaja = false
+      let sebagaiId = false
+
+      const teksPemodifikasi = teksTersisa
+        .slice(indeksSimbolBukaPemodifikasi + 1, indeksSimbolTutupPemodifikasi)
+        .trim()
+      const pecahanTeksPemodifikasi = teksPemodifikasi.split(',')
+      for (const isiTeksPemodifikasiMentah of pecahanTeksPemodifikasi) {
+        const isiTeksPemodifikasi = isiTeksPemodifikasiMentah.trim()
+        const isiTeksPemodifikasiKecil = isiTeksPemodifikasi.toLowerCase()
+
+        if (
+          isiTeksPemodifikasiKecil === 'readonly' ||
+          isiTeksPemodifikasiKecil === 'ro' ||
+          isiTeksPemodifikasiKecil === 'bacasaja'
+        ) {
+          bacaSaja = true
+        } else if (isiTeksPemodifikasiKecil === 'id') {
+          sebagaiId = true
+        }
+      }
+
+      this.aturBacaSaja(bacaSaja)
+      this.aturSebagaiId(sebagaiId)
+
+      teksTersisa = teksTersisa.slice(0, indeksSimbolBukaPemodifikasi).trim()
     }
 
     // deteksi bawaan
@@ -234,4 +310,9 @@ export interface ParameterBuatAtribut extends ParameterBuatElemenBernama {
   rentangMultiplisitas?: RentangMultiplisitas
   tipe?: string
   bawaan?: string
+  sebagaiId?: boolean
+  bacaSaja?: boolean
+  unik?: boolean
+  terurut?: boolean
+  urutan?: boolean
 }
