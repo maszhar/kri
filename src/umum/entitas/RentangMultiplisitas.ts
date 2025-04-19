@@ -98,8 +98,8 @@ export class RentangMultiplisitas {
 
   static dariProto(proto: RentangMultiplisitasPb): RentangMultiplisitas {
     return new RentangMultiplisitas({
-      maksimal: proto.maksimal,
-      minimal: proto.minimal
+      maksimal: proto.maksimal === -1 ? null : proto.maksimal,
+      minimal: proto.minimal === -1 ? null : proto.minimal
     })
   }
 }
