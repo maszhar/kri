@@ -75,17 +75,18 @@
     }
   }
   petaItemMenu.set(JenisMenuPanelKiri.JUDUL_SISTEM, [menuBuatSubsistem])
-  petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [
-    {
-      label: 'Buat kelas',
-      aksi: (): void => {
-        if (refMenu instanceof SistemLangsung) {
-          refMenu.buatKelas()
-        }
+
+  const menuBuatKelas = {
+    label: 'Buat kelas',
+    aksi: (): void => {
+      if (refMenu instanceof SistemLangsung) {
+        refMenu.buatKelas()
       }
-    },
-    menuBuatSubsistem
-  ])
+    }
+  }
+  petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [menuBuatKelas, menuBuatSubsistem])
+
+  petaItemMenu.set(JenisMenuPanelKiri.JUDUL_KELAS, [menuBuatKelas])
 
   function bukaMenu(posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref?: IsiProyek): void {
     if (petaItemMenu.has(jenis)) {
