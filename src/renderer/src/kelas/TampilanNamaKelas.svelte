@@ -34,7 +34,7 @@
     mengedit = false
 
     if (terapkan) {
-      perbaruiNama(namaTerinput)
+      perbaruiNama(namaTerinput.replaceAll(/[^A-Za-z0-9_]/g, ''))
     }
   }
 
@@ -46,9 +46,11 @@
   })
 </script>
 
-<button
+<div
   class="relative select-none font-bold py-1 px-4 text-center cursor-move"
   ondblclick={mulaiEditNama}
+  role="button"
+  tabindex={0}
 >
   {#if mengedit}
     <input
@@ -63,4 +65,4 @@
   <span class={mengedit ? 'opacity-0' : ''}>
     {nama}
   </span>
-</button>
+</div>
