@@ -74,6 +74,10 @@ export class Atribut extends ElemenBernama {
     this.rentangMultiplisitas = rentangMultiplisitas
   }
 
+  aturTipe(tipe?: string): void {
+    this.tipe = tipe
+  }
+
   aturDariTeks(teks: string): void {
     let teksTersisa = teks.trim()
 
@@ -172,6 +176,16 @@ export class Atribut extends ElemenBernama {
       ) {
         this.rentangMultiplisitas = new RentangMultiplisitas()
       }
+    }
+
+    // deteksi tipe
+    const indeksSimbolTipe = teksTersisa.lastIndexOf(':')
+    if (indeksSimbolTipe !== -1) {
+      const tipe = teksTersisa.slice(indeksSimbolTipe + 1).trim()
+      this.aturTipe(tipe)
+      teksTersisa = teksTersisa.slice(0, indeksSimbolTipe).trim()
+    } else {
+      this.aturTipe()
     }
 
     const nama = teksTersisa.replaceAll(/[^A-Za-z0-9_]/g, '')

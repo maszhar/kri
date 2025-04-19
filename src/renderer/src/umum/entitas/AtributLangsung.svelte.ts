@@ -49,6 +49,11 @@ export class AtributLangsung extends Atribut {
     this.stringLangsung = super.toString()
   }
 
+  override aturTipe(tipe?: string): void {
+    super.aturTipe(tipe)
+    this.stringLangsung = super.toString()
+  }
+
   aturDariTeks(teks: string): void {
     super.aturDariTeks(teks)
     this.stringLangsung = super.toString()
