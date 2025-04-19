@@ -20,3 +20,18 @@ export function visibilitasKeSimbol(visibilitas: Visibilitas): string {
       return '~'
   }
 }
+
+export function visibilitasDariSimbol(simbol: string): Visibilitas {
+  switch (simbol) {
+    case '+':
+      return Visibilitas.PUBLIC
+    case '#':
+      return Visibilitas.PROTECTED
+    case '-':
+      return Visibilitas.PRIVATE
+    case '~':
+      return Visibilitas.PACKAGE
+    default:
+      return Visibilitas.TIDAK_DIATUR
+  }
+}

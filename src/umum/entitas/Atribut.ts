@@ -1,4 +1,4 @@
-import { Visibilitas, visibilitasKeSimbol } from '../tipe/Visibilitas'
+import { Visibilitas, visibilitasDariSimbol, visibilitasKeSimbol } from '../tipe/Visibilitas'
 import { ElemenBernama, ParameterBuatElemenBernama } from './ElemenBernama'
 import { RentangMultiplisitas } from './RentangMultiplisitas'
 
@@ -54,8 +54,27 @@ export class Atribut extends ElemenBernama {
     return hasil
   }
 
+  aturVisibilitas(visibilitas: Visibilitas): void {
+    this.visibilitas = visibilitas
+  }
+
   aturDariTeks(teks: string): void {
-    const nama = teks.replaceAll(/[^A-Za-z0-9_]/g, '')
+    let teksTersisa = teks.trim()
+
+    const karakterPertama = teksTersisa[0]
+    if (
+      karakterPertama === '+' ||
+      karakterPertama === '-' ||
+      karakterPertama === '#' ||
+      karakterPertama === '~'
+    ) {
+      this.aturVisibilitas(visibilitasDariSimbol(karakterPertama))
+      teksTersisa = teksTersisa.slice(1).trim()
+    } else {
+      this.aturVisibilitas(Visibilitas.TIDAK_DIATUR)
+    }
+
+    const nama = teksTersisa.replaceAll(/[^A-Za-z0-9_]/g, '')
     this.validasiNamaBaru(nama, this)
     this.aturNama(nama)
   }

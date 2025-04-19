@@ -1,4 +1,5 @@
 import { Atribut, type ParameterBuatAtribut } from '../../../../umum/entitas/Atribut'
+import type { Visibilitas } from '../../../../umum/tipe/Visibilitas'
 
 export class AtributLangsung extends Atribut {
   private stringLangsung = $state('')
@@ -20,6 +21,11 @@ export class AtributLangsung extends Atribut {
 
   toStringLangsung(): string {
     return this.stringLangsung
+  }
+
+  override aturVisibilitas(visibilitas: Visibilitas): void {
+    super.aturVisibilitas(visibilitas)
+    this.stringLangsung = super.toString()
   }
 
   aturDariTeks(teks: string): void {
