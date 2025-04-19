@@ -27,7 +27,9 @@ export class KelasLangsung extends Kelas {
   }
 
   override buatAtribut(parameter: ParameterBuatAtribut = {}): AtributLangsung {
-    const atributBaru = new AtributLangsung(parameter)
+    const atributBaru = new AtributLangsung(parameter, (namaBaru, elemenLama) =>
+      this.validasiNamaAnggota(namaBaru, elemenLama)
+    )
     super.buatAtribut(parameter, atributBaru)
     this.koleksiAtributLangsung.push(atributBaru)
     return atributBaru

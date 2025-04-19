@@ -4,8 +4,11 @@ export class AtributLangsung extends Atribut {
   private stringLangsung = $state('')
   private namaLangsung = $state('')
 
-  constructor(parameter: ParameterBuatAtribut) {
-    super(parameter)
+  constructor(
+    parameter: ParameterBuatAtribut,
+    validasiNamaBaru: (nama: string, atribut: Atribut) => void
+  ) {
+    super(parameter, validasiNamaBaru)
 
     this.namaLangsung = this.nama
     this.stringLangsung = super.toString()
@@ -17,6 +20,12 @@ export class AtributLangsung extends Atribut {
 
   toStringLangsung(): string {
     return this.stringLangsung
+  }
+
+  aturDariTeks(teks: string): void {
+    super.aturDariTeks(teks)
+    this.stringLangsung = super.toString()
+    this.namaLangsung = this.nama
   }
 
   override aturNama(nama: string): void {

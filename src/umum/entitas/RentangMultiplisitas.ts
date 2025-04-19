@@ -18,6 +18,14 @@ export class RentangMultiplisitas {
     this.validasiNilaiMinimal()
   }
 
+  dapatkanMinimal(): number | null {
+    return this.minimal
+  }
+
+  dapatkanMaksimal(): number | null {
+    return this.maksimal
+  }
+
   private validasiNilaiMinimal(): void {
     if (this.maksimal !== null && this.minimal !== null && this.minimal > this.maksimal) {
       this.minimal = this.maksimal

@@ -5,18 +5,23 @@ import { RentangMultiplisitas } from './RentangMultiplisitas'
 export class Atribut extends ElemenBernama {
   protected visibilitas: Visibilitas
   protected diwarisankan: boolean
+  protected rentangMultiplisitasDiatur: boolean
   protected rentangMultiplisitas: RentangMultiplisitas
   protected tipe?: string
   protected bawaan?: string
 
-  constructor(parameter: ParameterBuatAtribut) {
+  constructor(
+    parameter: ParameterBuatAtribut,
+    private validasiNamaBaru: (nama: string, atribut: Atribut) => void
+  ) {
     super({
       ...parameter,
       nama: parameter.nama ?? 'atributBaru'
     })
 
-    this.visibilitas = parameter.visibilitas ?? Visibilitas.PRIVATE
+    this.visibilitas = parameter.visibilitas ?? Visibilitas.TIDAK_DIATUR
     this.diwarisankan = parameter.diwariskan ?? false
+    this.rentangMultiplisitasDiatur = parameter.rentangMultiplisitas !== undefined
     this.rentangMultiplisitas = parameter.rentangMultiplisitas ?? new RentangMultiplisitas()
     this.tipe = parameter.tipe
     this.bawaan = parameter.bawaan
@@ -34,13 +39,25 @@ export class Atribut extends ElemenBernama {
     if (this.tipe) {
       hasil += ` : ${this.tipe}`
     }
-    hasil += ` ${this.rentangMultiplisitas.toString()}`
+
+    if (
+      this.rentangMultiplisitasDiatur ||
+      this.rentangMultiplisitas.dapatkanMinimal() !== 1 ||
+      this.rentangMultiplisitas.dapatkanMaksimal() !== 1
+    )
+      hasil += ` ${this.rentangMultiplisitas.toString()}`
 
     if (this.bawaan) {
       hasil += ` = ${this.bawaan}`
     }
 
     return hasil
+  }
+
+  aturDariTeks(teks: string): void {
+    const nama = teks.replaceAll(/[^A-Za-z0-9_]/g, '')
+    this.validasiNamaBaru(nama, this)
+    this.aturNama(nama)
   }
 
   serialisasi(): any {
@@ -55,16 +72,22 @@ export class Atribut extends ElemenBernama {
     }
   }
 
-  static deserialisasi(data: any): Atribut {
-    return new Atribut({
-      id: data.id,
-      visibilitas: data.visibilitas as Visibilitas,
-      diwariskan: data.diwariskan,
-      nama: data.nama,
-      rentangMultiplisitas: RentangMultiplisitas.deserialisasi(data.rentangMultiplisitas),
-      tipe: data.tipe,
-      bawaan: data.bawaan
-    })
+  static deserialisasi(
+    data: any,
+    validasiNamaBaru: (nama: string, atribut: Atribut) => void
+  ): Atribut {
+    return new Atribut(
+      {
+        id: data.id,
+        visibilitas: data.visibilitas as Visibilitas,
+        diwariskan: data.diwariskan,
+        nama: data.nama,
+        rentangMultiplisitas: RentangMultiplisitas.deserialisasi(data.rentangMultiplisitas),
+        tipe: data.tipe,
+        bawaan: data.bawaan
+      },
+      validasiNamaBaru
+    )
   }
 }
 

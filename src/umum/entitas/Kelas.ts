@@ -21,13 +21,23 @@ export class Kelas extends ElemenBernama {
     this.koleksiAsosiasi = parameter.koleksiAsosiasi ?? []
   }
 
-  private validasiNamaAnggota(nama: string, elemenLama?: Atribut): void {
-    const atributBernamaSama = this.koleksiAtribut.find((atribut) => atribut.dapatkanNama() == nama)
+  protected validasiNamaAnggota(nama: string, elemenLama?: Atribut | Operasi): void {
+    const koleksiAtributTersaring =
+      elemenLama && elemenLama instanceof Atribut
+        ? this.koleksiAtribut.filter((atribut) => atribut !== elemenLama)
+        : this.koleksiAtribut
+    const atributBernamaSama = koleksiAtributTersaring.find(
+      (atribut) => atribut.dapatkanNama() == nama
+    )
     if (atributBernamaSama) {
       throw new GalatNamaSama(nama, TipeElemen.ATRIBUT)
     }
 
-    const operasiBernamaSama = this.koleksiOperasi.find((operasi) => operasi.nama === nama)
+    const koleksiOperasiTersaring =
+      elemenLama && elemenLama instanceof Operasi
+        ? this.koleksiOperasi.filter((operasi) => operasi !== elemenLama)
+        : this.koleksiOperasi
+    const operasiBernamaSama = koleksiOperasiTersaring.find((operasi) => operasi.nama === nama)
     if (operasiBernamaSama) {
       throw new GalatNamaSama(nama, TipeElemen.OPERASI)
     }
@@ -63,7 +73,11 @@ export class Kelas extends ElemenBernama {
     }
     this.validasiNamaAnggota(parameter.nama)
 
-    const atribut = objekLama ?? new Atribut(parameter)
+    const atribut =
+      objekLama ??
+      new Atribut(parameter, (namaBaru, elemenLama) =>
+        this.validasiNamaAnggota(namaBaru, elemenLama)
+      )
 
     const idTerbesar = this.dapatkanIdAtributTerbesar()
     atribut.aturId(idTerbesar + 1)
