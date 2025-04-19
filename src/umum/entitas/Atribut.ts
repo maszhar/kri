@@ -12,6 +12,7 @@ export class Atribut extends ElemenBernama {
 
   protected sebagaiId: boolean
   protected bacaSaja: boolean
+  protected selaluTulisKeunikan: boolean
   protected unik: boolean
   protected terurut: boolean
   protected urutan: boolean
@@ -34,6 +35,7 @@ export class Atribut extends ElemenBernama {
 
     this.sebagaiId = parameter.sebagaiId ?? false
     this.bacaSaja = parameter.bacaSaja ?? false
+    this.selaluTulisKeunikan = parameter.selaluTulisKeunikan ?? false
     this.unik = parameter.unik ?? false
     this.terurut = parameter.terurut ?? false
     this.urutan = parameter.urutan ?? false
@@ -72,6 +74,12 @@ export class Atribut extends ElemenBernama {
 
     if (this.sebagaiId) {
       koleksiTeksPemodifikasi.push('id')
+    }
+
+    if (this.unik) {
+      koleksiTeksPemodifikasi.push('unique')
+    } else if (this.selaluTulisKeunikan) {
+      koleksiTeksPemodifikasi.push('nonunique')
     }
 
     if (koleksiTeksPemodifikasi.length > 0) {
@@ -115,6 +123,14 @@ export class Atribut extends ElemenBernama {
     this.sebagaiId = sebagaiId
   }
 
+  aturUnik(unik: boolean): void {
+    this.unik = unik
+  }
+
+  aturSelaluTulisKeunikan(selaluTulisKeunikan: boolean): void {
+    this.selaluTulisKeunikan = selaluTulisKeunikan
+  }
+
   aturDariTeks(teks: string): void {
     let teksTersisa = teks.trim()
 
@@ -154,6 +170,8 @@ export class Atribut extends ElemenBernama {
     ) {
       let bacaSaja = false
       let sebagaiId = false
+      let selaluTulisKeunikan = false
+      let unik = false
 
       const teksPemodifikasi = teksTersisa
         .slice(indeksSimbolBukaPemodifikasi + 1, indeksSimbolTutupPemodifikasi)
@@ -171,13 +189,29 @@ export class Atribut extends ElemenBernama {
           bacaSaja = true
         } else if (isiTeksPemodifikasiKecil === 'id') {
           sebagaiId = true
+        } else if (isiTeksPemodifikasiKecil === 'unique' || isiTeksPemodifikasiKecil === 'unik') {
+          selaluTulisKeunikan = false
+          unik = true
+        } else if (
+          isiTeksPemodifikasiKecil === 'nonunique' ||
+          isiTeksPemodifikasiKecil === 'tidakunik'
+        ) {
+          selaluTulisKeunikan = true
+          unik = false
         }
       }
 
       this.aturBacaSaja(bacaSaja)
       this.aturSebagaiId(sebagaiId)
+      this.aturUnik(unik)
+      this.aturSelaluTulisKeunikan(selaluTulisKeunikan)
 
       teksTersisa = teksTersisa.slice(0, indeksSimbolBukaPemodifikasi).trim()
+    } else {
+      if (this.aturBacaSaja) this.aturBacaSaja(false)
+      if (this.aturSebagaiId) this.aturSebagaiId(false)
+      if (this.aturUnik) this.aturUnik(false)
+      if (this.aturSelaluTulisKeunikan) this.aturSelaluTulisKeunikan(false)
     }
 
     // deteksi bawaan
@@ -312,6 +346,7 @@ export interface ParameterBuatAtribut extends ParameterBuatElemenBernama {
   bawaan?: string
   sebagaiId?: boolean
   bacaSaja?: boolean
+  selaluTulisKeunikan?: boolean
   unik?: boolean
   terurut?: boolean
   urutan?: boolean

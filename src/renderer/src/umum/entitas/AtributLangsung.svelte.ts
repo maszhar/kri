@@ -64,6 +64,16 @@ export class AtributLangsung extends Atribut {
     this.stringLangsung = super.toString()
   }
 
+  override aturUnik(unik: boolean): void {
+    super.aturUnik(unik)
+    this.stringLangsung = super.toString()
+  }
+
+  override aturSelaluTulisKeunikan(selaluTulisKeunikan: boolean): void {
+    super.aturSelaluTulisKeunikan(selaluTulisKeunikan)
+    this.stringLangsung = super.toString()
+  }
+
   aturDariTeks(teks: string): void {
     super.aturDariTeks(teks)
     this.stringLangsung = super.toString()
