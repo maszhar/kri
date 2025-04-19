@@ -22,6 +22,7 @@
   <!-- Atribut -->
   {#if kelas.dapatkanKoleksiAtributLangsung().length > 0}
     <TampilanKompartemen>
+      <div class="text-center px-4">attributes</div>
       {#each kelas.dapatkanKoleksiAtributLangsung() as atribut, _id (atribut.dapatkanId())}
         <TampilanAtribut {atribut} />
       {/each}
