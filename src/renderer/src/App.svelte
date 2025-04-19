@@ -12,6 +12,7 @@
   import TampilanKonfigurasiSistem from './sistem/TampilanKonfigurasiSistem.svelte'
   import TampilanEditorKelas from './kelas/TampilanEditorKelas.svelte'
   import { KelasLangsung } from './umum/entitas/KelasLangsung.svelte'
+  import { Pesan } from './umum/entitas/Pesan.svelte'
 
   // === Atribut ===
 
@@ -27,8 +28,7 @@
   let sistemAktif: SistemLangsung | null = $state(null)
   let isiProyekAktif: IsiProyek | null = $state(null)
 
-  let pesan: string | null = $state(null)
-
+  // === Operasi ===
   async function bukaProyek(): Promise<void> {
     const dataProyek = await window.mesin.bukaProyek()
     if (!dataProyek) {
@@ -63,10 +63,6 @@
     window.mesin.hasilkanKode(proyekLama.bungkusData())
   }
 
-  function tutupPesan(): void {
-    pesan = null
-  }
-
   // isi proyek aktif
   function bukaIsiProyek(isiProyek: IsiProyek, sistem: SistemLangsung | null): void {
     isiProyekAktif = isiProyek
@@ -78,8 +74,8 @@
   <title>{proyek.dapatkanNamaLangsung()} | Kri</title>
 </svelte:head>
 
-{#if pesan}
-  <TampilanPesan {pesan} oke={tutupPesan} />
+{#if Pesan.dapatkanPesanLangsung()}
+  <TampilanPesan pesan={Pesan.dapatkanPesanLangsung()} oke={(): void => Pesan.tutup()} />
 {/if}
 
 <Dasar>

@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
+  import { TipeElemen } from '../../../umum/tipe/TipeElemen'
+  import { Pesan } from '../umum/entitas/Pesan.svelte'
+
   interface Properti {
     nama: string
     perbaruiNama: (nama: string) => void
@@ -34,7 +38,15 @@
     mengedit = false
 
     if (terapkan && namaTerinput.trim() !== '') {
-      perbaruiNama(namaTerinput.replaceAll(/[^A-Za-z0-9_]/g, ''))
+      try {
+        perbaruiNama(namaTerinput.replaceAll(/[^A-Za-z0-9_]/g, ''))
+      } catch (e: any) {
+        if (e instanceof GalatNamaSama && e.tipe === TipeElemen.KELAS) {
+          Pesan.tampilkan(`Nama kelas '${e.nama}' telah digunakan.`)
+        } else {
+          Pesan.tampilkan(e.message)
+        }
+      }
     }
   }
 
