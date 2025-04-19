@@ -49,16 +49,17 @@ message AtributPb {
   VisibilitasPb visibilitas = 2;
   bool diwariskan = 3;
   string nama = 4;
-  RentangMultiplisitasPb rentang_multiplisitas = 5;
-  optional string tipe = 6;
-  optional string bawaan = 7;
-  bool sebagai_id = 8;
-  bool baca_saja = 9;
-  bool selalu_tulis_keunikan = 10;
-  bool unik = 11;
-  bool tuliskan_keterurutan = 12;
-  bool terurut = 13;
-  bool urutan = 14;
+  bool rentang_multiplisitas_diatur = 5;
+  RentangMultiplisitasPb rentang_multiplisitas = 6;
+  optional string tipe = 7;
+  optional string bawaan = 8;
+  bool sebagai_id = 9;
+  bool baca_saja = 10;
+  bool selalu_tulis_keunikan = 11;
+  bool unik = 12;
+  bool tuliskan_keterurutan = 13;
+  bool terurut = 14;
+  bool urutan = 15;
 }
 
 message RentangMultiplisitasPb {

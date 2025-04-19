@@ -36,7 +36,7 @@ export class Atribut extends IsiProyek {
 
     this.visibilitas = parameter.visibilitas ?? Visibilitas.TIDAK_DIATUR
     this.diwariskan = parameter.diwariskan ?? false
-    this.rentangMultiplisitasDiatur = parameter.rentangMultiplisitas !== undefined
+    this.rentangMultiplisitasDiatur = parameter.rentangMultiplisitasDiatur ?? false
     this.rentangMultiplisitas = parameter.rentangMultiplisitas ?? new RentangMultiplisitas()
     this.tipe = parameter.tipe
     this.bawaan = parameter.bawaan
@@ -429,6 +429,7 @@ export class Atribut extends IsiProyek {
       urutan: this.urutan,
       visibilitas: visibilitasKeProto(this.visibilitas),
       bawaan: this.bawaan,
+      rentangMultiplisitasDiatur: this.rentangMultiplisitasDiatur,
       rentangMultiplisitas: this.rentangMultiplisitas.keProto(),
       tipe: this.tipe
     }
@@ -455,7 +456,8 @@ export class Atribut extends IsiProyek {
         unik: proto.unik,
         tuliskanKeterurutan: proto.tuliskanKeterurutan,
         terurut: proto.terurut,
-        urutan: proto.urutan
+        urutan: proto.urutan,
+        rentangMultiplisitasDiatur: proto.rentangMultiplisitasDiatur
       },
       validasiNamaBaru
     )
@@ -465,6 +467,7 @@ export class Atribut extends IsiProyek {
 export interface ParameterBuatAtribut extends ParameterBuatIsiProyek {
   visibilitas?: Visibilitas
   diwariskan?: boolean
+  rentangMultiplisitasDiatur?: boolean
   rentangMultiplisitas?: RentangMultiplisitas
   tipe?: string
   bawaan?: string

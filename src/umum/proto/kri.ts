@@ -98,43 +98,47 @@ export interface AtributPb {
      */
     nama: string;
     /**
-     * @generated from protobuf field: RentangMultiplisitasPb rentang_multiplisitas = 5;
+     * @generated from protobuf field: bool rentang_multiplisitas_diatur = 5;
+     */
+    rentangMultiplisitasDiatur: boolean;
+    /**
+     * @generated from protobuf field: RentangMultiplisitasPb rentang_multiplisitas = 6;
      */
     rentangMultiplisitas?: RentangMultiplisitasPb;
     /**
-     * @generated from protobuf field: optional string tipe = 6;
+     * @generated from protobuf field: optional string tipe = 7;
      */
     tipe?: string;
     /**
-     * @generated from protobuf field: optional string bawaan = 7;
+     * @generated from protobuf field: optional string bawaan = 8;
      */
     bawaan?: string;
     /**
-     * @generated from protobuf field: bool sebagai_id = 8;
+     * @generated from protobuf field: bool sebagai_id = 9;
      */
     sebagaiId: boolean;
     /**
-     * @generated from protobuf field: bool baca_saja = 9;
+     * @generated from protobuf field: bool baca_saja = 10;
      */
     bacaSaja: boolean;
     /**
-     * @generated from protobuf field: bool selalu_tulis_keunikan = 10;
+     * @generated from protobuf field: bool selalu_tulis_keunikan = 11;
      */
     selaluTulisKeunikan: boolean;
     /**
-     * @generated from protobuf field: bool unik = 11;
+     * @generated from protobuf field: bool unik = 12;
      */
     unik: boolean;
     /**
-     * @generated from protobuf field: bool tuliskan_keterurutan = 12;
+     * @generated from protobuf field: bool tuliskan_keterurutan = 13;
      */
     tuliskanKeterurutan: boolean;
     /**
-     * @generated from protobuf field: bool terurut = 13;
+     * @generated from protobuf field: bool terurut = 14;
      */
     terurut: boolean;
     /**
-     * @generated from protobuf field: bool urutan = 14;
+     * @generated from protobuf field: bool urutan = 15;
      */
     urutan: boolean;
 }
@@ -521,16 +525,17 @@ class AtributPb$Type extends MessageType<AtributPb> {
             { no: 2, name: "visibilitas", kind: "enum", T: () => ["VisibilitasPb", VisibilitasPb, "VISIBILITAS_PB_"] },
             { no: 3, name: "diwariskan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 4, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "rentang_multiplisitas", kind: "message", T: () => RentangMultiplisitasPb },
-            { no: 6, name: "tipe", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "bawaan", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "sebagai_id", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 9, name: "baca_saja", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 10, name: "selalu_tulis_keunikan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 11, name: "unik", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 12, name: "tuliskan_keterurutan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 13, name: "terurut", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 14, name: "urutan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 5, name: "rentang_multiplisitas_diatur", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "rentang_multiplisitas", kind: "message", T: () => RentangMultiplisitasPb },
+            { no: 7, name: "tipe", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "bawaan", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "sebagai_id", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 10, name: "baca_saja", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 11, name: "selalu_tulis_keunikan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 12, name: "unik", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 13, name: "tuliskan_keterurutan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 14, name: "terurut", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 15, name: "urutan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<AtributPb>): AtributPb {
@@ -539,6 +544,7 @@ class AtributPb$Type extends MessageType<AtributPb> {
         message.visibilitas = 0;
         message.diwariskan = false;
         message.nama = "";
+        message.rentangMultiplisitasDiatur = false;
         message.sebagaiId = false;
         message.bacaSaja = false;
         message.selaluTulisKeunikan = false;
@@ -567,34 +573,37 @@ class AtributPb$Type extends MessageType<AtributPb> {
                 case /* string nama */ 4:
                     message.nama = reader.string();
                     break;
-                case /* RentangMultiplisitasPb rentang_multiplisitas */ 5:
+                case /* bool rentang_multiplisitas_diatur */ 5:
+                    message.rentangMultiplisitasDiatur = reader.bool();
+                    break;
+                case /* RentangMultiplisitasPb rentang_multiplisitas */ 6:
                     message.rentangMultiplisitas = RentangMultiplisitasPb.internalBinaryRead(reader, reader.uint32(), options, message.rentangMultiplisitas);
                     break;
-                case /* optional string tipe */ 6:
+                case /* optional string tipe */ 7:
                     message.tipe = reader.string();
                     break;
-                case /* optional string bawaan */ 7:
+                case /* optional string bawaan */ 8:
                     message.bawaan = reader.string();
                     break;
-                case /* bool sebagai_id */ 8:
+                case /* bool sebagai_id */ 9:
                     message.sebagaiId = reader.bool();
                     break;
-                case /* bool baca_saja */ 9:
+                case /* bool baca_saja */ 10:
                     message.bacaSaja = reader.bool();
                     break;
-                case /* bool selalu_tulis_keunikan */ 10:
+                case /* bool selalu_tulis_keunikan */ 11:
                     message.selaluTulisKeunikan = reader.bool();
                     break;
-                case /* bool unik */ 11:
+                case /* bool unik */ 12:
                     message.unik = reader.bool();
                     break;
-                case /* bool tuliskan_keterurutan */ 12:
+                case /* bool tuliskan_keterurutan */ 13:
                     message.tuliskanKeterurutan = reader.bool();
                     break;
-                case /* bool terurut */ 13:
+                case /* bool terurut */ 14:
                     message.terurut = reader.bool();
                     break;
-                case /* bool urutan */ 14:
+                case /* bool urutan */ 15:
                     message.urutan = reader.bool();
                     break;
                 default:
@@ -621,36 +630,39 @@ class AtributPb$Type extends MessageType<AtributPb> {
         /* string nama = 4; */
         if (message.nama !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.nama);
-        /* RentangMultiplisitasPb rentang_multiplisitas = 5; */
+        /* bool rentang_multiplisitas_diatur = 5; */
+        if (message.rentangMultiplisitasDiatur !== false)
+            writer.tag(5, WireType.Varint).bool(message.rentangMultiplisitasDiatur);
+        /* RentangMultiplisitasPb rentang_multiplisitas = 6; */
         if (message.rentangMultiplisitas)
-            RentangMultiplisitasPb.internalBinaryWrite(message.rentangMultiplisitas, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* optional string tipe = 6; */
+            RentangMultiplisitasPb.internalBinaryWrite(message.rentangMultiplisitas, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* optional string tipe = 7; */
         if (message.tipe !== undefined)
-            writer.tag(6, WireType.LengthDelimited).string(message.tipe);
-        /* optional string bawaan = 7; */
+            writer.tag(7, WireType.LengthDelimited).string(message.tipe);
+        /* optional string bawaan = 8; */
         if (message.bawaan !== undefined)
-            writer.tag(7, WireType.LengthDelimited).string(message.bawaan);
-        /* bool sebagai_id = 8; */
+            writer.tag(8, WireType.LengthDelimited).string(message.bawaan);
+        /* bool sebagai_id = 9; */
         if (message.sebagaiId !== false)
-            writer.tag(8, WireType.Varint).bool(message.sebagaiId);
-        /* bool baca_saja = 9; */
+            writer.tag(9, WireType.Varint).bool(message.sebagaiId);
+        /* bool baca_saja = 10; */
         if (message.bacaSaja !== false)
-            writer.tag(9, WireType.Varint).bool(message.bacaSaja);
-        /* bool selalu_tulis_keunikan = 10; */
+            writer.tag(10, WireType.Varint).bool(message.bacaSaja);
+        /* bool selalu_tulis_keunikan = 11; */
         if (message.selaluTulisKeunikan !== false)
-            writer.tag(10, WireType.Varint).bool(message.selaluTulisKeunikan);
-        /* bool unik = 11; */
+            writer.tag(11, WireType.Varint).bool(message.selaluTulisKeunikan);
+        /* bool unik = 12; */
         if (message.unik !== false)
-            writer.tag(11, WireType.Varint).bool(message.unik);
-        /* bool tuliskan_keterurutan = 12; */
+            writer.tag(12, WireType.Varint).bool(message.unik);
+        /* bool tuliskan_keterurutan = 13; */
         if (message.tuliskanKeterurutan !== false)
-            writer.tag(12, WireType.Varint).bool(message.tuliskanKeterurutan);
-        /* bool terurut = 13; */
+            writer.tag(13, WireType.Varint).bool(message.tuliskanKeterurutan);
+        /* bool terurut = 14; */
         if (message.terurut !== false)
-            writer.tag(13, WireType.Varint).bool(message.terurut);
-        /* bool urutan = 14; */
+            writer.tag(14, WireType.Varint).bool(message.terurut);
+        /* bool urutan = 15; */
         if (message.urutan !== false)
-            writer.tag(14, WireType.Varint).bool(message.urutan);
+            writer.tag(15, WireType.Varint).bool(message.urutan);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
