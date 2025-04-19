@@ -21,6 +21,7 @@ export class AtributLangsung extends Atribut {
 
   override aturNama(nama: string): void {
     super.aturNama(nama)
+    this.namaLangsung = nama
     this.stringLangsung = super.toString()
   }
 }
