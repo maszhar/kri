@@ -1,4 +1,11 @@
-import { Visibilitas, visibilitasDariSimbol, visibilitasKeSimbol } from '../tipe/Visibilitas'
+import { OperasiPb } from '../proto/kri'
+import {
+  Visibilitas,
+  visibilitasDariProto,
+  visibilitasDariSimbol,
+  visibilitasKeProto,
+  visibilitasKeSimbol
+} from '../tipe/Visibilitas'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 import { ParameterOperasi } from './ParameterOperasi'
 import { RentangMultiplisitas } from './RentangMultiplisitas'
@@ -316,12 +323,112 @@ export class Operasi extends IsiProyek {
     this.nama = nama
   }
 
-  serialisasi(): any {
-    return {}
+  aturSemua(parameter: ParameterBuatOperasi): void {
+    this.visibilitas = parameter.visibilitas ?? Visibilitas.TIDAK_DIATUR
+    this.tipeKembalian = parameter.tipeKembalian
+    this.rentangMultiplisitasKembalianDiatur =
+      parameter.rentangMultiplisitasKembalianDiatur ?? false
+    this.rentangMultiplisitasKembalian =
+      parameter.rentangMultiplisitasKembalian ?? new RentangMultiplisitas()
+    this.sebagaiQuery = parameter.sebagaiQuery ?? false
+    this.selaluTulisKeunikanKembalian = parameter.selaluTulisKeunikanKembalian ?? false
+    this.kembalianUnik = parameter.kembalianUnik ?? false
+    this.tuliskanKeterurutanKembalian = parameter.tuliskanKeterurutanKembalian ?? false
+    this.kembalianTerurut = parameter.kembalianTerurut ?? false
+    this.kembalianAdalahUrutan = parameter.kembalianAdalahUrutan ?? false
+    this.koleksiParameterOperasi = parameter.koleksiParameterOperasi ?? []
   }
 
-  static deserialisasi(data: any): Operasi {
-    return new Operasi({ visibilitas: data.visibilitas }, () => {})
+  serialisasi(): any {
+    return {
+      ...super.serialisasi(),
+      visibilitas: this.visibilitas,
+      tipeKembalian: this.tipeKembalian,
+      rentangMultiplisitasKembalianDiatur: this.rentangMultiplisitasKembalianDiatur,
+      rentangMultiplisitasKembalian: this.rentangMultiplisitasKembalian,
+      sebagaiQuery: this.sebagaiQuery,
+      selaluTulisKeunikanKembalian: this.selaluTulisKeunikanKembalian,
+      kembalianUnik: this.kembalianUnik,
+      tuliskanKeterurutanKembalian: this.tuliskanKeterurutanKembalian,
+      kembalianTerurut: this.kembalianTerurut,
+      kembalianAdalahUrutan: this.kembalianAdalahUrutan,
+      koleksiParameterOperasi: this.koleksiParameterOperasi.map((parameter) =>
+        parameter.serialisasi()
+      )
+    }
+  }
+
+  static deserialisasi(
+    data: any,
+    objekLama?: Operasi,
+    validasiNamaBaru?: (nama: string, operasi: Operasi) => void
+  ): Operasi {
+    const operasi = objekLama ?? new Operasi({}, validasiNamaBaru!)
+    super.deserialisasi(data, operasi)
+    operasi.aturSemua({
+      visibilitas: data.visibilitas,
+      tipeKembalian: data.tipeKembalian,
+      rentangMultiplisitasKembalianDiatur: data.rentangMultiplisitasKembalianDiatur,
+      rentangMultiplisitasKembalian: RentangMultiplisitas.deserialisasi(
+        data.rentangMultiplisitasKembalian
+      ),
+      sebagaiQuery: data.sebagaiQuery,
+      selaluTulisKeunikanKembalian: data.selaluTulisKeunikanKembalian,
+      kembalianUnik: data.kembalianUnik,
+      tuliskanKeterurutanKembalian: data.tuliskanKeterurutanKembalian,
+      kembalianTerurut: data.kembalianTerurut,
+      kembalianAdalahUrutan: data.kembalianAdalahUrutan,
+      koleksiParameterOperasi: data.koleksiParameterOperasi.map((parameter) =>
+        ParameterOperasi.deserialisasi(parameter)
+      )
+    })
+    return operasi
+  }
+
+  keProto(): OperasiPb {
+    return {
+      id: this.id,
+      nama: this.nama,
+      visibilitas: visibilitasKeProto(this.visibilitas),
+      tipeKembalian: this.tipeKembalian,
+      rentangMultiplisitasKembalianDiatur: this.rentangMultiplisitasKembalianDiatur,
+      rentangMultiplisitasKembalian: this.rentangMultiplisitasKembalian.keProto(),
+      sebagaiQuery: this.sebagaiQuery,
+      selaluTulisKeunikanKembalian: this.selaluTulisKeunikanKembalian,
+      kembalianUnik: this.kembalianUnik,
+      tuliskanKeterurutanKembalian: this.tuliskanKeterurutanKembalian,
+      kembalianTerurut: this.kembalianTerurut,
+      kembalianAdalahUrutan: this.kembalianAdalahUrutan,
+      koleksiParameter: this.koleksiParameterOperasi.map((parameter) => parameter.keProto())
+    }
+  }
+
+  static dariProto(
+    proto: OperasiPb,
+    validasiNamaBaru: (nama: string, operasi: Operasi) => void
+  ): Operasi {
+    return new Operasi(
+      {
+        id: proto.id,
+        nama: proto.nama,
+        visibilitas: visibilitasDariProto(proto.visibilitas),
+        tipeKembalian: proto.tipeKembalian,
+        rentangMultiplisitasKembalianDiatur: proto.rentangMultiplisitasKembalianDiatur,
+        rentangMultiplisitasKembalian: proto.rentangMultiplisitasKembalian
+          ? RentangMultiplisitas.dariProto(proto.rentangMultiplisitasKembalian)
+          : new RentangMultiplisitas(),
+        sebagaiQuery: proto.sebagaiQuery,
+        selaluTulisKeunikanKembalian: proto.selaluTulisKeunikanKembalian,
+        kembalianUnik: proto.kembalianUnik,
+        tuliskanKeterurutanKembalian: proto.tuliskanKeterurutanKembalian,
+        kembalianTerurut: proto.kembalianTerurut,
+        kembalianAdalahUrutan: proto.kembalianAdalahUrutan,
+        koleksiParameterOperasi: proto.koleksiParameter.map((protoParameter) =>
+          ParameterOperasi.dariProto(protoParameter)
+        )
+      },
+      validasiNamaBaru
+    )
   }
 }
 

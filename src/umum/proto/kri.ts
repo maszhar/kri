@@ -76,6 +76,10 @@ export interface KelasPb {
      * @generated from protobuf field: repeated AtributPb koleksi_atribut = 3;
      */
     koleksiAtribut: AtributPb[];
+    /**
+     * @generated from protobuf field: repeated OperasiPb koleksi_operasi = 4;
+     */
+    koleksiOperasi: OperasiPb[];
 }
 /**
  * @generated from protobuf message AtributPb
@@ -139,6 +143,120 @@ export interface AtributPb {
     terurut: boolean;
     /**
      * @generated from protobuf field: bool urutan = 15;
+     */
+    urutan: boolean;
+}
+/**
+ * @generated from protobuf message OperasiPb
+ */
+export interface OperasiPb {
+    /**
+     * @generated from protobuf field: uint32 id = 1;
+     */
+    id: number; // Diwarisi dari IsiProyek
+    /**
+     * @generated from protobuf field: string nama = 2;
+     */
+    nama: string; // Diwarisi dari IsiProyek
+    /**
+     * @generated from protobuf field: VisibilitasPb visibilitas = 3;
+     */
+    visibilitas: VisibilitasPb;
+    /**
+     * @generated from protobuf field: optional string tipe_kembalian = 4;
+     */
+    tipeKembalian?: string;
+    /**
+     * @generated from protobuf field: bool rentang_multiplisitas_kembalian_diatur = 5;
+     */
+    rentangMultiplisitasKembalianDiatur: boolean;
+    /**
+     * @generated from protobuf field: RentangMultiplisitasPb rentang_multiplisitas_kembalian = 6;
+     */
+    rentangMultiplisitasKembalian?: RentangMultiplisitasPb;
+    /**
+     * @generated from protobuf field: bool sebagai_query = 7;
+     */
+    sebagaiQuery: boolean;
+    /**
+     * @generated from protobuf field: bool selalu_tulis_keunikan_kembalian = 8;
+     */
+    selaluTulisKeunikanKembalian: boolean;
+    /**
+     * @generated from protobuf field: bool kembalian_unik = 9;
+     */
+    kembalianUnik: boolean;
+    /**
+     * @generated from protobuf field: bool tuliskan_keterurutan_kembalian = 10;
+     */
+    tuliskanKeterurutanKembalian: boolean;
+    /**
+     * @generated from protobuf field: bool kembalian_terurut = 11;
+     */
+    kembalianTerurut: boolean;
+    /**
+     * @generated from protobuf field: bool kembalian_adalah_urutan = 12;
+     */
+    kembalianAdalahUrutan: boolean;
+    /**
+     * @generated from protobuf field: repeated ParameterOperasiPb koleksi_parameter = 13;
+     */
+    koleksiParameter: ParameterOperasiPb[];
+}
+/**
+ * @generated from protobuf message ParameterOperasiPb
+ */
+export interface ParameterOperasiPb {
+    /**
+     * @generated from protobuf field: uint32 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: string nama = 2;
+     */
+    nama: string;
+    /**
+     * @generated from protobuf field: optional string tipe = 3;
+     */
+    tipe?: string;
+    /**
+     * @generated from protobuf field: optional string bawaan = 4;
+     */
+    bawaan?: string;
+    /**
+     * @generated from protobuf field: ArahParameterPb arah = 5;
+     */
+    arah: ArahParameterPb;
+    /**
+     * @generated from protobuf field: bool arah_diatur = 6;
+     */
+    arahDiatur: boolean;
+    /**
+     * @generated from protobuf field: bool rentang_multiplisitas_diatur = 7;
+     */
+    rentangMultiplisitasDiatur: boolean;
+    /**
+     * @generated from protobuf field: RentangMultiplisitasPb rentang_multiplisitas = 8;
+     */
+    rentangMultiplisitas?: RentangMultiplisitasPb;
+    /**
+     * @generated from protobuf field: bool selalu_tulis_keunikan = 9;
+     */
+    selaluTulisKeunikan: boolean;
+    /**
+     * @generated from protobuf field: bool unik = 10;
+     */
+    unik: boolean;
+    /**
+     * @generated from protobuf field: bool tuliskan_keterurutan = 11;
+     */
+    tuliskanKeterurutan: boolean;
+    /**
+     * @generated from protobuf field: bool terurut = 12;
+     */
+    terurut: boolean;
+    /**
+     * @generated from protobuf field: bool urutan = 13;
      */
     urutan: boolean;
 }
@@ -261,6 +379,27 @@ export enum PlatformPb {
      * @generated from protobuf enum value: PLATFORM_PB_NODE_JS = 2;
      */
     NODE_JS = 2
+}
+/**
+ * @generated from protobuf enum ArahParameterPb
+ */
+export enum ArahParameterPb {
+    /**
+     * @generated from protobuf enum value: ARAH_PARAMETER_TIDAK_DIATUR = 0;
+     */
+    ARAH_PARAMETER_TIDAK_DIATUR = 0,
+    /**
+     * @generated from protobuf enum value: ARAH_PARAMETER_MASUK = 1;
+     */
+    ARAH_PARAMETER_MASUK = 1,
+    /**
+     * @generated from protobuf enum value: ARAH_PARAMETER_KELUAR = 2;
+     */
+    ARAH_PARAMETER_KELUAR = 2,
+    /**
+     * @generated from protobuf enum value: ARAH_PARAMETER_MASUK_KELUAR = 3;
+     */
+    ARAH_PARAMETER_MASUK_KELUAR = 3
 }
 /**
  * @generated from protobuf enum VisibilitasPb
@@ -460,7 +599,8 @@ class KelasPb$Type extends MessageType<KelasPb> {
         super("KelasPb", [
             { no: 1, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
             { no: 2, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "koleksi_atribut", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => AtributPb }
+            { no: 3, name: "koleksi_atribut", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => AtributPb },
+            { no: 4, name: "koleksi_operasi", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => OperasiPb }
         ]);
     }
     create(value?: PartialMessage<KelasPb>): KelasPb {
@@ -468,6 +608,7 @@ class KelasPb$Type extends MessageType<KelasPb> {
         message.id = 0;
         message.nama = "";
         message.koleksiAtribut = [];
+        message.koleksiOperasi = [];
         if (value !== undefined)
             reflectionMergePartial<KelasPb>(this, message, value);
         return message;
@@ -485,6 +626,9 @@ class KelasPb$Type extends MessageType<KelasPb> {
                     break;
                 case /* repeated AtributPb koleksi_atribut */ 3:
                     message.koleksiAtribut.push(AtributPb.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated OperasiPb koleksi_operasi */ 4:
+                    message.koleksiOperasi.push(OperasiPb.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -507,6 +651,9 @@ class KelasPb$Type extends MessageType<KelasPb> {
         /* repeated AtributPb koleksi_atribut = 3; */
         for (let i = 0; i < message.koleksiAtribut.length; i++)
             AtributPb.internalBinaryWrite(message.koleksiAtribut[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* repeated OperasiPb koleksi_operasi = 4; */
+        for (let i = 0; i < message.koleksiOperasi.length; i++)
+            OperasiPb.internalBinaryWrite(message.koleksiOperasi[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -673,6 +820,287 @@ class AtributPb$Type extends MessageType<AtributPb> {
  * @generated MessageType for protobuf message AtributPb
  */
 export const AtributPb = new AtributPb$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OperasiPb$Type extends MessageType<OperasiPb> {
+    constructor() {
+        super("OperasiPb", [
+            { no: 1, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "visibilitas", kind: "enum", T: () => ["VisibilitasPb", VisibilitasPb, "VISIBILITAS_PB_"] },
+            { no: 4, name: "tipe_kembalian", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "rentang_multiplisitas_kembalian_diatur", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "rentang_multiplisitas_kembalian", kind: "message", T: () => RentangMultiplisitasPb },
+            { no: 7, name: "sebagai_query", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 8, name: "selalu_tulis_keunikan_kembalian", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "kembalian_unik", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 10, name: "tuliskan_keterurutan_kembalian", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 11, name: "kembalian_terurut", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 12, name: "kembalian_adalah_urutan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 13, name: "koleksi_parameter", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ParameterOperasiPb }
+        ]);
+    }
+    create(value?: PartialMessage<OperasiPb>): OperasiPb {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.nama = "";
+        message.visibilitas = 0;
+        message.rentangMultiplisitasKembalianDiatur = false;
+        message.sebagaiQuery = false;
+        message.selaluTulisKeunikanKembalian = false;
+        message.kembalianUnik = false;
+        message.tuliskanKeterurutanKembalian = false;
+        message.kembalianTerurut = false;
+        message.kembalianAdalahUrutan = false;
+        message.koleksiParameter = [];
+        if (value !== undefined)
+            reflectionMergePartial<OperasiPb>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OperasiPb): OperasiPb {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint32 id */ 1:
+                    message.id = reader.uint32();
+                    break;
+                case /* string nama */ 2:
+                    message.nama = reader.string();
+                    break;
+                case /* VisibilitasPb visibilitas */ 3:
+                    message.visibilitas = reader.int32();
+                    break;
+                case /* optional string tipe_kembalian */ 4:
+                    message.tipeKembalian = reader.string();
+                    break;
+                case /* bool rentang_multiplisitas_kembalian_diatur */ 5:
+                    message.rentangMultiplisitasKembalianDiatur = reader.bool();
+                    break;
+                case /* RentangMultiplisitasPb rentang_multiplisitas_kembalian */ 6:
+                    message.rentangMultiplisitasKembalian = RentangMultiplisitasPb.internalBinaryRead(reader, reader.uint32(), options, message.rentangMultiplisitasKembalian);
+                    break;
+                case /* bool sebagai_query */ 7:
+                    message.sebagaiQuery = reader.bool();
+                    break;
+                case /* bool selalu_tulis_keunikan_kembalian */ 8:
+                    message.selaluTulisKeunikanKembalian = reader.bool();
+                    break;
+                case /* bool kembalian_unik */ 9:
+                    message.kembalianUnik = reader.bool();
+                    break;
+                case /* bool tuliskan_keterurutan_kembalian */ 10:
+                    message.tuliskanKeterurutanKembalian = reader.bool();
+                    break;
+                case /* bool kembalian_terurut */ 11:
+                    message.kembalianTerurut = reader.bool();
+                    break;
+                case /* bool kembalian_adalah_urutan */ 12:
+                    message.kembalianAdalahUrutan = reader.bool();
+                    break;
+                case /* repeated ParameterOperasiPb koleksi_parameter */ 13:
+                    message.koleksiParameter.push(ParameterOperasiPb.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OperasiPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint32 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).uint32(message.id);
+        /* string nama = 2; */
+        if (message.nama !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nama);
+        /* VisibilitasPb visibilitas = 3; */
+        if (message.visibilitas !== 0)
+            writer.tag(3, WireType.Varint).int32(message.visibilitas);
+        /* optional string tipe_kembalian = 4; */
+        if (message.tipeKembalian !== undefined)
+            writer.tag(4, WireType.LengthDelimited).string(message.tipeKembalian);
+        /* bool rentang_multiplisitas_kembalian_diatur = 5; */
+        if (message.rentangMultiplisitasKembalianDiatur !== false)
+            writer.tag(5, WireType.Varint).bool(message.rentangMultiplisitasKembalianDiatur);
+        /* RentangMultiplisitasPb rentang_multiplisitas_kembalian = 6; */
+        if (message.rentangMultiplisitasKembalian)
+            RentangMultiplisitasPb.internalBinaryWrite(message.rentangMultiplisitasKembalian, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* bool sebagai_query = 7; */
+        if (message.sebagaiQuery !== false)
+            writer.tag(7, WireType.Varint).bool(message.sebagaiQuery);
+        /* bool selalu_tulis_keunikan_kembalian = 8; */
+        if (message.selaluTulisKeunikanKembalian !== false)
+            writer.tag(8, WireType.Varint).bool(message.selaluTulisKeunikanKembalian);
+        /* bool kembalian_unik = 9; */
+        if (message.kembalianUnik !== false)
+            writer.tag(9, WireType.Varint).bool(message.kembalianUnik);
+        /* bool tuliskan_keterurutan_kembalian = 10; */
+        if (message.tuliskanKeterurutanKembalian !== false)
+            writer.tag(10, WireType.Varint).bool(message.tuliskanKeterurutanKembalian);
+        /* bool kembalian_terurut = 11; */
+        if (message.kembalianTerurut !== false)
+            writer.tag(11, WireType.Varint).bool(message.kembalianTerurut);
+        /* bool kembalian_adalah_urutan = 12; */
+        if (message.kembalianAdalahUrutan !== false)
+            writer.tag(12, WireType.Varint).bool(message.kembalianAdalahUrutan);
+        /* repeated ParameterOperasiPb koleksi_parameter = 13; */
+        for (let i = 0; i < message.koleksiParameter.length; i++)
+            ParameterOperasiPb.internalBinaryWrite(message.koleksiParameter[i], writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message OperasiPb
+ */
+export const OperasiPb = new OperasiPb$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ParameterOperasiPb$Type extends MessageType<ParameterOperasiPb> {
+    constructor() {
+        super("ParameterOperasiPb", [
+            { no: 1, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "tipe", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "bawaan", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "arah", kind: "enum", T: () => ["ArahParameterPb", ArahParameterPb] },
+            { no: 6, name: "arah_diatur", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 7, name: "rentang_multiplisitas_diatur", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 8, name: "rentang_multiplisitas", kind: "message", T: () => RentangMultiplisitasPb },
+            { no: 9, name: "selalu_tulis_keunikan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 10, name: "unik", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 11, name: "tuliskan_keterurutan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 12, name: "terurut", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 13, name: "urutan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ParameterOperasiPb>): ParameterOperasiPb {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.nama = "";
+        message.arah = 0;
+        message.arahDiatur = false;
+        message.rentangMultiplisitasDiatur = false;
+        message.selaluTulisKeunikan = false;
+        message.unik = false;
+        message.tuliskanKeterurutan = false;
+        message.terurut = false;
+        message.urutan = false;
+        if (value !== undefined)
+            reflectionMergePartial<ParameterOperasiPb>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ParameterOperasiPb): ParameterOperasiPb {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint32 id */ 1:
+                    message.id = reader.uint32();
+                    break;
+                case /* string nama */ 2:
+                    message.nama = reader.string();
+                    break;
+                case /* optional string tipe */ 3:
+                    message.tipe = reader.string();
+                    break;
+                case /* optional string bawaan */ 4:
+                    message.bawaan = reader.string();
+                    break;
+                case /* ArahParameterPb arah */ 5:
+                    message.arah = reader.int32();
+                    break;
+                case /* bool arah_diatur */ 6:
+                    message.arahDiatur = reader.bool();
+                    break;
+                case /* bool rentang_multiplisitas_diatur */ 7:
+                    message.rentangMultiplisitasDiatur = reader.bool();
+                    break;
+                case /* RentangMultiplisitasPb rentang_multiplisitas */ 8:
+                    message.rentangMultiplisitas = RentangMultiplisitasPb.internalBinaryRead(reader, reader.uint32(), options, message.rentangMultiplisitas);
+                    break;
+                case /* bool selalu_tulis_keunikan */ 9:
+                    message.selaluTulisKeunikan = reader.bool();
+                    break;
+                case /* bool unik */ 10:
+                    message.unik = reader.bool();
+                    break;
+                case /* bool tuliskan_keterurutan */ 11:
+                    message.tuliskanKeterurutan = reader.bool();
+                    break;
+                case /* bool terurut */ 12:
+                    message.terurut = reader.bool();
+                    break;
+                case /* bool urutan */ 13:
+                    message.urutan = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ParameterOperasiPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint32 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).uint32(message.id);
+        /* string nama = 2; */
+        if (message.nama !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nama);
+        /* optional string tipe = 3; */
+        if (message.tipe !== undefined)
+            writer.tag(3, WireType.LengthDelimited).string(message.tipe);
+        /* optional string bawaan = 4; */
+        if (message.bawaan !== undefined)
+            writer.tag(4, WireType.LengthDelimited).string(message.bawaan);
+        /* ArahParameterPb arah = 5; */
+        if (message.arah !== 0)
+            writer.tag(5, WireType.Varint).int32(message.arah);
+        /* bool arah_diatur = 6; */
+        if (message.arahDiatur !== false)
+            writer.tag(6, WireType.Varint).bool(message.arahDiatur);
+        /* bool rentang_multiplisitas_diatur = 7; */
+        if (message.rentangMultiplisitasDiatur !== false)
+            writer.tag(7, WireType.Varint).bool(message.rentangMultiplisitasDiatur);
+        /* RentangMultiplisitasPb rentang_multiplisitas = 8; */
+        if (message.rentangMultiplisitas)
+            RentangMultiplisitasPb.internalBinaryWrite(message.rentangMultiplisitas, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* bool selalu_tulis_keunikan = 9; */
+        if (message.selaluTulisKeunikan !== false)
+            writer.tag(9, WireType.Varint).bool(message.selaluTulisKeunikan);
+        /* bool unik = 10; */
+        if (message.unik !== false)
+            writer.tag(10, WireType.Varint).bool(message.unik);
+        /* bool tuliskan_keterurutan = 11; */
+        if (message.tuliskanKeterurutan !== false)
+            writer.tag(11, WireType.Varint).bool(message.tuliskanKeterurutan);
+        /* bool terurut = 12; */
+        if (message.terurut !== false)
+            writer.tag(12, WireType.Varint).bool(message.terurut);
+        /* bool urutan = 13; */
+        if (message.urutan !== false)
+            writer.tag(13, WireType.Varint).bool(message.urutan);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ParameterOperasiPb
+ */
+export const ParameterOperasiPb = new ParameterOperasiPb$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RentangMultiplisitasPb$Type extends MessageType<RentangMultiplisitasPb> {
     constructor() {

@@ -157,18 +157,24 @@ export class Kelas extends IsiProyek {
     this.koleksiAtribut = koleksiAtribut
   }
 
+  aturKoleksiOperasi(koleksiOperasi: Operasi[]): void {
+    this.koleksiOperasi = koleksiOperasi
+  }
+
   serialisasi(): any {
     return {
       id: this.id,
       nama: this.nama,
-      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.serialisasi())
+      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.serialisasi()),
+      koleksiOperasi: this.koleksiOperasi.map((operasi) => operasi.serialisasi())
     }
   }
 
   static override deserialisasi(
     data: any,
     objekLama?: Kelas,
-    pengonversiAtribut?: (data: any) => Atribut
+    pengonversiAtribut?: (data: any) => Atribut,
+    pengonversiOperasi?: (data: any) => Operasi
   ): Kelas {
     const kelas = objekLama ?? new Kelas()
     super.deserialisasi(data, kelas)
@@ -182,6 +188,15 @@ export class Kelas extends IsiProyek {
     )
     kelas.aturKoleksiAtribut(koleksiAtribut)
 
+    const koleksiOperasi = data.koleksiOperasi.map((dataOperasi) =>
+      pengonversiOperasi
+        ? pengonversiOperasi(dataOperasi)
+        : Operasi.deserialisasi(dataOperasi, undefined, (nama, atribut) =>
+            kelas.validasiNamaAnggota(nama, atribut)
+          )
+    )
+    kelas.aturKoleksiOperasi(koleksiOperasi)
+
     return kelas
   }
 
@@ -189,7 +204,8 @@ export class Kelas extends IsiProyek {
     return {
       id: this.id,
       nama: this.nama,
-      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.keProto())
+      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.keProto()),
+      koleksiOperasi: this.koleksiOperasi.map((operasi) => operasi.keProto())
     }
   }
 
@@ -203,6 +219,11 @@ export class Kelas extends IsiProyek {
       Atribut.dariProto(protoAtribut, (nama, atribut) => kelas.validasiNamaAnggota(nama, atribut))
     )
     kelas.aturKoleksiAtribut(koleksiAtribut)
+
+    const koleksiOperasi = proto.koleksiOperasi.map((protoOperasi) =>
+      Operasi.dariProto(protoOperasi, (nama, atribut) => kelas.validasiNamaAnggota(nama, atribut))
+    )
+    kelas.aturKoleksiOperasi(koleksiOperasi)
 
     return kelas
   }

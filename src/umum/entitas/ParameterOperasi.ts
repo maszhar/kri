@@ -1,4 +1,5 @@
-import { ArahParameter } from '../tipe/ArahParameter'
+import { ParameterOperasiPb } from '../proto/kri'
+import { ArahParameter, arahParameterDariProto, arahParameterKeProto } from '../tipe/ArahParameter'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 import { RentangMultiplisitas } from './RentangMultiplisitas'
 
@@ -266,6 +267,7 @@ export class ParameterOperasi extends IsiProyek {
 
   serialisasi(): any {
     return {
+      ...super.serialisasi(),
       arahDiatur: this.arahDiatur,
       arah: this.arah,
       tipe: this.tipe,
@@ -281,7 +283,7 @@ export class ParameterOperasi extends IsiProyek {
   }
 
   static deserialisasi(data: any): ParameterOperasi {
-    return new ParameterOperasi({
+    const parameterOperasi = new ParameterOperasi({
       arahDiatur: data.arahDiatur,
       arah: data.arah,
       tipe: data.tipe,
@@ -293,6 +295,46 @@ export class ParameterOperasi extends IsiProyek {
       tuliskanKeterurutan: data.tuliskanKeterurutan,
       terurut: data.terurut,
       urutan: data.urutan
+    })
+    super.deserialisasi(data, parameterOperasi)
+    return parameterOperasi
+  }
+
+  keProto(): ParameterOperasiPb {
+    return {
+      id: this.id,
+      nama: this.nama,
+      arahDiatur: this.arahDiatur,
+      arah: arahParameterKeProto(this.arah),
+      tipe: this.tipe,
+      rentangMultiplisitasDiatur: this.rentangMultiplisitasDiatur,
+      rentangMultiplisitas: this.rentangMultiplisitas.keProto(),
+      selaluTulisKeunikan: this.selaluTulisKeunikan,
+      terurut: this.terurut,
+      tuliskanKeterurutan: this.tuliskanKeterurutan,
+      unik: this.unik,
+      urutan: this.urutan,
+      bawaan: this.bawaan
+    }
+  }
+
+  static dariProto(proto: ParameterOperasiPb): ParameterOperasi {
+    return new ParameterOperasi({
+      id: proto.id,
+      nama: proto.nama,
+      arahDiatur: proto.arahDiatur,
+      arah: arahParameterDariProto(proto.arah),
+      tipe: proto.tipe,
+      rentangMultiplisitasDiatur: proto.rentangMultiplisitasDiatur,
+      rentangMultiplisitas: proto.rentangMultiplisitas
+        ? RentangMultiplisitas.dariProto(proto.rentangMultiplisitas)
+        : new RentangMultiplisitas(),
+      selaluTulisKeunikan: proto.selaluTulisKeunikan,
+      terurut: proto.terurut,
+      tuliskanKeterurutan: proto.tuliskanKeterurutan,
+      unik: proto.unik,
+      urutan: proto.urutan,
+      bawaan: proto.bawaan
     })
   }
 }

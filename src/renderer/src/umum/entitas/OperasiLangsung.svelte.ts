@@ -33,4 +33,20 @@ export class OperasiLangsung extends Operasi {
   toStringLangsung(): string {
     return this.teksLangsung
   }
+
+  override aturSemua(parameter: ParameterBuatOperasi): void {
+    super.aturSemua(parameter)
+    this.namaLangsung = this.nama
+    this.teksLangsung = this.toString()
+  }
+
+  static override deserialisasi(
+    data: any,
+    _objekLama?: Operasi,
+    validasiNamaBaru?: (nama: string, operasi: Operasi) => void
+  ): OperasiLangsung {
+    const operasiLangsung = new OperasiLangsung({}, validasiNamaBaru)
+    super.deserialisasi(data, operasiLangsung, validasiNamaBaru)
+    return operasiLangsung
+  }
 }

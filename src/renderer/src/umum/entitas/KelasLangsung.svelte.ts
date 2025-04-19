@@ -56,6 +56,11 @@ export class KelasLangsung extends Kelas {
     return operasiBaru
   }
 
+  override aturKoleksiOperasi(koleksiOperasi: Operasi[]): void {
+    super.aturKoleksiOperasi(koleksiOperasi)
+    this.koleksiOperasiLangsung = this.koleksiOperasi as OperasiLangsung[]
+  }
+
   static override deserialisasi(data: any): KelasLangsung {
     const kelasLangsung = new KelasLangsung({})
     const pengonversiAtribut = (dataAtribut: any): AtributLangsung => {
@@ -63,7 +68,12 @@ export class KelasLangsung extends Kelas {
         kelasLangsung.validasiNamaAnggota(nama, atribut)
       )
     }
-    super.deserialisasi(data, kelasLangsung, pengonversiAtribut)
+    const pengonversiOperasi = (dataAtribut: any): OperasiLangsung => {
+      return OperasiLangsung.deserialisasi(dataAtribut, undefined, (nama, atribut) =>
+        kelasLangsung.validasiNamaAnggota(nama, atribut)
+      )
+    }
+    super.deserialisasi(data, kelasLangsung, pengonversiAtribut, pengonversiOperasi)
     return kelasLangsung
   }
 }

@@ -42,6 +42,7 @@ message KelasPb {
   uint32 id = 1;
   string nama = 2;
   repeated AtributPb koleksi_atribut = 3;
+  repeated OperasiPb koleksi_operasi = 4;
 }
 
 message AtributPb {
@@ -60,6 +61,45 @@ message AtributPb {
   bool tuliskan_keterurutan = 13;
   bool terurut = 14;
   bool urutan = 15;
+}
+
+message OperasiPb {
+  uint32 id = 1;// Diwarisi dari IsiProyek
+  string nama = 2;// Diwarisi dari IsiProyek
+  VisibilitasPb visibilitas = 3;
+  optional string tipe_kembalian = 4;
+  bool rentang_multiplisitas_kembalian_diatur = 5;
+  RentangMultiplisitasPb rentang_multiplisitas_kembalian = 6;
+  bool sebagai_query = 7;
+  bool selalu_tulis_keunikan_kembalian = 8;
+  bool kembalian_unik = 9;
+  bool tuliskan_keterurutan_kembalian = 10;
+  bool kembalian_terurut = 11;
+  bool kembalian_adalah_urutan = 12;
+  repeated ParameterOperasiPb koleksi_parameter = 13;
+}
+
+message ParameterOperasiPb {
+  uint32 id = 1;
+  string nama = 2;
+  optional string tipe = 3;
+  optional string bawaan = 4;
+  ArahParameterPb arah = 5;
+  bool arah_diatur = 6;
+  bool rentang_multiplisitas_diatur = 7;
+  RentangMultiplisitasPb rentang_multiplisitas = 8;
+  bool selalu_tulis_keunikan = 9;
+  bool unik = 10;
+  bool tuliskan_keterurutan = 11;
+  bool terurut = 12;
+  bool urutan = 13;
+}
+
+enum ArahParameterPb {
+  ARAH_PARAMETER_TIDAK_DIATUR = 0;
+  ARAH_PARAMETER_MASUK = 1;
+  ARAH_PARAMETER_KELUAR = 2;
+  ARAH_PARAMETER_MASUK_KELUAR = 3;
 }
 
 message RentangMultiplisitasPb {
