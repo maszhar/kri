@@ -1,11 +1,12 @@
 import { ElemenKlas } from './ElemenKlas'
-import { Model } from './Model'
+import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 
-export class DiagramKlas extends Model {
+export class DiagramKelas extends IsiProyek {
   koleksiElemenKlas: ElemenKlas[]
 
   constructor(parameter: ParameterBuatDiagramKlas = {}) {
     super({
+      ...parameter,
       nama: parameter.nama ?? 'DiagramKlas1'
     })
     this.koleksiElemenKlas = parameter.koleksiElemenKlas ?? []
@@ -27,7 +28,6 @@ export class DiagramKlas extends Model {
   }
 }
 
-export interface ParameterBuatDiagramKlas {
-  nama?: string
+export interface ParameterBuatDiagramKlas extends ParameterBuatIsiProyek {
   koleksiElemenKlas?: ElemenKlas[]
 }

@@ -1,6 +1,6 @@
 import { readonly, writable, type Readable, type Writable } from 'svelte/store'
 import { ProyekLama } from '../../../../umum/entitas/ProyekLama'
-import { DiagramKlasLangsung } from './DiagramKlasLangsung'
+import { DiagramKelasLangsung } from './DiagramKelasLangsung.svelte'
 import { KlasLangsung } from './KlasLangsung'
 import type { SequenceDiagram } from '../../../../umum/entitas/SequenceDiagram'
 import { GalatNamaSama } from '../../../../umum/galat/GalatNamaSama'
@@ -11,7 +11,7 @@ import { CeritaPenggunaLangsung } from './CeritaPenggunaLangsung'
 export class ProyekLangsungLama extends ProyekLama {
   // === ATRIBUT ===
   private koleksiCeritaPenggunaLangsung: Writable<CeritaPenggunaLangsung[]> = writable([])
-  private koleksiDiagramKlasLangsung: Writable<DiagramKlasLangsung[]> = writable([])
+  private koleksiDiagramKlasLangsung: Writable<DiagramKelasLangsung[]> = writable([])
   private koleksiDiagramKasusGunaLangsung: Writable<DiagramKasusGunaLangsung[]> = writable([])
 
   // === KONSTRUKTOR ===
@@ -103,12 +103,12 @@ export class ProyekLangsungLama extends ProyekLama {
   }
 
   // diagram klas
-  dapatkanKoleksiDiagramKlasLangsung(): Readable<DiagramKlasLangsung[]> {
+  dapatkanKoleksiDiagramKlasLangsung(): Readable<DiagramKelasLangsung[]> {
     return this.koleksiDiagramKlasLangsung
   }
 
-  tambahDiagramKlasBaru(): DiagramKlasLangsung {
-    const diagramKlasLangsung = new DiagramKlasLangsung()
+  tambahDiagramKlasBaru(): DiagramKelasLangsung {
+    const diagramKlasLangsung = new DiagramKelasLangsung()
     this.koleksiDiagramKlasLangsung.update((koleksiSekarang) => {
       koleksiSekarang.push(diagramKlasLangsung)
       return koleksiSekarang
@@ -122,6 +122,6 @@ export interface ParameterBuatProyekLangsung {
   koleksiCeritaPenggunaLangsung?: CeritaPenggunaLangsung[]
   koleksiKlasLangsung?: KlasLangsung[]
   koleksiSequenceDiagram?: SequenceDiagram[]
-  koleksiDiagramKlasLangsung?: DiagramKlasLangsung[]
+  koleksiDiagramKlasLangsung?: DiagramKelasLangsung[]
   koleksiDiagramKasusGuna?: DiagramKasusGunaLangsung[]
 }

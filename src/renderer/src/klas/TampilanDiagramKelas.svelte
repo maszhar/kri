@@ -5,7 +5,7 @@
   import { Koordinat } from '../../../umum/entitas/Koordinat'
   import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
   import { TipeElemen } from '../../../umum/tipe/TipeElemen'
-  import type { DiagramKlasLangsung } from '../umum/entitas/DiagramKlasLangsung'
+  import type { DiagramKelasLangsung } from '../umum/entitas/DiagramKelasLangsung.svelte'
   import type { KlasLangsung } from '../umum/entitas/KlasLangsung'
   import { Ukuran2D } from '../umum/entitas/Ukuran2D'
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
@@ -18,7 +18,7 @@
   // === ATRIBUT ===
 
   interface Properti {
-    diagramKlas: DiagramKlasLangsung
+    diagramKlas: DiagramKelasLangsung
     tambahKlasBaru: () => KlasLangsung
     ubahNamaKlas: (klas: Kelas, nama: string) => void
     hapusKlas: (klas: Kelas) => void

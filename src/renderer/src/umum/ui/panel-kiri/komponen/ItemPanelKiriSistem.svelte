@@ -1,11 +1,14 @@
 <script lang="ts">
   import type { IsiProyek } from '../../../../../../umum/entitas/IsiProyek'
   import type { Koordinat } from '../../../../../../umum/entitas/Koordinat'
+  import { DiagramKelasLangsung } from '../../../entitas/DiagramKelasLangsung.svelte'
   import { KelasLangsung } from '../../../entitas/KelasLangsung.svelte'
   import type { SistemLangsung } from '../../../entitas/SistemLangsung.svelte'
+  import IkonKelas from '../../ikon/IkonKelas.svelte'
   import IkonSistem from '../../ikon/IkonSistem.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
+  import ItemPanelKiriDiagramKelas from './ItemPanelKiriDiagramKelas.svelte'
   import ItemPanelKiriKelas from './ItemPanelKiriKelas.svelte'
   import ItemPanelKiriSistem from './ItemPanelKiriSistem.svelte'
 
@@ -41,7 +44,8 @@
   bukaMenu={(posisiKlik: Koordinat): void =>
     bukaMenu(posisiKlik, JenisMenuPanelKiri.SISTEM, sistem)}
   {id}
-  punyaChildren={sistem.dapatkanKoleksiSubsistemLangsung().length > 0 ||
+  punyaChildren={sistem.dapatkanKoleksiDiagramKelasLangsung().length > 0 ||
+    sistem.dapatkanKoleksiSubsistemLangsung().length > 0 ||
     sistem.dapatkanKoleksiKelasLangsung().length > 0}
   buka={(): void => bukaIsiProyek(sistem, null)}
   aktif={isiProyekAktif === sistem}
@@ -51,6 +55,39 @@
   {/snippet}
 
   {#snippet itemChildren(level: number)}
+    <!-- Diagram Kelas (2) -->
+    {#if sistem.dapatkanKoleksiDiagramKelasLangsung().length > 0}
+      <ItemPanelKiri
+        id={parseInt(`${id}2`)}
+        {level}
+        label="Diagram Kelas"
+        {idAktif}
+        {pilih}
+        bukaMenu={(posisiKlik: Koordinat): void =>
+          bukaMenu(posisiKlik, JenisMenuPanelKiri.JUDUL_DIAGRAM_KELAS, sistem)}
+        punyaChildren={true}
+      >
+        {#snippet ikon()}
+          <IkonKelas class="w-full h-full fill-white stroke-black" />
+        {/snippet}
+        {#snippet itemChildren(levelDalam: number)}
+          {#each sistem.dapatkanKoleksiDiagramKelasLangsung() as diagramKelas, _i (diagramKelas.dapatkanId())}
+            <ItemPanelKiriDiagramKelas
+              {bukaMenu}
+              {idAktif}
+              level={levelDalam}
+              idPrefix={parseInt(`${id}2`)}
+              {diagramKelas}
+              {pilih}
+              bukaDiagramKelas={(diagramKelas: DiagramKelasLangsung): void =>
+                bukaIsiProyek(diagramKelas, sistem)}
+              {isiProyekAktif}
+            />
+          {/each}
+        {/snippet}
+      </ItemPanelKiri>
+    {/if}
+
     <!-- Kelas (1) -->
     {#if sistem.dapatkanKoleksiKelasLangsung().length > 0}
       <ItemPanelKiri

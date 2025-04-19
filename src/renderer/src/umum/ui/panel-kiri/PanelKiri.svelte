@@ -85,7 +85,19 @@
       }
     }
   }
-  petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [menuBuatKelas, menuBuatSubsistem])
+  const menuBuatDiagramKelas = {
+    label: 'Buat diagram kelas',
+    aksi: (): void => {
+      if (refMenu instanceof SistemLangsung) {
+        refMenu.buatDiagramKelas()
+      }
+    }
+  }
+  petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [
+    menuBuatDiagramKelas,
+    menuBuatKelas,
+    menuBuatSubsistem
+  ])
 
   petaItemMenu.set(JenisMenuPanelKiri.JUDUL_KELAS, [menuBuatKelas])
 

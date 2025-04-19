@@ -12,6 +12,7 @@ import { Framework, frameworkDariProto, frameworkKeProto } from '../tipe/Framewo
 import { Platform, platformDariProto, platformKeProto } from '../tipe/Platform'
 import { TargetSistem, targetSistemDariProto, targetSistemKeProto } from '../tipe/TargetSistem'
 import { TipeElemen } from '../tipe/TipeElemen'
+import { DiagramKelas, ParameterBuatDiagramKlas } from './DiagramKelas'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 import { Kelas, ParameterBuatKelas } from './Kelas'
 import {
@@ -28,6 +29,7 @@ export class Sistem extends IsiProyek {
 
   protected koleksiKelas: Kelas[]
   protected koleksiSubsistem: Sistem[]
+  protected koleksiDiagramKelas: DiagramKelas[]
 
   constructor(parameter: ParameterBuatSistem = {}) {
     super({
@@ -42,6 +44,7 @@ export class Sistem extends IsiProyek {
 
     this.koleksiKelas = parameter.koleksiKelas ?? []
     this.koleksiSubsistem = parameter.koleksiSubsistem ?? []
+    this.koleksiDiagramKelas = parameter.koleksiDiagramKelas ?? []
   }
 
   dapatkanTarget(): TargetSistem {
@@ -141,6 +144,17 @@ export class Sistem extends IsiProyek {
     return kelasBaru
   }
 
+  buatDiagramKelas(
+    parameter: ParameterBuatDiagramKlas = {},
+    pabrikDiagramKelas?: (parameter: ParameterBuatDiagramKlas) => DiagramKelas
+  ): DiagramKelas {
+    const diagramKelas = pabrikDiagramKelas
+      ? pabrikDiagramKelas(parameter)
+      : new DiagramKelas(parameter)
+    this.koleksiDiagramKelas.push(diagramKelas)
+    return diagramKelas
+  }
+
   dapatkanKoleksiSubsistem(): Sistem[] {
     return this.koleksiSubsistem
   }
@@ -220,4 +234,5 @@ export interface ParameterBuatSistem extends ParameterBuatIsiProyek {
   bahasaPemrograman?: BahasaPemrograman
   koleksiKelas?: Kelas[]
   koleksiSubsistem?: Sistem[]
+  koleksiDiagramKelas?: DiagramKelas[]
 }

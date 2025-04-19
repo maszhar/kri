@@ -7,5 +7,7 @@ export enum JenisMenuPanelKiri {
   JUDUL_ATRIBUT = 5,
   ATRIBUT = 6,
   JUDUL_OPERASI = 7,
-  OPERASI = 8
+  OPERASI = 8,
+  JUDUL_DIAGRAM_KELAS = 9,
+  DIAGRAM_KELAS = 10
 }

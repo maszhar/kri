@@ -1,7 +1,7 @@
 import { ProyekPb } from '../proto/kri'
 import { CeritaPengguna } from './CeritaPengguna'
 import { DiagramKasusGuna } from './DiagramKasusGuna'
-import { DiagramKlas } from './DiagramKlas'
+import { DiagramKelas } from './DiagramKelas'
 import { Kelas } from './Kelas'
 import { SequenceDiagram } from './SequenceDiagram'
 
@@ -10,7 +10,7 @@ export class ProyekLama {
   koleksiCeritaPengguna: CeritaPengguna[]
   koleksiKlas: Kelas[]
   koleksiSequenceDiagram: SequenceDiagram[]
-  koleksiDiagramKlas: DiagramKlas[]
+  koleksiDiagramKlas: DiagramKelas[]
   protected koleksiDiagramKasusGuna: DiagramKasusGuna[]
 
   // === KONSTRUKTOR ===
@@ -107,6 +107,6 @@ export interface ParameterBuatProyek {
   koleksiCeritaPengguna?: CeritaPengguna[]
   koleksiKlas?: Kelas[]
   koleksiSequenceDiagram?: SequenceDiagram[]
-  koleksiDiagramKlas?: DiagramKlas[]
+  koleksiDiagramKlas?: DiagramKelas[]
   koleksiDiagramKasusGuna?: DiagramKasusGuna[]
 }

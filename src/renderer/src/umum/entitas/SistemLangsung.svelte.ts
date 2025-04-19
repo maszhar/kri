@@ -1,9 +1,11 @@
+import type { ParameterBuatDiagramKlas, DiagramKelas } from '../../../../umum/entitas/DiagramKelas'
 import type { ParameterBuatKelas } from '../../../../umum/entitas/Kelas'
 import { Sistem, type ParameterBuatSistem } from '../../../../umum/entitas/Sistem'
 import { BahasaPemrograman } from '../../../../umum/tipe/BahasaPemrograman'
 import { Framework } from '../../../../umum/tipe/Framework'
 import { Platform } from '../../../../umum/tipe/Platform'
 import { TargetSistem } from '../../../../umum/tipe/TargetSistem'
+import { DiagramKelasLangsung } from './DiagramKelasLangsung.svelte'
 import { KelasLangsung } from './KelasLangsung.svelte'
 
 export class SistemLangsung extends Sistem {
@@ -15,6 +17,7 @@ export class SistemLangsung extends Sistem {
 
   private koleksiSubsistemLangsung: SistemLangsung[] = $state([])
   private koleksiKelasLangsung: KelasLangsung[] = $state([])
+  private koleksiDiagramKelasLangsung: DiagramKelasLangsung[] = $state([])
 
   constructor(parameter: ParameterBuatSistem = {}) {
     super(parameter)
@@ -26,6 +29,7 @@ export class SistemLangsung extends Sistem {
     this.bahasaPemrogramanLangsung = this.bahasaPemrograman
     this.koleksiSubsistemLangsung = this.koleksiSubsistem as SistemLangsung[]
     this.koleksiKelasLangsung = this.koleksiKelas as KelasLangsung[]
+    this.koleksiDiagramKelasLangsung = this.koleksiDiagramKelas as DiagramKelasLangsung[]
   }
 
   dapatkanNamaLangsung(): string {
@@ -94,6 +98,19 @@ export class SistemLangsung extends Sistem {
   ubahNamaKelas(kelas: KelasLangsung, namaBaru: string): void {
     this.validasiNamaKelas(namaBaru, kelas)
     kelas.aturNama(namaBaru)
+  }
+
+  dapatkanKoleksiDiagramKelasLangsung(): DiagramKelasLangsung[] {
+    return this.koleksiDiagramKelasLangsung
+  }
+
+  override buatDiagramKelas(parameter: ParameterBuatDiagramKlas = {}): DiagramKelas {
+    const diagramKelas = super.buatDiagramKelas(
+      parameter,
+      (parameterLokal) => new DiagramKelasLangsung(parameterLokal)
+    ) as DiagramKelasLangsung
+    this.koleksiDiagramKelasLangsung.push(diagramKelas)
+    return diagramKelas
   }
 
   dapatkanKoleksiSubsistemLangsung(): SistemLangsung[] {
