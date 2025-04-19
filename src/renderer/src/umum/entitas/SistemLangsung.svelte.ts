@@ -116,7 +116,8 @@ export class SistemLangsung extends Sistem {
       bahasaPemrograman: data.bahasaPemrograman as BahasaPemrograman,
       koleksiSubsistem: data.koleksiSubsistem.map((dataSubsistem) =>
         SistemLangsung.deserialisasi(dataSubsistem)
-      )
+      ),
+      koleksiKelas: data.koleksiKelas.map((dataKelas) => KelasLangsung.deserialisasi(dataKelas))
     })
   }
 }

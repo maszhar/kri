@@ -32,4 +32,11 @@ export class KelasLangsung extends Kelas {
     this.koleksiAtributLangsung.push(atributBaru)
     return atributBaru
   }
+
+  static deserialisasi(data: any): KelasLangsung {
+    return new KelasLangsung({
+      id: data.id,
+      nama: data.nama
+    })
+  }
 }
