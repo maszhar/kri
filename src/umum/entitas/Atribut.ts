@@ -238,6 +238,8 @@ export class Atribut extends ElemenBernama {
         } else if (
           isiTeksPemodifikasiKecil === 'unordered' ||
           isiTeksPemodifikasiKecil === 'unorder' ||
+          isiTeksPemodifikasiKecil === 'nonordered' ||
+          isiTeksPemodifikasiKecil === 'nonorder' ||
           isiTeksPemodifikasiKecil === 'tidakterurut'
         ) {
           tuliskanKeterurutan = true
@@ -267,6 +269,9 @@ export class Atribut extends ElemenBernama {
       if (this.aturSebagaiId) this.aturSebagaiId(false)
       if (this.aturUnik) this.aturUnik(false)
       if (this.aturSelaluTulisKeunikan) this.aturSelaluTulisKeunikan(false)
+      if (this.terurut) this.aturTerurut(false)
+      if (this.tuliskanKeterurutan) this.aturTuliskanKeterurutan(false)
+      if (this.urutan) this.aturUrutan(false)
     }
 
     // deteksi bawaan
