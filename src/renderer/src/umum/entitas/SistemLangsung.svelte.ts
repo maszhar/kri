@@ -25,6 +25,7 @@ export class SistemLangsung extends Sistem {
     this.frameworkLangsung = this.framework
     this.bahasaPemrogramanLangsung = this.bahasaPemrograman
     this.koleksiSubsistemLangsung = this.koleksiSubsistem as SistemLangsung[]
+    this.koleksiKelasLangsung = this.koleksiKelas as KelasLangsung[]
   }
 
   dapatkanNamaLangsung(): string {
