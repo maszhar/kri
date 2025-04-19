@@ -28,4 +28,12 @@
       {/each}
     </TampilanKompartemen>
   {/if}
+  {#if kelas.dapatkanKoleksiMetodeLangsung().length > 0}
+    <TampilanKompartemen>
+      <div class="text-center px-4">operations</div>
+      {#each kelas.dapatkanKoleksiMetodeLangsung() as atribut, _id (atribut.dapatkanId())}
+        <div>{atribut.dapatkanNamaLangsung()}</div>
+      {/each}
+    </TampilanKompartemen>
+  {/if}
 </div>
