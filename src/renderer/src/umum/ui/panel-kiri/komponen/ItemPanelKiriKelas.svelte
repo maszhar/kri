@@ -83,7 +83,7 @@
         punyaChildren={true}
       >
         {#snippet ikon()}
-          <div class="font-bold text-green-400">O</div>
+          <div class="font-bold text-green-400">M</div>
         {/snippet}
         {#snippet itemChildren(level: number)}
           {#each kelas.dapatkanKoleksiMetodeLangsung() as metode, _id (metode.dapatkanId())}

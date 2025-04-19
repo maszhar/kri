@@ -31,6 +31,6 @@
   buka={(): void => buka()}
 >
   {#snippet ikon()}
-    <div class="font-bold text-green-400">O</div>
+    <div class="font-bold text-green-400">M</div>
   {/snippet}
 </ItemPanelKiri>
