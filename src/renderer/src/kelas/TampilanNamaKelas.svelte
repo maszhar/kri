@@ -33,7 +33,7 @@
     window.removeEventListener('click', tanganiKlikSaatMengedit)
     mengedit = false
 
-    if (terapkan) {
+    if (terapkan && namaTerinput.trim() !== '') {
       perbaruiNama(namaTerinput.replaceAll(/[^A-Za-z0-9_]/g, ''))
     }
   }
