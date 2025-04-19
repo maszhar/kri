@@ -11,9 +11,9 @@
   import ItemMenuKonteks from '../umum/ui/ItemMenuKonteks.svelte'
   import JudulMenuKonteks from '../umum/ui/JudulMenuKonteks.svelte'
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
-  import TampilanAtribut from './TampilanAtribut.svelte'
-  import TampilanKompartemen from './TampilanKompartemen.svelte'
-  import TampilanOperasi from './TampilanOperasi.svelte'
+  import TampilanAtribut from '../kelas/TampilanAtribut.svelte'
+  import TampilanKompartemen from '../kelas/TampilanKompartemen.svelte'
+  import TampilanOperasi from '../kelas/TampilanOperasi.svelte'
   import type { KlasLangsung } from '../umum/entitas/KlasLangsung'
 
   // === ATRIBUT ===

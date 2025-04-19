@@ -13,11 +13,11 @@
     pilih: (id: number) => void
     proyek: ProyekLangsung
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref?: IsiProyek) => void
-    bukaSistem: (sistem: SistemLangsung) => void
+    bukaIsiProyek: (isiProyek: IsiProyek, sistem: SistemLangsung | null) => void
     isiProyekAktif: IsiProyek | null
     waktuLoad: number
   }
-  const { proyek, idAktif, pilih, bukaMenu, bukaSistem, isiProyekAktif, waktuLoad }: Properti =
+  const { proyek, idAktif, pilih, bukaMenu, bukaIsiProyek, isiProyekAktif, waktuLoad }: Properti =
     $props()
 
   const idProyek = 1
@@ -43,7 +43,7 @@
         {pilih}
         {bukaMenu}
         idPrefix={idProyek}
-        bukaIsiProyek={bukaSistem}
+        {bukaIsiProyek}
         {isiProyekAktif}
       />
     {/each}

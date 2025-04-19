@@ -94,8 +94,11 @@ export class Sistem extends IsiProyek {
     this.bahasaPemrograman = bahasa
   }
 
-  private validasiNamaKelas(nama: string): void {
-    const kelasBernamaSama = this.koleksiKelas.find((kelas) => kelas.dapatkanNama() === nama)
+  protected validasiNamaKelas(nama: string, kelasLama?: Kelas): void {
+    const koleksiKelas = kelasLama
+      ? this.koleksiKelas.filter((kelas) => kelas !== kelasLama)
+      : this.koleksiKelas
+    const kelasBernamaSama = koleksiKelas.find((kelas) => kelas.dapatkanNama() === nama)
     if (kelasBernamaSama) {
       throw new GalatNamaSama(nama, TipeElemen.KELAS)
     }

@@ -11,10 +11,10 @@
   interface Properti {
     proyek: ProyekLangsung
     isiProyekAktif: IsiProyek | null
-    bukaSistem: (sistem: SistemLangsung) => void
+    bukaIsiProyek: (isiProyek: IsiProyek, sistem: SistemLangsung | null) => void
     waktuLoad: number
   }
-  const { proyek, isiProyekAktif, bukaSistem, waktuLoad }: Properti = $props()
+  const { proyek, isiProyekAktif, bukaIsiProyek, waktuLoad }: Properti = $props()
 
   let idItemAktif = $state(-1)
 
@@ -125,7 +125,7 @@
     idAktif={idItemAktif}
     {pilih}
     {bukaMenu}
-    {bukaSistem}
+    {bukaIsiProyek}
     {waktuLoad}
   />
 </div>

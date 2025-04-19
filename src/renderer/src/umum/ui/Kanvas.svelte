@@ -51,7 +51,7 @@
 
 <div
   class={`relative m-4 inline-block bg-white ${className}`}
-  style={`width: ${ukuran.lebar}px; height: ${ukuran.tinggi}px;`}
+  style={`${ukuran.lebar >= 0 ? `width: ${ukuran.lebar}px;` : ''} ${ukuran.tinggi ? `height: ${ukuran.tinggi}px;` : ''}`}
   ondblclick={tanganiKlikGanda}
   oncontextmenu={tanganiBukaMenuKonteks}
   role="button"

@@ -90,6 +90,11 @@ export class SistemLangsung extends Sistem {
     return kelasBaru
   }
 
+  ubahNamaKelas(kelas: KelasLangsung, namaBaru: string): void {
+    this.validasiNamaKelas(namaBaru, kelas)
+    kelas.aturNama(namaBaru)
+  }
+
   dapatkanKoleksiSubsistemLangsung(): SistemLangsung[] {
     return this.koleksiSubsistemLangsung
   }

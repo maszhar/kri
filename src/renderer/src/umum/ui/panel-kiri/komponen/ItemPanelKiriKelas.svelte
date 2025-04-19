@@ -12,19 +12,11 @@
     pilih: (id: number) => void
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref: IsiProyek) => void
     idPrefix: number
-    bukaIsiProyek: (isiProyek: IsiProyek) => void
+    bukaKelas: (kelas: KelasLangsung) => void
     isiProyekAktif: IsiProyek
   }
-  const {
-    level,
-    kelas,
-    idAktif,
-    pilih,
-    bukaMenu,
-    idPrefix,
-    bukaIsiProyek,
-    isiProyekAktif
-  }: Properti = $props()
+  const { level, kelas, idAktif, pilih, bukaMenu, idPrefix, bukaKelas, isiProyekAktif }: Properti =
+    $props()
 
   const id = parseInt(`${idPrefix}${kelas.dapatkanId()}`)
 </script>
@@ -37,7 +29,7 @@
   bukaMenu={(posisiKlik: Koordinat): void => bukaMenu(posisiKlik, JenisMenuPanelKiri.KELAS, kelas)}
   {id}
   punyaChildren={false}
-  buka={(): void => bukaIsiProyek(kelas)}
+  buka={(): void => bukaKelas(kelas)}
   aktif={isiProyekAktif === kelas}
 >
   {#snippet ikon()}

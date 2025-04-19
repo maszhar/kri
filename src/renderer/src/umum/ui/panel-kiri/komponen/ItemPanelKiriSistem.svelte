@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { IsiProyek } from '../../../../../../umum/entitas/IsiProyek'
   import type { Koordinat } from '../../../../../../umum/entitas/Koordinat'
+  import { KelasLangsung } from '../../../entitas/KelasLangsung.svelte'
   import type { SistemLangsung } from '../../../entitas/SistemLangsung.svelte'
   import IkonSistem from '../../ikon/IkonSistem.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
@@ -15,7 +16,7 @@
     pilih: (id: number) => void
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref: IsiProyek) => void
     idPrefix: number
-    bukaIsiProyek: (isiProyek: IsiProyek) => void
+    bukaIsiProyek: (isiProyek: IsiProyek, sistem: SistemLangsung | null) => void
     isiProyekAktif: IsiProyek
   }
   const {
@@ -42,7 +43,7 @@
   {id}
   punyaChildren={sistem.dapatkanKoleksiSubsistemLangsung().length > 0 ||
     sistem.dapatkanKoleksiKelasLangsung().length > 0}
-  buka={(): void => bukaIsiProyek(sistem)}
+  buka={(): void => bukaIsiProyek(sistem, null)}
   aktif={isiProyekAktif === sistem}
 >
   {#snippet ikon()}
@@ -74,7 +75,7 @@
               idPrefix={parseInt(`${id}1`)}
               {kelas}
               {pilih}
-              {bukaIsiProyek}
+              bukaKelas={(kelas: KelasLangsung): void => bukaIsiProyek(kelas, sistem)}
               {isiProyekAktif}
             />
           {/each}

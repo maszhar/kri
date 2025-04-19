@@ -10,6 +10,8 @@
   import type { IsiProyek } from '../../umum/entitas/IsiProyek'
   import { SistemLangsung } from './umum/entitas/SistemLangsung.svelte'
   import TampilanKonfigurasiSistem from './sistem/TampilanKonfigurasiSistem.svelte'
+  import TampilanEditorKelas from './kelas/TampilanEditorKelas.svelte'
+  import { KelasLangsung } from './umum/entitas/KelasLangsung.svelte'
 
   // === Atribut ===
 
@@ -22,6 +24,7 @@
   // penyimpanan
   let lokasiPenyimpananProyek = ''
 
+  let sistemAktif: SistemLangsung | null = $state(null)
   let isiProyekAktif: IsiProyek | null = $state(null)
 
   let pesan: string | null = $state(null)
@@ -65,8 +68,9 @@
   }
 
   // isi proyek aktif
-  function bukaIsiProyek(isiProyek: IsiProyek): void {
+  function bukaIsiProyek(isiProyek: IsiProyek, sistem: SistemLangsung | null): void {
     isiProyekAktif = isiProyek
+    sistemAktif = sistem
   }
 </script>
 
@@ -81,15 +85,12 @@
 <Dasar>
   <PanelAtas saatBukaProyekDiklik={bukaProyek} saatSimpanDiklik={simpanProyek} {hasilkanKode} />
   <div class="flex-grow flex items-stretch">
-    <PanelKiri
-      {proyek}
-      {isiProyekAktif}
-      bukaSistem={(sistem: SistemLangsung): void => bukaIsiProyek(sistem)}
-      {waktuLoad}
-    />
+    <PanelKiri {proyek} {isiProyekAktif} {bukaIsiProyek} {waktuLoad} />
     <Jendela>
       {#if isiProyekAktif instanceof SistemLangsung}
         <TampilanKonfigurasiSistem sistem={isiProyekAktif} />
+      {:else if isiProyekAktif instanceof KelasLangsung && sistemAktif}
+        <TampilanEditorKelas kelas={isiProyekAktif} sistem={sistemAktif} />
       {/if}
     </Jendela>
     <PanelKanan proyek={proyekLama} />
