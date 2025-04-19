@@ -3,7 +3,7 @@
   import type { ParameterBuatAtribut } from '../../../umum/entitas/Atribut'
   import type { ElemenKlas } from '../../../umum/entitas/ElemenKlas'
   import { Koordinat } from '../../../umum/entitas/Koordinat'
-  import type { ParameterBuatOperasi } from '../../../umum/entitas/Operasi'
+  import type { ParameterBuatMetode } from '../../../umum/entitas/Metode'
   import { GalatNamaSama } from '../../../umum/galat/GalatNamaSama'
   import { TipeElemen } from '../../../umum/tipe/TipeElemen'
   import TampilanKursorMulaiKoneksi from '../sequence/ui/TampilanKursorMulaiKoneksi.svelte'
@@ -13,7 +13,7 @@
   import MenuKonteks from '../umum/ui/MenuKonteks.svelte'
   import TampilanAtribut from '../kelas/TampilanAtribut.svelte'
   import TampilanKompartemen from '../kelas/TampilanKompartemen.svelte'
-  import TampilanOperasi from '../kelas/TampilanOperasi.svelte'
+  import TampilanMetode from '../kelas/TampilanMetode.svelte'
   import type { KlasLangsung } from '../umum/entitas/KlasLangsung'
 
   // === ATRIBUT ===
@@ -60,7 +60,7 @@
   const nama = klasLangsung.dapatkanNamaLangsung()
   let posisi = $state(elemenKlas.posisi)
   let koleksiAtribut = $state(elemenKlas.klas.koleksiAtribut)
-  let koleksiOperasi = $state(elemenKlas.klas.koleksiOperasi)
+  let koleksiMetode = $state(elemenKlas.klas.koleksiMetode)
 
   // elemen web
   let elemenTampilanElemenKlas: HTMLDivElement
@@ -78,7 +78,7 @@
     koleksiAtribut = elemenKlas.klas.koleksiAtribut
   })
 
-  // Perpindahan posisi elemen
+  // PerpindahkoleksiMetodeen
   let titikPojokKiriAtasKanvas: Koordinat | null = null
   let bedaTitikKursorDanElemenSaatAwalMemindah: Koordinat | null = null
 
@@ -216,39 +216,39 @@
     }
   }
 
-  // buat operasi
-  let elemenOperasiBaru: TampilanOperasi | null = $state(null)
-  let sedangMembuatOperasiBaru = $state(false)
+  // buat metode
+  let elemenMetodeBaru: TampilanMetode | null = $state(null)
+  let sedangMembuatMetodeBaru = $state(false)
 
-  function mulaiBuatOperasiBaru(e: MouseEvent): void {
+  function mulaiBuatMetodeBaru(e: MouseEvent): void {
     e.stopPropagation()
     // buatAtributupMenuModifikasiKlas()
-    sedangMembuatOperasiBaru = true
+    sedangMembuatMetodeBaru = true
   }
 
   $effect(() => {
-    if (sedangMembuatOperasiBaru && elemenOperasiBaru) {
-      elemenOperasiBaru.mulaiEditOperasi()
+    if (sedangMembuatMetodeBaru && elemenMetodeBaru) {
+      elemenMetodeBaru.mulaiEditMetode()
     }
   })
 
-  // edit operasi
-  function batalkanEditOperasi(): void {
-    if (sedangMembuatOperasiBaru) {
-      sedangMembuatOperasiBaru = false
+  // edit metode
+  function batalkanEditMetode(): void {
+    if (sedangMembuatMetodeBaru) {
+      sedangMembuatMetodeBaru = false
     }
     akhiriMengedit()
   }
 
-  function selesaikanEditOperasi(indeks: number, parameterBuatOperasi: ParameterBuatOperasi): void {
+  function selesaikanEditMetode(indeks: number, parameterBuatMetode: ParameterBuatMetode): void {
     try {
-      if (sedangMembuatOperasiBaru && parameterBuatOperasi) {
-        sedangMembuatOperasiBaru = false
-        elemenKlas.klas.tambahOperasiBaru(parameterBuatOperasi)
-      } else if (!sedangMembuatOperasiBaru) {
-        elemenKlas.klas.ubahOperasi(indeks, parameterBuatOperasi)
+      if (sedangMembuatMetodeBaru && parameterBuatMetode) {
+        sedangMembuatMetodeBaru = false
+        elemenKlas.klas.tambahMetodeBaru(parameterBuatMetode)
+      } else if (!sedangMembuatMetodeBaru) {
+        elemenKlas.klas.ubahMetode(indeks, parameterBuatMetode)
       }
-      koleksiOperasi = elemenKlas.klas.koleksiOperasi
+      koleksiMetode = elemenKlas.klas.koleksiMetode
       akhiriMengedit()
     } catch (e: any) {
       if (e instanceof GalatNamaSama) {
@@ -265,9 +265,9 @@
     switch (e.tipe) {
       case TipeElemen.ATRIBUT:
         tipe = 'atribut'
-        break
+        breakkoleksiMetode
       case TipeElemen.OPERASI:
-        tipe = 'operasi'
+        tipe = 'metode'
         break
       default:
     }
@@ -384,7 +384,7 @@
   <MenuKonteks posisi={posisiMenuModifikasiKlas}>
     <JudulMenuKonteks>Tambah Fitur</JudulMenuKonteks>
     <ItemMenuKonteks saatDiklik={mulaiMembuatAtributBaru}>Tambah Atribut</ItemMenuKonteks>
-    <ItemMenuKonteks saatDiklik={mulaiBuatOperasiBaru}>Tambah Operasi</ItemMenuKonteks>
+    <ItemMenuKonteks saatDiklik={mulaiBuatMetodeBaru}>Tambah Metode</ItemMenuKonteks>
     <JudulMenuKonteks>Hapus</JudulMenuKonteks>
     <ItemMenuKonteks saatDiklik={hapus}>Hapus</ItemMenuKonteks>
   </MenuKonteks>
@@ -467,30 +467,30 @@
       </TampilanKompartemen>
     {/if}
 
-    <!-- Kompartemen Operasi -->
-    {#if koleksiOperasi.length > 0 || sedangMembuatOperasiBaru}
+    <!-- Kompartemen Metode -->
+    {#if koleksiMetode.length > 0 || sedangMembuatMetodeBaru}
       <TampilanKompartemen>
-        {#each koleksiOperasi as operasi, indeksOperasi}
-          <TampilanOperasi
-            {operasi}
+        {#each koleksiMetode as metode, indeksMetode}
+          <TampilanMetode
+            {metode}
             indeksKlas={indeks}
-            indeksOperasi={indeksOperasi + 1}
+            indeksMetode={indeksMetode + 1}
             {mulaiMengedit}
-            batalkanMengedit={batalkanEditOperasi}
-            selesaiMengedit={(parameter: ParameterBuatOperasi): void =>
-              selesaikanEditOperasi(indeksOperasi, parameter)}
+            batalkanMengedit={batalkanEditMetode}
+            selesaiMengedit={(parameter: ParameterBuatMetode): void =>
+              selesaikanEditMetode(indeksMetode, parameter)}
           />
         {/each}
 
-        {#if sedangMembuatOperasiBaru}
-          <TampilanOperasi
+        {#if sedangMembuatMetodeBaru}
+          <TampilanMetode
             indeksKlas={indeks}
-            indeksOperasi={0}
+            indeksMetode={0}
             {mulaiMengedit}
-            batalkanMengedit={batalkanEditOperasi}
-            selesaiMengedit={(parameter: ParameterBuatOperasi): void =>
-              selesaikanEditOperasi(0, parameter)}
-            bind:this={elemenOperasiBaru}
+            batalkanMengedit={batalkanEditMetode}
+            selesaiMengedit={(parameter: ParameterBuatMetode): void =>
+              selesaikanEditMetode(0, parameter)}
+            bind:this={elemenMetodeBaru}
           />
         {/if}
       </TampilanKompartemen>

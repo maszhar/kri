@@ -43,7 +43,7 @@
       } catch (e: any) {
         if (e instanceof GalatNamaSama) {
           Pesan.tampilkan(
-            `Nama '${e.nama}' telah digunakan sebagai nama ${e.tipe === TipeElemen.ATRIBUT ? 'atribut lain' : 'operasi'} pada kelas ini.`
+            `Nama '${e.nama}' telah digunakan sebagai nama ${e.tipe === TipeElemen.ATRIBUT ? 'atribut lain' : 'metode'} pada kelas ini.`
           )
         } else {
           Pesan.tampilkan(e.message)

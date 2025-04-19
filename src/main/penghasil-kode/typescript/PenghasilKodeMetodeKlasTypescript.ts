@@ -1,7 +1,7 @@
-import { Operasi } from '../../../umum/entitas/Operasi'
+import { Metode } from '../../../umum/entitas/Metode'
 
-export class PenghasilKodeOperasiKlasTypescript {
-  hasilkanKode(operasi: Operasi): string {
+export class PenghasilKodeMetodeKlasTypescript {
+  hasilkanKode(metode: Metode): string {
     // indentasi
     const indentasi = '  '
 
@@ -9,13 +9,13 @@ export class PenghasilKodeOperasiKlasTypescript {
 
     hasilKode += indentasi
     hasilKode += 'public'
-    hasilKode += ` ${operasi.nama}(`
-    hasilKode += operasi.koleksiParameter
+    hasilKode += ` ${metode.nama}(`
+    hasilKode += metode.koleksiParameter
       .map((parameter) => `${parameter.nama}: ${parameter.tipe ?? 'any'}`)
       .join(', ')
     hasilKode += `)`
-    if (operasi.tipeKeluaran) {
-      hasilKode += `: ${operasi.tipeKeluaran}`
+    if (metode.tipeKeluaran) {
+      hasilKode += `: ${metode.tipeKeluaran}`
     }
     hasilKode += ' {\n'
     hasilKode += `${indentasi}}\n`
