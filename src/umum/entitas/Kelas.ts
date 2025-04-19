@@ -90,13 +90,21 @@ export class Kelas extends IsiProyek {
     return atribut
   }
 
+  private dapatkanIdMetodeTerbesar(): number {
+    let idTerbesar = 0
+    if (this.koleksiMetode.length > 0) {
+      idTerbesar = Math.max(...this.koleksiMetode.map((atribut) => atribut.dapatkanId()))
+    }
+    return idTerbesar
+  }
+
   private hasilkanNamaMetode(): string {
-    const frasa = 'atribut'
+    const frasa = 'metode'
 
     let indeksNamaBaruTerakhir = 0
-    for (const atribut of this.koleksiAtribut) {
-      if (new RegExp('^' + frasa).test(atribut.dapatkanNama())) {
-        const indeksNama = parseInt(atribut.dapatkanNama().slice(frasa.length))
+    for (const metode of this.koleksiMetode) {
+      if (new RegExp('^' + frasa).test(metode.dapatkanNama())) {
+        const indeksNama = parseInt(metode.dapatkanNama().slice(frasa.length))
         if (!isNaN(indeksNama)) {
           indeksNamaBaruTerakhir = indeksNama
         }
@@ -108,7 +116,7 @@ export class Kelas extends IsiProyek {
 
   buatMetode(parameter: ParameterBuatMetode = {}, objekLama?: Metode): Metode {
     if (parameter.nama === undefined) {
-      parameter.nama = this.hasilkanNamaAtribut()
+      parameter.nama = this.hasilkanNamaMetode()
     }
     this.validasiNamaAnggota(parameter.nama)
 
@@ -118,7 +126,7 @@ export class Kelas extends IsiProyek {
         this.validasiNamaAnggota(namaBaru, elemenLama)
       )
 
-    const idTerbesar = this.dapatkanIdAtributTerbesar()
+    const idTerbesar = this.dapatkanIdMetodeTerbesar()
     metode.aturId(idTerbesar + 1)
 
     metode.aturNama(parameter.nama)

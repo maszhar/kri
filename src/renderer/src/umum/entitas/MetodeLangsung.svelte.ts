@@ -18,6 +18,11 @@ export class MetodeLangsung extends Metode {
     return this.namaLangsung
   }
 
+  override aturNama(nama: string): void {
+    super.aturNama(nama)
+    this.namaLangsung = nama
+  }
+
   toStringLangsung(): string {
     return this.teksLangsung
   }
