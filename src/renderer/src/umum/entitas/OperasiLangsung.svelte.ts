@@ -1,12 +1,12 @@
-import { Metode, type ParameterBuatMetode } from '../../../../umum/entitas/Metode'
+import { Operasi, type ParameterBuatOperasi } from '../../../../umum/entitas/Operasi'
 
-export class MetodeLangsung extends Metode {
+export class OperasiLangsung extends Operasi {
   private namaLangsung = $state('')
   private teksLangsung = $state('')
 
   constructor(
-    parameter: ParameterBuatMetode,
-    validasiNamaBaru: (nama: string, metode: Metode) => void
+    parameter: ParameterBuatOperasi,
+    validasiNamaBaru: (nama: string, operasi: Operasi) => void
   ) {
     super(parameter, validasiNamaBaru)
 

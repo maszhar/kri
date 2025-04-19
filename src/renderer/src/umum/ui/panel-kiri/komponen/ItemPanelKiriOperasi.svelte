@@ -1,31 +1,31 @@
 <script lang="ts">
   import type { IsiProyek } from '../../../../../../umum/entitas/IsiProyek'
   import type { Koordinat } from '../../../../../../umum/entitas/Koordinat'
-  import type { MetodeLangsung } from '../../../entitas/MetodeLangsung.svelte'
+  import type { OperasiLangsung } from '../../../entitas/OperasiLangsung.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
 
   interface Properti {
     level: number
-    metode: MetodeLangsung
+    operasi: OperasiLangsung
     idAktif: number
     pilih: (id: number) => void
     bukaMenu: (posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref: IsiProyek) => void
     idPrefix: number
     buka: () => void
   }
-  const { level, metode, idAktif, pilih, bukaMenu, idPrefix, buka }: Properti = $props()
+  const { level, operasi, idAktif, pilih, bukaMenu, idPrefix, buka }: Properti = $props()
 
-  const id = parseInt(`${idPrefix}${metode.dapatkanId()}`)
+  const id = parseInt(`${idPrefix}${operasi.dapatkanId()}`)
 </script>
 
 <ItemPanelKiri
   {level}
-  label={metode.dapatkanNamaLangsung()}
+  label={operasi.dapatkanNamaLangsung()}
   {idAktif}
   {pilih}
   bukaMenu={(posisiKlik: Koordinat): void =>
-    bukaMenu(posisiKlik, JenisMenuPanelKiri.OPERASI, metode)}
+    bukaMenu(posisiKlik, JenisMenuPanelKiri.OPERASI, operasi)}
   {id}
   punyaChildren={false}
   buka={(): void => buka()}

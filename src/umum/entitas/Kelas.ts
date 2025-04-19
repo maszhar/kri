@@ -4,11 +4,11 @@ import { TipeElemen } from '../tipe/TipeElemen'
 import { Asosiasi } from './Asosiasi'
 import { Atribut, ParameterBuatAtribut } from './Atribut'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
-import { Metode, ParameterBuatMetode } from './Metode'
+import { Operasi, ParameterBuatOperasi } from './Operasi'
 
 export class Kelas extends IsiProyek {
   protected koleksiAtribut: Atribut[]
-  protected koleksiMetode: Metode[]
+  protected koleksiOperasi: Operasi[]
   protected koleksiAsosiasi: Asosiasi[]
 
   constructor(parameter: ParameterBuatKelas = {}) {
@@ -17,11 +17,11 @@ export class Kelas extends IsiProyek {
       nama: parameter.nama || 'KelasBaru'
     })
     this.koleksiAtribut = parameter.koleksiAtribut ?? []
-    this.koleksiMetode = parameter.koleksiMetode ?? []
+    this.koleksiOperasi = parameter.koleksiOperasi ?? []
     this.koleksiAsosiasi = parameter.koleksiAsosiasi ?? []
   }
 
-  protected validasiNamaAnggota(nama: string, elemenLama?: Atribut | Metode): void {
+  protected validasiNamaAnggota(nama: string, elemenLama?: Atribut | Operasi): void {
     const koleksiAtributTersaring =
       elemenLama && elemenLama instanceof Atribut
         ? this.koleksiAtribut.filter((atribut) => atribut !== elemenLama)
@@ -33,14 +33,14 @@ export class Kelas extends IsiProyek {
       throw new GalatNamaSama(nama, TipeElemen.ATRIBUT)
     }
 
-    const koleksiMetodeTersaring =
-      elemenLama && elemenLama instanceof Metode
-        ? this.koleksiMetode.filter((metode) => metode !== elemenLama)
-        : this.koleksiMetode
-    const metodeBernamaSama = koleksiMetodeTersaring.find(
-      (metode) => metode.dapatkanNama() === nama
+    const koleksiOperasiTersaring =
+      elemenLama && elemenLama instanceof Operasi
+        ? this.koleksiOperasi.filter((operasi) => operasi !== elemenLama)
+        : this.koleksiOperasi
+    const operasiBernamaSama = koleksiOperasiTersaring.find(
+      (operasi) => operasi.dapatkanNama() === nama
     )
-    if (metodeBernamaSama) {
+    if (operasiBernamaSama) {
       throw new GalatNamaSama(nama, TipeElemen.OPERASI)
     }
   }
@@ -90,21 +90,21 @@ export class Kelas extends IsiProyek {
     return atribut
   }
 
-  private dapatkanIdMetodeTerbesar(): number {
+  private dapatkanIdOperasiTerbesar(): number {
     let idTerbesar = 0
-    if (this.koleksiMetode.length > 0) {
-      idTerbesar = Math.max(...this.koleksiMetode.map((atribut) => atribut.dapatkanId()))
+    if (this.koleksiOperasi.length > 0) {
+      idTerbesar = Math.max(...this.koleksiOperasi.map((atribut) => atribut.dapatkanId()))
     }
     return idTerbesar
   }
 
-  private hasilkanNamaMetode(): string {
-    const frasa = 'metode'
+  private hasilkanNamaOperasi(): string {
+    const frasa = 'operasi'
 
     let indeksNamaBaruTerakhir = 0
-    for (const metode of this.koleksiMetode) {
-      if (new RegExp('^' + frasa).test(metode.dapatkanNama())) {
-        const indeksNama = parseInt(metode.dapatkanNama().slice(frasa.length))
+    for (const operasi of this.koleksiOperasi) {
+      if (new RegExp('^' + frasa).test(operasi.dapatkanNama())) {
+        const indeksNama = parseInt(operasi.dapatkanNama().slice(frasa.length))
         if (!isNaN(indeksNama)) {
           indeksNamaBaruTerakhir = indeksNama
         }
@@ -114,25 +114,25 @@ export class Kelas extends IsiProyek {
     return `${frasa}${indeksNamaBaruTerakhir + 1}`
   }
 
-  buatMetode(parameter: ParameterBuatMetode = {}, objekLama?: Metode): Metode {
+  buatOperasi(parameter: ParameterBuatOperasi = {}, objekLama?: Operasi): Operasi {
     if (parameter.nama === undefined) {
-      parameter.nama = this.hasilkanNamaMetode()
+      parameter.nama = this.hasilkanNamaOperasi()
     }
     this.validasiNamaAnggota(parameter.nama)
 
-    const metode =
+    const operasi =
       objekLama ??
-      new Metode(parameter, (namaBaru, elemenLama) =>
+      new Operasi(parameter, (namaBaru, elemenLama) =>
         this.validasiNamaAnggota(namaBaru, elemenLama)
       )
 
-    const idTerbesar = this.dapatkanIdMetodeTerbesar()
-    metode.aturId(idTerbesar + 1)
+    const idTerbesar = this.dapatkanIdOperasiTerbesar()
+    operasi.aturId(idTerbesar + 1)
 
-    metode.aturNama(parameter.nama)
+    operasi.aturNama(parameter.nama)
 
-    this.koleksiMetode.push(metode)
-    return metode
+    this.koleksiOperasi.push(operasi)
+    return operasi
   }
 
   tambahAsosiasi(tujuan: Kelas): Asosiasi {
@@ -223,5 +223,5 @@ export class Kelas extends IsiProyek {
 export interface ParameterBuatKelas extends ParameterBuatIsiProyek {
   koleksiAtribut?: Atribut[]
   koleksiAsosiasi?: Asosiasi[]
-  koleksiMetode?: Metode[]
+  koleksiOperasi?: Operasi[]
 }

@@ -1,9 +1,9 @@
 import { Kelas } from '../../../umum/entitas/Kelas'
 import { PenghasilKodeAtributKlasTypescript } from './PenghasilKodeAtributKlasTypescript'
-import { PenghasilKodeMetodeKlasTypescript } from './PenghasilKodeMetodeKlasTypescript'
+import { PenghasilKodeOperasiKlasTypescript } from './PenghasilKodeOperasiKlasTypescript'
 
 export class PenghasilKodeKlasTypescript {
-  private penghasilKodeMetode = new PenghasilKodeMetodeKlasTypescript()
+  private penghasilKodeOperasi = new PenghasilKodeOperasiKlasTypescript()
 
   constructor(private klas: Kelas) {}
 
@@ -27,9 +27,9 @@ export class PenghasilKodeKlasTypescript {
       hasilKode += penghasilKodeAtribut.hasilkanKode()
     })
 
-    // metode
-    this.klas.koleksiMetode.forEach((metode) => {
-      hasilKode += this.penghasilKodeMetode.hasilkanKode(metode)
+    // operasi
+    this.klas.koleksiOperasi.forEach((operasi) => {
+      hasilKode += this.penghasilKodeOperasi.hasilkanKode(operasi)
     })
 
     // penutup

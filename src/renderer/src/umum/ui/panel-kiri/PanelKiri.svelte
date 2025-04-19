@@ -97,15 +97,15 @@
       }
     }
   }
-  const menuBuatMetode = {
-    label: 'Buat metode',
+  const menuBuatOperasi = {
+    label: 'Buat operasi',
     aksi: (): void => {
       if (refMenu instanceof KelasLangsung) {
-        refMenu.buatMetode()
+        refMenu.buatOperasi()
       }
     }
   }
-  petaItemMenu.set(JenisMenuPanelKiri.KELAS, [menuBuatAtribut, menuBuatMetode])
+  petaItemMenu.set(JenisMenuPanelKiri.KELAS, [menuBuatAtribut, menuBuatOperasi])
 
   petaItemMenu.set(JenisMenuPanelKiri.JUDUL_ATRIBUT, [menuBuatAtribut])
 

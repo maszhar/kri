@@ -28,7 +28,7 @@
   let sistemAktif: SistemLangsung | null = $state(null)
   let isiProyekAktif: IsiProyek | null = $state(null)
 
-  // === Metode ===
+  // === Operasi ===
   async function bukaProyek(): Promise<void> {
     const dataProyek = await window.mesin.bukaProyek()
     if (!dataProyek) {

@@ -5,7 +5,7 @@
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
   import ItemPanelKiriAtribut from './ItemPanelKiriAtribut.svelte'
-  import ItemPanelKiriMetode from './ItemPanelKiriMetode.svelte'
+  import ItemPanelKiriOperasi from './ItemPanelKiriOperasi.svelte'
 
   interface Properti {
     level: number
@@ -31,7 +31,7 @@
   bukaMenu={(posisiKlik: Koordinat): void => bukaMenu(posisiKlik, JenisMenuPanelKiri.KELAS, kelas)}
   {id}
   punyaChildren={kelas.dapatkanKoleksiAtributLangsung().length > 0 ||
-    kelas.dapatkanKoleksiMetodeLangsung().length > 0}
+    kelas.dapatkanKoleksiOperasiLangsung().length > 0}
   buka={(): void => bukaKelas(kelas)}
   aktif={isiProyekAktif === kelas}
 >
@@ -70,11 +70,11 @@
       </ItemPanelKiri>
     {/if}
 
-    <!-- Metode (1) -->
-    {#if kelas.dapatkanKoleksiMetodeLangsung().length > 0}
+    <!-- Operasi (1) -->
+    {#if kelas.dapatkanKoleksiOperasiLangsung().length > 0}
       <ItemPanelKiri
         {level}
-        label="Metode"
+        label="Operasi"
         {idAktif}
         {pilih}
         bukaMenu={(posisiKlik: Koordinat): void =>
@@ -86,10 +86,10 @@
           <div class="font-bold text-green-400">M</div>
         {/snippet}
         {#snippet itemChildren(level: number)}
-          {#each kelas.dapatkanKoleksiMetodeLangsung() as metode, _id (metode.dapatkanId())}
-            <ItemPanelKiriMetode
+          {#each kelas.dapatkanKoleksiOperasiLangsung() as operasi, _id (operasi.dapatkanId())}
+            <ItemPanelKiriOperasi
               {level}
-              {metode}
+              {operasi}
               {idAktif}
               {pilih}
               idPrefix={parseInt(`${id}1`)}

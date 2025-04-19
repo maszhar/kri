@@ -1,13 +1,13 @@
 import type { Atribut, ParameterBuatAtribut } from '../../../../umum/entitas/Atribut'
 import { Kelas, type ParameterBuatKelas } from '../../../../umum/entitas/Kelas'
-import type { ParameterBuatMetode, Metode } from '../../../../umum/entitas/Metode'
+import type { ParameterBuatOperasi, Operasi } from '../../../../umum/entitas/Operasi'
 import { AtributLangsung } from './AtributLangsung.svelte'
-import { MetodeLangsung } from './MetodeLangsung.svelte'
+import { OperasiLangsung } from './OperasiLangsung.svelte'
 
 export class KelasLangsung extends Kelas {
   private namaLangsung = $state('')
   private koleksiAtributLangsung: AtributLangsung[] = $state([])
-  private koleksiMetodeLangsung: MetodeLangsung[] = $state([])
+  private koleksiOperasiLangsung: OperasiLangsung[] = $state([])
 
   constructor(parameter: ParameterBuatKelas) {
     super(parameter)
@@ -43,17 +43,17 @@ export class KelasLangsung extends Kelas {
     this.koleksiAtributLangsung = this.koleksiAtribut as AtributLangsung[]
   }
 
-  dapatkanKoleksiMetodeLangsung(): MetodeLangsung[] {
-    return this.koleksiMetodeLangsung
+  dapatkanKoleksiOperasiLangsung(): OperasiLangsung[] {
+    return this.koleksiOperasiLangsung
   }
 
-  override buatMetode(parameter: ParameterBuatMetode = {}): Metode {
-    const metodeBaru = new MetodeLangsung(parameter, (namaBaru, elemenLama) =>
+  override buatOperasi(parameter: ParameterBuatOperasi = {}): Operasi {
+    const operasiBaru = new OperasiLangsung(parameter, (namaBaru, elemenLama) =>
       this.validasiNamaAnggota(namaBaru, elemenLama)
     )
-    super.buatMetode(parameter, metodeBaru)
-    this.koleksiMetodeLangsung.push(metodeBaru)
-    return metodeBaru
+    super.buatOperasi(parameter, operasiBaru)
+    this.koleksiOperasiLangsung.push(operasiBaru)
+    return operasiBaru
   }
 
   static override deserialisasi(data: any): KelasLangsung {

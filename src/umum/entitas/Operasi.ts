@@ -1,9 +1,9 @@
 import { Visibilitas, visibilitasKeSimbol } from '../tipe/Visibilitas'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
-import { ParameterMetode } from './ParameterMetode'
+import { ParameterOperasi } from './ParameterOperasi'
 import { RentangMultiplisitas } from './RentangMultiplisitas'
 
-export class Metode extends IsiProyek {
+export class Operasi extends IsiProyek {
   protected visibilitas: Visibilitas
   protected tipeKembalian?: string
   protected rentangMultiplisitasKembalianDiatur: boolean
@@ -14,11 +14,11 @@ export class Metode extends IsiProyek {
   protected tuliskanKeterurutanKembalian: boolean
   protected kembalianTerurut: boolean
   protected kembalianAdalahUrutan: boolean
-  protected koleksiParameterMetode: ParameterMetode[]
+  protected koleksiParameterOperasi: ParameterOperasi[]
 
   constructor(
-    parameter: ParameterBuatMetode,
-    private validasiNamaBaru: (nama: string, metode: Metode) => void
+    parameter: ParameterBuatOperasi,
+    private validasiNamaBaru: (nama: string, operasi: Operasi) => void
   ) {
     super(parameter)
 
@@ -34,7 +34,7 @@ export class Metode extends IsiProyek {
     this.tuliskanKeterurutanKembalian = parameter.tuliskanKeterurutanKembalian ?? false
     this.kembalianTerurut = parameter.kembalianTerurut ?? false
     this.kembalianAdalahUrutan = parameter.kembalianAdalahUrutan ?? false
-    this.koleksiParameterMetode = parameter.koleksiParameterMetode ?? []
+    this.koleksiParameterOperasi = parameter.koleksiParameterOperasi ?? []
   }
 
   toString(): string {
@@ -45,33 +45,33 @@ export class Metode extends IsiProyek {
 
     hasil += this.nama
 
-    // properti metode
-    const koleksiTeksPropertiMetode: string[] = []
+    // properti operasi
+    const koleksiTeksPropertiOperasi: string[] = []
 
     if (this.sebagaiQuery) {
-      koleksiTeksPropertiMetode.push('query')
+      koleksiTeksPropertiOperasi.push('query')
     }
 
     if (this.tuliskanKeterurutanKembalian) {
       if (this.kembalianTerurut) {
-        koleksiTeksPropertiMetode.push('ordered')
+        koleksiTeksPropertiOperasi.push('ordered')
       } else {
-        koleksiTeksPropertiMetode.push('unordered')
+        koleksiTeksPropertiOperasi.push('unordered')
       }
     }
 
     if (this.kembalianUnik) {
-      koleksiTeksPropertiMetode.push('unique')
+      koleksiTeksPropertiOperasi.push('unique')
     } else if (this.selaluTulisKeunikanKembalian) {
-      koleksiTeksPropertiMetode.push('nonunique')
+      koleksiTeksPropertiOperasi.push('nonunique')
     }
 
     if (this.kembalianAdalahUrutan) {
-      koleksiTeksPropertiMetode.push('sequence')
+      koleksiTeksPropertiOperasi.push('sequence')
     }
 
     if (
-      koleksiTeksPropertiMetode.length > 0 ||
+      koleksiTeksPropertiOperasi.length > 0 ||
       this.rentangMultiplisitasKembalianDiatur ||
       this.rentangMultiplisitasKembalian.dapatkanMinimal() !== 1 ||
       this.rentangMultiplisitasKembalian.dapatkanMaksimal() !== 1 ||
@@ -91,9 +91,9 @@ export class Metode extends IsiProyek {
         hasil += ` ${this.rentangMultiplisitasKembalian.toString()}`
       }
 
-      if (koleksiTeksPropertiMetode.length > 0) {
+      if (koleksiTeksPropertiOperasi.length > 0) {
         hasil += ' {'
-        hasil += koleksiTeksPropertiMetode.join(', ')
+        hasil += koleksiTeksPropertiOperasi.join(', ')
         hasil += '}'
       }
     }
@@ -105,12 +105,12 @@ export class Metode extends IsiProyek {
     return {}
   }
 
-  static deserialisasi(data: any): Metode {
-    return new Metode({ visibilitas: data.visibilitas }, () => {})
+  static deserialisasi(data: any): Operasi {
+    return new Operasi({ visibilitas: data.visibilitas }, () => {})
   }
 }
 
-export interface ParameterBuatMetode extends ParameterBuatIsiProyek {
+export interface ParameterBuatOperasi extends ParameterBuatIsiProyek {
   visibilitas?: Visibilitas
   tipeKembalian?: string
   rentangMultiplisitasKembalianDiatur?: boolean
@@ -121,5 +121,5 @@ export interface ParameterBuatMetode extends ParameterBuatIsiProyek {
   tuliskanKeterurutanKembalian?: boolean
   kembalianTerurut?: boolean
   kembalianAdalahUrutan?: boolean
-  koleksiParameterMetode?: ParameterMetode[]
+  koleksiParameterOperasi?: ParameterOperasi[]
 }

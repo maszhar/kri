@@ -2,7 +2,7 @@ import { ArahParameter } from '../tipe/ArahParameter'
 import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 import { RentangMultiplisitas } from './RentangMultiplisitas'
 
-export class ParameterMetode extends IsiProyek {
+export class ParameterOperasi extends IsiProyek {
   protected arahDiatur: boolean
   protected arah: ArahParameter
   protected tipe?: string
@@ -16,7 +16,7 @@ export class ParameterMetode extends IsiProyek {
   protected terurut: boolean
   protected urutan: boolean
 
-  constructor(parameter: ParameterBuatParameterMetode) {
+  constructor(parameter: ParameterBuatParameterOperasi) {
     super({
       ...parameter,
       nama: parameter.nama ?? 'parameterBaru'
@@ -50,8 +50,8 @@ export class ParameterMetode extends IsiProyek {
     }
   }
 
-  static deserialisasi(data: any): ParameterMetode {
-    return new ParameterMetode({
+  static deserialisasi(data: any): ParameterOperasi {
+    return new ParameterOperasi({
       arahDiatur: data.arahDiatur,
       arah: data.arah,
       tipe: data.tipe,
@@ -67,7 +67,7 @@ export class ParameterMetode extends IsiProyek {
   }
 }
 
-export interface ParameterBuatParameterMetode extends ParameterBuatIsiProyek {
+export interface ParameterBuatParameterOperasi extends ParameterBuatIsiProyek {
   arahDiatur?: boolean
   arah?: ArahParameter
   tipe?: string

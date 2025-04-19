@@ -1,19 +1,19 @@
 <script lang="ts">
-  import type { Metode, ParameterBuatMetode } from '../../../umum/entitas/Metode'
-  import { ParameterMetode } from '../../../umum/entitas/ParameterMetode'
+  import type { Operasi, ParameterBuatOperasi } from '../../../umum/entitas/Operasi'
+  import { ParameterOperasi } from '../../../umum/entitas/ParameterOperasi'
 
   interface Properti {
     indeksKlas: number
-    indeksMetode: number
-    metode?: Metode
+    indeksOperasi: number
+    operasi?: Operasi
     mulaiMengedit?: () => void
-    selesaiMengedit: (metodeBaru: ParameterBuatMetode) => void
+    selesaiMengedit: (operasiBaru: ParameterBuatOperasi) => void
     batalkanMengedit: () => void
   }
   let {
     indeksKlas,
-    indeksMetode: indeksAtribut,
-    metode,
+    indeksOperasi: indeksAtribut,
+    operasi,
     mulaiMengedit,
     batalkanMengedit,
     selesaiMengedit
@@ -24,11 +24,11 @@
   let teksAtributTerformatSementara = $state('')
 
   // pengformat
-  function hasilkanTeksAtributTerformat(metode: Metode): string {
+  function hasilkanTeksAtributTerformat(operasi: Operasi): string {
     let teksTerformat = ''
-    teksTerformat += metode.nama
+    teksTerformat += operasi.nama
     teksTerformat += '('
-    teksTerformat += metode.koleksiParameter
+    teksTerformat += operasi.koleksiParameter
       .map((parameter) => {
         let teksParameterTerformat = ''
         teksParameterTerformat += parameter.nama
@@ -39,15 +39,15 @@
       })
       .join(', ')
     teksTerformat += ')'
-    if (metode.tipeKeluaran) {
-      teksTerformat += ` : ${metode.tipeKeluaran}`
+    if (operasi.tipeKeluaran) {
+      teksTerformat += ` : ${operasi.tipeKeluaran}`
     }
     return teksTerformat
   }
 
-  function hasilkanParameterBuatMetodeDariTeksTerformat(
+  function hasilkanParameterBuatOperasiDariTeksTerformat(
     teksTerformat: string
-  ): ParameterBuatMetode {
+  ): ParameterBuatOperasi {
     const indeksPembukaKoleksiParameter = teksTerformat.lastIndexOf('(')
 
     let nama = ''
@@ -78,7 +78,7 @@
         .trim()
     }
 
-    let koleksiParameter: ParameterMetode[] = []
+    let koleksiParameter: ParameterOperasi[] = []
 
     if (teksKoleksiParameter) {
       let koleksiTeksParameter = teksKoleksiParameter.split(',')
@@ -97,7 +97,7 @@
         }
 
         koleksiParameter.push(
-          new ParameterMetode({
+          new ParameterOperasi({
             nama: nama,
             tipe: tipe
           })
@@ -131,9 +131,9 @@
   }
 
   // edit atribut
-  export function mulaiEditMetode(): void {
-    if (metode) {
-      teksAtributTerformatSementara = hasilkanTeksAtributTerformat(metode)
+  export function mulaiEditOperasi(): void {
+    if (operasi) {
+      teksAtributTerformatSementara = hasilkanTeksAtributTerformat(operasi)
     } else {
       teksAtributTerformatSementara = ''
     }
@@ -145,9 +145,9 @@
   function tanganiSelesaiMengedit(): void {
     sedangMengedit = false
 
-    if (!metode) {
+    if (!operasi) {
       if (teksAtributTerformatSementara.trim().length > 0) {
-        const parameterAtributBaru = hasilkanParameterBuatMetodeDariTeksTerformat(
+        const parameterAtributBaru = hasilkanParameterBuatOperasiDariTeksTerformat(
           teksAtributTerformatSementara
         )
         selesaiMengedit(parameterAtributBaru)
@@ -160,7 +160,7 @@
         return
       }
 
-      const parameterAtributBaru = hasilkanParameterBuatMetodeDariTeksTerformat(
+      const parameterAtributBaru = hasilkanParameterBuatOperasiDariTeksTerformat(
         teksAtributTerformatSementara
       )
       selesaiMengedit(parameterAtributBaru)
@@ -198,11 +198,11 @@
   class="relative"
   role="button"
   tabindex={(40000 + indeksKlas) * 100000 + 10000 + indeksAtribut}
-  ondblclick={mulaiEditMetode}
+  ondblclick={mulaiEditOperasi}
 >
-  {#if metode}
+  {#if operasi}
     <span class={`px-2 select-none ${sedangMengedit ? 'opacity-0' : ''}`}>
-      {hasilkanTeksAtributTerformat(metode)}
+      {hasilkanTeksAtributTerformat(operasi)}
     </span>
   {:else}
     <br />
