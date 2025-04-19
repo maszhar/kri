@@ -14,6 +14,7 @@ export class Atribut extends ElemenBernama {
   protected bacaSaja: boolean
   protected selaluTulisKeunikan: boolean
   protected unik: boolean
+  protected tuliskanKeterurutan: boolean
   protected terurut: boolean
   protected urutan: boolean
 
@@ -37,6 +38,7 @@ export class Atribut extends ElemenBernama {
     this.bacaSaja = parameter.bacaSaja ?? false
     this.selaluTulisKeunikan = parameter.selaluTulisKeunikan ?? false
     this.unik = parameter.unik ?? false
+    this.tuliskanKeterurutan = parameter.tuliskanKeterurutan ?? false
     this.terurut = parameter.terurut ?? false
     this.urutan = parameter.urutan ?? false
   }
@@ -72,14 +74,26 @@ export class Atribut extends ElemenBernama {
       koleksiTeksPemodifikasi.push('readOnly')
     }
 
-    if (this.sebagaiId) {
-      koleksiTeksPemodifikasi.push('id')
+    if (this.tuliskanKeterurutan) {
+      if (this.terurut) {
+        koleksiTeksPemodifikasi.push('ordered')
+      } else {
+        koleksiTeksPemodifikasi.push('unordered')
+      }
     }
 
     if (this.unik) {
       koleksiTeksPemodifikasi.push('unique')
     } else if (this.selaluTulisKeunikan) {
       koleksiTeksPemodifikasi.push('nonunique')
+    }
+
+    if (this.urutan) {
+      koleksiTeksPemodifikasi.push('sequence')
+    }
+
+    if (this.sebagaiId) {
+      koleksiTeksPemodifikasi.push('id')
     }
 
     if (koleksiTeksPemodifikasi.length > 0) {
@@ -131,6 +145,18 @@ export class Atribut extends ElemenBernama {
     this.selaluTulisKeunikan = selaluTulisKeunikan
   }
 
+  aturTuliskanKeterurutan(tuliskanKeterurutan: boolean): void {
+    this.tuliskanKeterurutan = tuliskanKeterurutan
+  }
+
+  aturTerurut(terurut: boolean): void {
+    this.terurut = terurut
+  }
+
+  aturUrutan(urutan: boolean): void {
+    this.urutan = urutan
+  }
+
   aturDariTeks(teks: string): void {
     let teksTersisa = teks.trim()
 
@@ -172,6 +198,9 @@ export class Atribut extends ElemenBernama {
       let sebagaiId = false
       let selaluTulisKeunikan = false
       let unik = false
+      let urutan = false
+      let terurut = false
+      let tuliskanKeterurutan = false
 
       const teksPemodifikasi = teksTersisa
         .slice(indeksSimbolBukaPemodifikasi + 1, indeksSimbolTutupPemodifikasi)
@@ -192,12 +221,35 @@ export class Atribut extends ElemenBernama {
         } else if (isiTeksPemodifikasiKecil === 'unique' || isiTeksPemodifikasiKecil === 'unik') {
           selaluTulisKeunikan = false
           unik = true
+          urutan = false
         } else if (
           isiTeksPemodifikasiKecil === 'nonunique' ||
           isiTeksPemodifikasiKecil === 'tidakunik'
         ) {
           selaluTulisKeunikan = true
           unik = false
+        } else if (
+          isiTeksPemodifikasiKecil === 'ordered' ||
+          isiTeksPemodifikasiKecil === 'order' ||
+          isiTeksPemodifikasiKecil === 'terurut'
+        ) {
+          tuliskanKeterurutan = true
+          terurut = true
+        } else if (
+          isiTeksPemodifikasiKecil === 'unordered' ||
+          isiTeksPemodifikasiKecil === 'unorder' ||
+          isiTeksPemodifikasiKecil === 'tidakterurut'
+        ) {
+          tuliskanKeterurutan = true
+          terurut = false
+        } else if (
+          isiTeksPemodifikasiKecil === 'sequence' ||
+          isiTeksPemodifikasiKecil === 'seq' ||
+          isiTeksPemodifikasiKecil === 'urutan'
+        ) {
+          urutan = true
+          unik = false
+          terurut = true
         }
       }
 
@@ -205,6 +257,9 @@ export class Atribut extends ElemenBernama {
       this.aturSebagaiId(sebagaiId)
       this.aturUnik(unik)
       this.aturSelaluTulisKeunikan(selaluTulisKeunikan)
+      this.aturTerurut(terurut)
+      this.aturTuliskanKeterurutan(tuliskanKeterurutan)
+      this.aturUrutan(urutan)
 
       teksTersisa = teksTersisa.slice(0, indeksSimbolBukaPemodifikasi).trim()
     } else {
@@ -348,6 +403,7 @@ export interface ParameterBuatAtribut extends ParameterBuatElemenBernama {
   bacaSaja?: boolean
   selaluTulisKeunikan?: boolean
   unik?: boolean
+  tuliskanKeterurutan?: boolean
   terurut?: boolean
   urutan?: boolean
 }
