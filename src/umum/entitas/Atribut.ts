@@ -66,6 +66,14 @@ export class Atribut extends ElemenBernama {
     this.bawaan = bawaan
   }
 
+  aturRentangMultiplisitasDiatur(diatur: boolean): void {
+    this.rentangMultiplisitasDiatur = diatur
+  }
+
+  aturRentangMultiplisitas(rentangMultiplisitas: RentangMultiplisitas): void {
+    this.rentangMultiplisitas = rentangMultiplisitas
+  }
+
   aturDariTeks(teks: string): void {
     let teksTersisa = teks.trim()
 
@@ -97,9 +105,73 @@ export class Atribut extends ElemenBernama {
     if (indeksSimbolBawaan !== -1 && teksTersisa.length > indeksSimbolBawaan + 1) {
       const bawaan = teksTersisa.slice(indeksSimbolBawaan + 1).trim()
       this.aturBawaan(bawaan)
-      teksTersisa = teksTersisa.slice(0, indeksSimbolBawaan)
+      teksTersisa = teksTersisa.slice(0, indeksSimbolBawaan).trim()
     } else {
       this.aturBawaan()
+    }
+
+    // deteksi rentang multiplisitas
+    const indeksSimbolTutupMultiplisitas = teksTersisa.lastIndexOf(']')
+    let indeksSimbolBukaMultiplisitas = -1
+    if (indeksSimbolTutupMultiplisitas !== -1) {
+      indeksSimbolBukaMultiplisitas = teksTersisa.lastIndexOf('[')
+    }
+
+    if (
+      indeksSimbolBukaMultiplisitas !== -1 &&
+      indeksSimbolTutupMultiplisitas !== -1 &&
+      indeksSimbolTutupMultiplisitas - indeksSimbolBukaMultiplisitas > 1
+    ) {
+      const teksMultiplisitas = teksTersisa.slice(
+        indeksSimbolBukaMultiplisitas + 1,
+        indeksSimbolTutupMultiplisitas
+      )
+      const pecahanTeksMultiplisitas = teksMultiplisitas.split('..')
+
+      const pindaiNilaiMultiplisitas = (teksNilai: string): number | null => {
+        if (teksNilai === '*') {
+          return null
+        }
+        const hasil = parseInt(teksNilai)
+        if (isNaN(hasil)) {
+          return 1
+        } else {
+          return hasil
+        }
+      }
+
+      let minimal: number | null = null
+      let maksimal: number | null = null
+
+      minimal = pindaiNilaiMultiplisitas(pecahanTeksMultiplisitas[0].trim())
+      if (pecahanTeksMultiplisitas.length === 1) {
+        maksimal = minimal
+      } else {
+        maksimal = pindaiNilaiMultiplisitas(pecahanTeksMultiplisitas[1].trim())
+      }
+
+      this.aturRentangMultiplisitasDiatur(true)
+      if (
+        this.rentangMultiplisitas.dapatkanMinimal() !== minimal ||
+        this.rentangMultiplisitas.dapatkanMaksimal() !== maksimal
+      ) {
+        this.aturRentangMultiplisitas(
+          new RentangMultiplisitas({
+            minimal: minimal,
+            maksimal: maksimal
+          })
+        )
+      }
+
+      teksTersisa = teksTersisa.slice(0, indeksSimbolBukaMultiplisitas).trim()
+    } else {
+      this.aturRentangMultiplisitasDiatur(false)
+      if (
+        this.rentangMultiplisitas.dapatkanMaksimal() !== 1 &&
+        this.rentangMultiplisitas.dapatkanMinimal() !== 1
+      ) {
+        this.rentangMultiplisitas = new RentangMultiplisitas()
+      }
     }
 
     const nama = teksTersisa.replaceAll(/[^A-Za-z0-9_]/g, '')

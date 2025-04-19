@@ -15,7 +15,7 @@ export class RentangMultiplisitas {
       this.minimal = parameter.minimal
     }
 
-    this.validasiNilaiMinimal()
+    this.validasiNilai()
   }
 
   dapatkanMinimal(): number | null {
@@ -26,26 +26,33 @@ export class RentangMultiplisitas {
     return this.maksimal
   }
 
-  private validasiNilaiMinimal(): void {
-    if (this.maksimal !== null && this.minimal !== null && this.minimal > this.maksimal) {
+  private validasiNilai(): void {
+    if (
+      (this.minimal === null && this.maksimal !== null) ||
+      (this.maksimal !== null && this.minimal !== null && this.minimal > this.maksimal)
+    ) {
+      const nilaiSementara = this.minimal
       this.minimal = this.maksimal
-    }
-  }
-
-  private validasiNilaiMaksimal(): void {
-    if (this.maksimal !== null && this.minimal !== null && this.maksimal < this.minimal) {
-      this.maksimal = this.minimal
+      this.maksimal = nilaiSementara
     }
   }
 
   aturMaksimal(maksimal: number | null): void {
-    this.maksimal = maksimal
-    this.validasiNilaiMinimal()
+    if (maksimal !== null && maksimal < 0) {
+      this.maksimal = 0
+    } else {
+      this.maksimal = maksimal
+    }
+    this.validasiNilai()
   }
 
   aturMinimal(minimal: number | null): void {
-    this.minimal = minimal
-    this.validasiNilaiMaksimal()
+    if (minimal !== null && minimal < 0) {
+      this.minimal = 0
+    } else {
+      this.minimal = minimal
+    }
+    this.validasiNilai()
   }
 
   private angkaMultiplisitasKeSimbol(angka: number | null): string {
@@ -81,6 +88,6 @@ export class RentangMultiplisitas {
   }
 }
 interface ParameterBuatRentangMultiplisitas {
-  minimal?: number
-  maksimal?: number
+  minimal?: number | null
+  maksimal?: number | null
 }

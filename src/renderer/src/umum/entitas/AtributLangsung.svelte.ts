@@ -1,4 +1,5 @@
 import { Atribut, type ParameterBuatAtribut } from '../../../../umum/entitas/Atribut'
+import type { RentangMultiplisitas } from '../../../../umum/entitas/RentangMultiplisitas'
 import type { Visibilitas } from '../../../../umum/tipe/Visibilitas'
 
 export class AtributLangsung extends Atribut {
@@ -35,6 +36,16 @@ export class AtributLangsung extends Atribut {
 
   override aturBawaan(bawaan?: string): void {
     super.aturBawaan(bawaan)
+    this.stringLangsung = super.toString()
+  }
+
+  override aturRentangMultiplisitasDiatur(diatur: boolean): void {
+    super.aturRentangMultiplisitasDiatur(diatur)
+    this.stringLangsung = super.toString()
+  }
+
+  override aturRentangMultiplisitas(rentangMultiplisitas: RentangMultiplisitas): void {
+    super.aturRentangMultiplisitas(rentangMultiplisitas)
     this.stringLangsung = super.toString()
   }
 
