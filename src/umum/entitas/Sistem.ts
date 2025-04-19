@@ -165,7 +165,8 @@ export class Sistem extends IsiProyek {
       platform: this.platform,
       framework: this.framework,
       bahasaPemrograman: this.bahasaPemrograman,
-      koleksiSubsistem: this.koleksiSubsistem.map((subsistem) => subsistem.serialisasi())
+      koleksiSubsistem: this.koleksiSubsistem.map((subsistem) => subsistem.serialisasi()),
+      koleksiKelas: this.koleksiKelas.map((kelas) => kelas.serialisasi())
     }
   }
 
@@ -179,7 +180,8 @@ export class Sistem extends IsiProyek {
       bahasaPemrograman: data.bahasaPemrograman as BahasaPemrograman,
       koleksiSubsistem: data.koleksiSubsistem.map((dataSubsistem) =>
         Sistem.deserialisasi(dataSubsistem)
-      )
+      ),
+      koleksiKelas: data.koleksiKelas.map((dataKelas) => Kelas.deserialisasi(dataKelas))
     })
   }
 
@@ -191,7 +193,8 @@ export class Sistem extends IsiProyek {
       platform: platformKeProto(this.platform),
       framework: frameworkKeProto(this.framework),
       bahasaPemrograman: bahasaPemrogramanKeProto(this.bahasaPemrograman),
-      koleksiSubsistem: this.koleksiSubsistem.map((subsistem) => subsistem.keProto())
+      koleksiSubsistem: this.koleksiSubsistem.map((subsistem) => subsistem.keProto()),
+      koleksiKelas: this.koleksiKelas.map((kelas) => kelas.keProto())
     }
   }
 
@@ -205,7 +208,8 @@ export class Sistem extends IsiProyek {
       bahasaPemrograman: bahasaPemrogramanDariProto(proto.bahasaPemrograman),
       koleksiSubsistem: proto.koleksiSubsistem.map((protoSubsistem) =>
         Sistem.dariProto(protoSubsistem)
-      )
+      ),
+      koleksiKelas: proto.koleksiKelas.map((protoKelas) => Kelas.dariProto(protoKelas))
     })
   }
 }

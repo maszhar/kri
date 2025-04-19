@@ -55,7 +55,6 @@
       lokasiPenyimpananProyek = lokasiPenyimpananBaru
     }
 
-    console.log(proyek.serialisasi())
     await window.mesin.simpanProyek(lokasiPenyimpananProyek, proyek.serialisasi())
   }
 

@@ -1,5 +1,5 @@
 import { GalatNamaSama } from '../galat/GalatNamaSama'
-import { KlasPb } from '../proto/kri'
+import { KelasPb } from '../proto/kri'
 import { TipeElemen } from '../tipe/TipeElemen'
 import { Asosiasi } from './Asosiasi'
 import { Atribut, ParameterBuatAtribut } from './Atribut'
@@ -13,7 +13,7 @@ export class Kelas extends ElemenBernama {
 
   constructor(parameter: ParameterBuatKelas = {}) {
     super({
-      id: parameter.id,
+      ...parameter,
       nama: parameter.nama || 'KelasBaru'
     })
     this.koleksiAtribut = parameter.koleksiAtribut ?? []
@@ -121,36 +121,28 @@ export class Kelas extends ElemenBernama {
     this.koleksiAsosiasi.push(asosiasi)
   }
 
-  bungkusData(): unknown {
-    return {
-      id: this.id,
-      nama: this.nama,
-      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.bungkusData()),
-      koleksiOperasi: this.koleksiOperasi.map((operasi) => operasi.bungkusData())
-    }
-  }
-
-  static bongkarBungkusanData(data: any): Kelas {
-    return new Kelas({
-      id: data.id,
-      nama: data.nama,
-      koleksiAtribut: data.koleksiAtribut.map((dataAtribut: any) =>
-        Atribut.bongkarBungkusanData(dataAtribut)
-      ),
-      koleksiOperasi: data.koleksiOperasi.map((dataOperasi) =>
-        Operasi.bongkarBungkusanData(dataOperasi)
-      )
-    })
-  }
-
-  keProto(): KlasPb {
+  serialisasi(): unknown {
     return {
       id: this.id,
       nama: this.nama
     }
   }
 
-  static dariProto(proto: KlasPb): Kelas {
+  static deserialisasi(data: any): Kelas {
+    return new Kelas({
+      id: data.id,
+      nama: data.nama
+    })
+  }
+
+  keProto(): KelasPb {
+    return {
+      id: this.id,
+      nama: this.nama
+    }
+  }
+
+  static dariProto(proto: KelasPb): Kelas {
     return new Kelas({
       id: proto.id,
       nama: proto.nama

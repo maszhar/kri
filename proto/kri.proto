@@ -1,5 +1,10 @@
 syntax = "proto3";
 
+message ProyekPb {
+  string nama = 1;
+  repeated SistemPb koleksi_sistem = 2;
+}
+
 message SistemPb {
   uint32 id = 1;
   string nama = 2;
@@ -8,11 +13,7 @@ message SistemPb {
   FrameworkPb framework = 5;
   BahasaPemrogramanPb bahasa_pemrograman = 6;
   repeated SistemPb koleksi_subsistem = 7;
-}
-
-message ProyekPb {
-  string nama = 1;
-  repeated SistemPb koleksi_sistem = 2;
+  repeated KelasPb koleksi_kelas = 8;
 }
 
 enum TargetSistemPb {
@@ -37,7 +38,7 @@ enum PlatformPb {
   PLATFORM_PB_NODE_JS = 2;
 }
 
-message KlasPb {
+message KelasPb {
   uint32 id = 1;
   string nama = 2;
 }

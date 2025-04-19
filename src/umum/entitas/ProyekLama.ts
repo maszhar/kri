@@ -48,7 +48,7 @@ export class ProyekLama {
     this.beriIdUntukSeluruhKlas()
 
     return {
-      koleksiKlas: this.koleksiKlas.map((klas) => klas.bungkusData()),
+      koleksiKlas: this.koleksiKlas.map((klas) => klas.serialisasi()),
       koleksiSequenceDiagram: this.koleksiSequenceDiagram.map((sequenceDiagram): unknown =>
         sequenceDiagram.bungkusData()
       )
@@ -56,7 +56,7 @@ export class ProyekLama {
   }
 
   static bongkarBungkusanData(data: any): ProyekLama {
-    const koleksiKlas = data.koleksiKlas.map((dataKlas) => Kelas.bongkarBungkusanData(dataKlas))
+    const koleksiKlas = data.koleksiKlas.map((dataKlas) => Kelas.deserialisasi(dataKlas))
     return new ProyekLama({
       koleksiKlas: koleksiKlas,
       koleksiSequenceDiagram: data.koleksiSequenceDiagram.map(
