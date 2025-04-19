@@ -4,6 +4,7 @@
   import TampilanAtribut from './TampilanAtribut.svelte'
   import TampilanKompartemen from './TampilanKompartemen.svelte'
   import TampilanNamaKelas from './TampilanNamaKelas.svelte'
+  import TampilanOperasi from './TampilanOperasi.svelte'
 
   interface Properti {
     sistem: SistemLangsung
@@ -31,8 +32,8 @@
   {#if kelas.dapatkanKoleksiOperasiLangsung().length > 0}
     <TampilanKompartemen>
       <div class="text-center px-4">operations</div>
-      {#each kelas.dapatkanKoleksiOperasiLangsung() as atribut, _id (atribut.dapatkanId())}
-        <div>{atribut.dapatkanNamaLangsung()}</div>
+      {#each kelas.dapatkanKoleksiOperasiLangsung() as operasi, _id (operasi.dapatkanId())}
+        <TampilanOperasi {operasi} />
       {/each}
     </TampilanKompartemen>
   {/if}

@@ -21,6 +21,13 @@ export class OperasiLangsung extends Operasi {
   override aturNama(nama: string): void {
     super.aturNama(nama)
     this.namaLangsung = nama
+    this.teksLangsung = this.toString()
+  }
+
+  override aturDariTeks(teks: string): void {
+    super.aturDariTeks(teks)
+    this.namaLangsung = this.nama
+    this.teksLangsung = this.toString()
   }
 
   toStringLangsung(): string {
