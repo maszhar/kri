@@ -26,7 +26,7 @@ export class KelasLangsung extends Kelas {
     return this.koleksiAtributLangsung
   }
 
-  override buatAtribut(parameter: ParameterBuatAtribut): AtributLangsung {
+  override buatAtribut(parameter: ParameterBuatAtribut = {}): AtributLangsung {
     const atributBaru = new AtributLangsung(parameter)
     super.buatAtribut(parameter, atributBaru)
     this.koleksiAtributLangsung.push(atributBaru)

@@ -7,6 +7,7 @@
   import { JenisMenuPanelKiri } from './JenisMenuPanelKiri'
   import type { IsiProyek } from '../../../../../umum/entitas/IsiProyek'
   import { SistemLangsung } from '../../entitas/SistemLangsung.svelte'
+  import { Kelas } from '../../../../../umum/entitas/Kelas'
 
   interface Properti {
     proyek: ProyekLangsung
@@ -87,6 +88,18 @@
   petaItemMenu.set(JenisMenuPanelKiri.SISTEM, [menuBuatKelas, menuBuatSubsistem])
 
   petaItemMenu.set(JenisMenuPanelKiri.JUDUL_KELAS, [menuBuatKelas])
+
+  const menuBuatAtribut = {
+    label: 'Buat atribut',
+    aksi: (): void => {
+      if (refMenu instanceof Kelas) {
+        refMenu.buatAtribut()
+      }
+    }
+  }
+  petaItemMenu.set(JenisMenuPanelKiri.KELAS, [menuBuatAtribut])
+
+  petaItemMenu.set(JenisMenuPanelKiri.JUDUL_ATRIBUT, [menuBuatAtribut])
 
   function bukaMenu(posisiKlik: Koordinat, jenis: JenisMenuPanelKiri, ref?: IsiProyek): void {
     if (petaItemMenu.has(jenis)) {

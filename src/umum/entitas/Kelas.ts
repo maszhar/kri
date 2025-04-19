@@ -41,12 +41,35 @@ export class Kelas extends ElemenBernama {
     return idTerbesar
   }
 
-  buatAtribut(parameter: ParameterBuatAtribut, objekLama?: Atribut): Atribut {
+  private hasilkanNamaAtribut(): string {
+    const frasa = 'atribut'
+
+    let indeksNamaBaruTerakhir = 0
+    for (const atribut of this.koleksiAtribut) {
+      if (new RegExp('^' + frasa).test(atribut.dapatkanNama())) {
+        const indeksNama = parseInt(atribut.dapatkanNama().slice(frasa.length))
+        if (!isNaN(indeksNama)) {
+          indeksNamaBaruTerakhir = indeksNama
+        }
+      }
+    }
+
+    return `${frasa}${indeksNamaBaruTerakhir + 1}`
+  }
+
+  buatAtribut(parameter: ParameterBuatAtribut = {}, objekLama?: Atribut): Atribut {
+    if (parameter.nama === undefined) {
+      parameter.nama = this.hasilkanNamaAtribut()
+    }
     this.validasiNamaAnggota(parameter.nama)
 
     const atribut = objekLama ?? new Atribut(parameter)
+
     const idTerbesar = this.dapatkanIdAtributTerbesar()
     atribut.aturId(idTerbesar + 1)
+
+    atribut.aturNama(parameter.nama)
+
     this.koleksiAtribut.push(atribut)
     return atribut
   }

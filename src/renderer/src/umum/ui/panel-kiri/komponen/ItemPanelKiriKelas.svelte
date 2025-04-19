@@ -4,6 +4,7 @@
   import type { KelasLangsung } from '../../../entitas/KelasLangsung.svelte'
   import { JenisMenuPanelKiri } from '../JenisMenuPanelKiri'
   import ItemPanelKiri from './ItemPanelKiri.svelte'
+  import ItemPanelKiriAtribut from './ItemPanelKiriAtribut.svelte'
 
   interface Properti {
     level: number
@@ -28,11 +29,43 @@
   {pilih}
   bukaMenu={(posisiKlik: Koordinat): void => bukaMenu(posisiKlik, JenisMenuPanelKiri.KELAS, kelas)}
   {id}
-  punyaChildren={false}
+  punyaChildren={kelas.dapatkanKoleksiAtributLangsung().length > 0}
   buka={(): void => bukaKelas(kelas)}
   aktif={isiProyekAktif === kelas}
 >
   {#snippet ikon()}
     <div class="font-bold text-blue-500">C</div>
+  {/snippet}
+  {#snippet itemChildren(level: number)}
+    {#if kelas.dapatkanKoleksiAtributLangsung().length > 0}
+      <!-- Atribut (0) -->
+      <ItemPanelKiri
+        {level}
+        label="Atribut"
+        {idAktif}
+        {pilih}
+        bukaMenu={(posisiKlik: Koordinat): void =>
+          bukaMenu(posisiKlik, JenisMenuPanelKiri.JUDUL_ATRIBUT, kelas)}
+        id={parseInt(`${id}0`)}
+        punyaChildren={true}
+      >
+        {#snippet ikon()}
+          <div class="font-bold text-red-400">A</div>
+        {/snippet}
+        {#snippet itemChildren(level: number)}
+          {#each kelas.dapatkanKoleksiAtributLangsung() as atribut, _id (atribut.dapatkanId())}
+            <ItemPanelKiriAtribut
+              {level}
+              {atribut}
+              {idAktif}
+              {pilih}
+              idPrefix={parseInt(`${id}0`)}
+              {bukaMenu}
+              buka={(): void => bukaKelas(kelas)}
+            />
+          {/each}
+        {/snippet}
+      </ItemPanelKiri>
+    {/if}
   {/snippet}
 </ItemPanelKiri>

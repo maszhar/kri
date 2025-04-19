@@ -2,11 +2,17 @@ import { Atribut, type ParameterBuatAtribut } from '../../../../umum/entitas/Atr
 
 export class AtributLangsung extends Atribut {
   private stringLangsung = $state('')
+  private namaLangsung = $state('')
 
   constructor(parameter: ParameterBuatAtribut) {
     super(parameter)
 
+    this.namaLangsung = this.nama
     this.stringLangsung = super.toString()
+  }
+
+  dapatkanNamaLangsung(): string {
+    return this.namaLangsung
   }
 
   toStringLangsung(): string {

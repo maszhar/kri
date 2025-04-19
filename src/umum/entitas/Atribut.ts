@@ -69,7 +69,7 @@ export class Atribut extends ElemenBernama {
 }
 
 export interface ParameterBuatAtribut extends ParameterBuatElemenBernama {
-  nama: string
+  nama?: string
   visibilitas?: Visibilitas
   diwariskan?: boolean
   rentangMultiplisitas?: RentangMultiplisitas

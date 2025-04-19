@@ -3,5 +3,6 @@ export enum JenisMenuPanelKiri {
   JUDUL_SISTEM = 1,
   SISTEM = 2,
   JUDUL_KELAS = 3,
-  KELAS = 4
+  KELAS = 4,
+  JUDUL_ATRIBUT = 5
 }
