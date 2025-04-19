@@ -303,6 +303,7 @@ export class Operasi extends IsiProyek {
 
         const hasil = this.koleksiParameterOperasi[indeksParameter].aturDariTeks(isiTeksParameter)
         if (hasil) {
+          this.koleksiParameterOperasi[indeksParameter].aturId(indeksParameter)
           indeksParameter++
         }
       }
