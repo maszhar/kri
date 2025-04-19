@@ -58,10 +58,19 @@ export class Atribut extends ElemenBernama {
     this.visibilitas = visibilitas
   }
 
+  aturDiwariskan(diwariskan: boolean): void {
+    this.diwarisankan = diwariskan
+  }
+
+  aturBawaan(bawaan?: string): void {
+    this.bawaan = bawaan
+  }
+
   aturDariTeks(teks: string): void {
     let teksTersisa = teks.trim()
 
-    const karakterPertama = teksTersisa[0]
+    // deteksi visibilitas
+    let karakterPertama = teksTersisa[0]
     if (
       karakterPertama === '+' ||
       karakterPertama === '-' ||
@@ -74,7 +83,29 @@ export class Atribut extends ElemenBernama {
       this.aturVisibilitas(Visibilitas.TIDAK_DIATUR)
     }
 
+    // deteksi diwariskan
+    karakterPertama = teksTersisa[0]
+    if (karakterPertama === '/') {
+      this.aturDiwariskan(true)
+      teksTersisa = teksTersisa.slice(1).trim()
+    } else {
+      this.aturDiwariskan(false)
+    }
+
+    // deteksi bawaan
+    const indeksSimbolBawaan = teksTersisa.indexOf('=')
+    if (indeksSimbolBawaan !== -1 && teksTersisa.length > indeksSimbolBawaan + 1) {
+      const bawaan = teksTersisa.slice(indeksSimbolBawaan + 1).trim()
+      this.aturBawaan(bawaan)
+      teksTersisa = teksTersisa.slice(0, indeksSimbolBawaan)
+    } else {
+      this.aturBawaan()
+    }
+
     const nama = teksTersisa.replaceAll(/[^A-Za-z0-9_]/g, '')
+    if (nama === '') {
+      throw new Error('Nama tidak boleh kosong')
+    }
     this.validasiNamaBaru(nama, this)
     this.aturNama(nama)
   }
