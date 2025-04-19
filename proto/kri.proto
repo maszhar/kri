@@ -41,6 +41,37 @@ enum PlatformPb {
 message KelasPb {
   uint32 id = 1;
   string nama = 2;
+  repeated AtributPb koleksi_atribut = 3;
+}
+
+message AtributPb {
+  uint32 id = 1;
+  VisibilitasPb visibilitas = 2;
+  bool diwariskan = 3;
+  string nama = 4;
+  RentangMultiplisitasPb rentang_multiplisitas = 5;
+  optional string tipe = 6;
+  optional string bawaan = 7;
+  bool sebagai_id = 8;
+  bool baca_saja = 9;
+  bool selalu_tulis_keunikan = 10;
+  bool unik = 11;
+  bool tuliskan_keterurutan = 12;
+  bool terurut = 13;
+  bool urutan = 14;
+}
+
+message RentangMultiplisitasPb {
+  int32 minimal = 1;
+  int32 maksimal = 2;
+}
+
+enum VisibilitasPb {
+  VISIBILITAS_PB_TIDAK_DIATUR = 0;
+  VISIBILITAS_PB_PUBLIC = 1;
+  VISIBILITAS_PB_PRIVATE = 2;
+  VISIBILITAS_PB_PROTECTED = 3;
+  VISIBILITAS_PB_PACKAGE = 4;
 }
 
 message SequenceDiagramPb {

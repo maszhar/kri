@@ -3,10 +3,10 @@ import { KelasPb } from '../proto/kri'
 import { TipeElemen } from '../tipe/TipeElemen'
 import { Asosiasi } from './Asosiasi'
 import { Atribut, ParameterBuatAtribut } from './Atribut'
-import { ElemenBernama, ParameterBuatElemenBernama } from './ElemenBernama'
+import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 import { Operasi, ParameterBuatOperasi } from './Operasi'
 
-export class Kelas extends ElemenBernama {
+export class Kelas extends IsiProyek {
   protected koleksiAtribut: Atribut[]
   protected koleksiOperasi: Operasi[]
   protected koleksiAsosiasi: Asosiasi[]
@@ -88,55 +88,13 @@ export class Kelas extends ElemenBernama {
     return atribut
   }
 
-  ubahAtribut(indeks: number, parameter: ParameterBuatAtribut): void {
-    // const koleksiAtributSelainIndeks = this.koleksiAtribut.filter((_, i) => i !== indeks)
-    // const atributBernamaSama = koleksiAtributSelainIndeks.find(
-    //   (atribut) => atribut.nama == parameter.nama
-    // )
-    // if (atributBernamaSama) {
-    //   throw new GalatNamaSama(parameter.nama, TipeElemen.ATRIBUT)
-    // }
-    // const operasiBernamaSama = this.koleksiOperasi.find(
-    //   (operasi) => operasi.nama === parameter.nama
-    // )
-    // if (operasiBernamaSama) {
-    //   throw new GalatNamaSama(parameter.nama, TipeElemen.OPERASI)
-    // }
-    // this.koleksiAtribut[indeks] = new Atribut(parameter)
-  }
-
   tambahOperasiBaru(parameter: ParameterBuatOperasi): Operasi {
-    const operasiBernamaSama = this.koleksiOperasi.find(
-      (operasi) => operasi.nama === parameter.nama
-    )
-    if (operasiBernamaSama) {
-      throw new GalatNamaSama(parameter.nama, TipeElemen.OPERASI)
-    }
-
-    const atributBernamaSama = this.koleksiAtribut.find((atribut) => atribut.nama == parameter.nama)
-    if (atributBernamaSama) {
-      throw new GalatNamaSama(parameter.nama, TipeElemen.ATRIBUT)
-    }
-
     const operasi = new Operasi(parameter)
     this.koleksiOperasi.push(operasi)
     return operasi
   }
 
   ubahOperasi(indeks: number, parameter: ParameterBuatOperasi): void {
-    const koleksiOperasiSelainIndeks = this.koleksiOperasi.filter((_, i) => i !== indeks)
-    const operasiBernamaSama = koleksiOperasiSelainIndeks.find(
-      (operasi) => operasi.nama === parameter.nama
-    )
-    if (operasiBernamaSama) {
-      throw new GalatNamaSama(parameter.nama, TipeElemen.OPERASI)
-    }
-
-    const atributBernamaSama = this.koleksiAtribut.find((atribut) => atribut.nama == parameter.nama)
-    if (atributBernamaSama) {
-      throw new GalatNamaSama(parameter.nama, TipeElemen.ATRIBUT)
-    }
-
     this.koleksiOperasi[indeks] = new Operasi(parameter)
   }
 
@@ -158,32 +116,58 @@ export class Kelas extends ElemenBernama {
     this.koleksiAsosiasi.push(asosiasi)
   }
 
-  serialisasi(): unknown {
+  aturKoleksiAtribut(koleksiAtribut: Atribut[]): void {
+    this.koleksiAtribut = koleksiAtribut
+  }
+
+  serialisasi(): any {
     return {
       id: this.id,
-      nama: this.nama
+      nama: this.nama,
+      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.serialisasi())
     }
   }
 
-  static deserialisasi(data: any): Kelas {
-    return new Kelas({
-      id: data.id,
-      nama: data.nama
-    })
+  static override deserialisasi(
+    data: any,
+    objekLama?: Kelas,
+    pengonversiAtribut?: (data: any) => Atribut
+  ): Kelas {
+    const kelas = objekLama ?? new Kelas()
+    super.deserialisasi(data, kelas)
+
+    const koleksiAtribut = data.koleksiAtribut.map((dataAtribut) =>
+      pengonversiAtribut
+        ? pengonversiAtribut(dataAtribut)
+        : Atribut.deserialisasi(dataAtribut, undefined, (nama, atribut) =>
+            kelas.validasiNamaAnggota(nama, atribut)
+          )
+    )
+    kelas.aturKoleksiAtribut(koleksiAtribut)
+
+    return kelas
   }
 
   keProto(): KelasPb {
     return {
       id: this.id,
-      nama: this.nama
+      nama: this.nama,
+      koleksiAtribut: this.koleksiAtribut.map((atribut) => atribut.keProto())
     }
   }
 
   static dariProto(proto: KelasPb): Kelas {
-    return new Kelas({
+    const kelas = new Kelas({
       id: proto.id,
       nama: proto.nama
     })
+
+    const koleksiAtribut = proto.koleksiAtribut.map((protoAtribut) =>
+      Atribut.dariProto(protoAtribut, (nama, atribut) => kelas.validasiNamaAnggota(nama, atribut))
+    )
+    kelas.aturKoleksiAtribut(koleksiAtribut)
+
+    return kelas
   }
 
   bungkusUntukAi(): any {
@@ -199,7 +183,7 @@ export class Kelas extends ElemenBernama {
   }
 }
 
-export interface ParameterBuatKelas extends ParameterBuatElemenBernama {
+export interface ParameterBuatKelas extends ParameterBuatIsiProyek {
   koleksiAtribut?: Atribut[]
   koleksiAsosiasi?: Asosiasi[]
   koleksiOperasi?: Operasi[]

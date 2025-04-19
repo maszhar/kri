@@ -1,10 +1,17 @@
-import { Visibilitas, visibilitasDariSimbol, visibilitasKeSimbol } from '../tipe/Visibilitas'
-import { ElemenBernama, ParameterBuatElemenBernama } from './ElemenBernama'
+import { AtributPb } from '../proto/kri'
+import {
+  Visibilitas,
+  visibilitasDariProto,
+  visibilitasDariSimbol,
+  visibilitasKeProto,
+  visibilitasKeSimbol
+} from '../tipe/Visibilitas'
+import { IsiProyek, ParameterBuatIsiProyek } from './IsiProyek'
 import { RentangMultiplisitas } from './RentangMultiplisitas'
 
-export class Atribut extends ElemenBernama {
+export class Atribut extends IsiProyek {
   protected visibilitas: Visibilitas
-  protected diwarisankan: boolean
+  protected diwariskan: boolean
   protected rentangMultiplisitasDiatur: boolean
   protected rentangMultiplisitas: RentangMultiplisitas
   protected tipe?: string
@@ -28,7 +35,7 @@ export class Atribut extends ElemenBernama {
     })
 
     this.visibilitas = parameter.visibilitas ?? Visibilitas.TIDAK_DIATUR
-    this.diwarisankan = parameter.diwariskan ?? false
+    this.diwariskan = parameter.diwariskan ?? false
     this.rentangMultiplisitasDiatur = parameter.rentangMultiplisitas !== undefined
     this.rentangMultiplisitas = parameter.rentangMultiplisitas ?? new RentangMultiplisitas()
     this.tipe = parameter.tipe
@@ -48,7 +55,7 @@ export class Atribut extends ElemenBernama {
     if (this.visibilitas !== Visibilitas.TIDAK_DIATUR) {
       hasil += `${visibilitasKeSimbol(this.visibilitas)} `
     }
-    if (this.diwarisankan) {
+    if (this.diwariskan) {
       hasil += '/ '
     }
     hasil += this.nama
@@ -110,7 +117,7 @@ export class Atribut extends ElemenBernama {
   }
 
   aturDiwariskan(diwariskan: boolean): void {
-    this.diwarisankan = diwariskan
+    this.diwariskan = diwariskan
   }
 
   aturBawaan(bawaan?: string): void {
@@ -368,37 +375,94 @@ export class Atribut extends ElemenBernama {
 
   serialisasi(): any {
     return {
-      id: this.id,
+      ...super.serialisasi(),
       visibilitas: this.visibilitas,
-      diwariskan: this.diwarisankan,
-      nama: this.nama,
-      rentangMultiplisitas: this.rentangMultiplisitas.serialisasi(),
+      diwariskan: this.diwariskan,
+      rentangMultiplisitasDiatur: this.rentangMultiplisitasDiatur,
+      rentangMultiplisitas: this.rentangMultiplisitas,
       tipe: this.tipe,
-      bawaan: this.bawaan
+      bawaan: this.bawaan,
+      sebagaiId: this.sebagaiId,
+      bacaSaja: this.bacaSaja,
+      selaluTulisKeunikan: this.selaluTulisKeunikan,
+      unik: this.unik,
+      tuliskanKeterurutan: this.tuliskanKeterurutan,
+      terurut: this.terurut,
+      urutan: this.urutan
     }
   }
 
-  static deserialisasi(
+  static override deserialisasi(
     data: any,
+    objekLama?: Atribut,
+    validasiNamaBaru?: (nama: string, atribut: Atribut) => void
+  ): IsiProyek {
+    const atribut = objekLama ?? new Atribut({}, validasiNamaBaru!)
+    super.deserialisasi(data, atribut)
+    atribut.aturVisibilitas(data.visibilitas)
+    atribut.aturDiwariskan(data.diwariskan)
+    atribut.aturRentangMultiplisitasDiatur(data.rentangMultiplisitasDiatur)
+    atribut.aturRentangMultiplisitas(RentangMultiplisitas.deserialisasi(data.rentangMultiplisitas))
+    atribut.aturTipe(data.tipe)
+    atribut.aturBawaan(data.bawaan)
+    atribut.aturSebagaiId(data.sebagaiId)
+    atribut.aturBacaSaja(data.bacaSaja)
+    atribut.aturSelaluTulisKeunikan(data.selaluTulisKeunikan)
+    atribut.aturUnik(data.unik)
+    atribut.aturTuliskanKeterurutan(data.tuliskanKeterurutan)
+    atribut.aturTerurut(data.terurut)
+    atribut.aturUrutan(data.urutan)
+    return atribut
+  }
+
+  keProto(): AtributPb {
+    return {
+      id: this.id,
+      nama: this.nama,
+      bacaSaja: this.bacaSaja,
+      diwariskan: this.diwariskan,
+      sebagaiId: this.sebagaiId,
+      selaluTulisKeunikan: this.selaluTulisKeunikan,
+      terurut: this.terurut,
+      tuliskanKeterurutan: this.tuliskanKeterurutan,
+      unik: this.unik,
+      urutan: this.urutan,
+      visibilitas: visibilitasKeProto(this.visibilitas),
+      bawaan: this.bawaan,
+      rentangMultiplisitas: this.rentangMultiplisitas.keProto(),
+      tipe: this.tipe
+    }
+  }
+
+  static dariProto(
+    proto: AtributPb,
     validasiNamaBaru: (nama: string, atribut: Atribut) => void
   ): Atribut {
     return new Atribut(
       {
-        id: data.id,
-        visibilitas: data.visibilitas as Visibilitas,
-        diwariskan: data.diwariskan,
-        nama: data.nama,
-        rentangMultiplisitas: RentangMultiplisitas.deserialisasi(data.rentangMultiplisitas),
-        tipe: data.tipe,
-        bawaan: data.bawaan
+        id: proto.id,
+        nama: proto.nama,
+        visibilitas: visibilitasDariProto(proto.visibilitas),
+        diwariskan: proto.diwariskan,
+        rentangMultiplisitas: proto.rentangMultiplisitas
+          ? RentangMultiplisitas.dariProto(proto.rentangMultiplisitas)
+          : new RentangMultiplisitas(),
+        tipe: proto.tipe,
+        bawaan: proto.bawaan,
+        sebagaiId: proto.sebagaiId,
+        bacaSaja: proto.bacaSaja,
+        selaluTulisKeunikan: proto.selaluTulisKeunikan,
+        unik: proto.unik,
+        tuliskanKeterurutan: proto.tuliskanKeterurutan,
+        terurut: proto.terurut,
+        urutan: proto.urutan
       },
       validasiNamaBaru
     )
   }
 }
 
-export interface ParameterBuatAtribut extends ParameterBuatElemenBernama {
-  nama?: string
+export interface ParameterBuatAtribut extends ParameterBuatIsiProyek {
   visibilitas?: Visibilitas
   diwariskan?: boolean
   rentangMultiplisitas?: RentangMultiplisitas

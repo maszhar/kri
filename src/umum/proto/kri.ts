@@ -72,6 +72,84 @@ export interface KelasPb {
      * @generated from protobuf field: string nama = 2;
      */
     nama: string;
+    /**
+     * @generated from protobuf field: repeated AtributPb koleksi_atribut = 3;
+     */
+    koleksiAtribut: AtributPb[];
+}
+/**
+ * @generated from protobuf message AtributPb
+ */
+export interface AtributPb {
+    /**
+     * @generated from protobuf field: uint32 id = 1;
+     */
+    id: number;
+    /**
+     * @generated from protobuf field: VisibilitasPb visibilitas = 2;
+     */
+    visibilitas: VisibilitasPb;
+    /**
+     * @generated from protobuf field: bool diwariskan = 3;
+     */
+    diwariskan: boolean;
+    /**
+     * @generated from protobuf field: string nama = 4;
+     */
+    nama: string;
+    /**
+     * @generated from protobuf field: RentangMultiplisitasPb rentang_multiplisitas = 5;
+     */
+    rentangMultiplisitas?: RentangMultiplisitasPb;
+    /**
+     * @generated from protobuf field: optional string tipe = 6;
+     */
+    tipe?: string;
+    /**
+     * @generated from protobuf field: optional string bawaan = 7;
+     */
+    bawaan?: string;
+    /**
+     * @generated from protobuf field: bool sebagai_id = 8;
+     */
+    sebagaiId: boolean;
+    /**
+     * @generated from protobuf field: bool baca_saja = 9;
+     */
+    bacaSaja: boolean;
+    /**
+     * @generated from protobuf field: bool selalu_tulis_keunikan = 10;
+     */
+    selaluTulisKeunikan: boolean;
+    /**
+     * @generated from protobuf field: bool unik = 11;
+     */
+    unik: boolean;
+    /**
+     * @generated from protobuf field: bool tuliskan_keterurutan = 12;
+     */
+    tuliskanKeterurutan: boolean;
+    /**
+     * @generated from protobuf field: bool terurut = 13;
+     */
+    terurut: boolean;
+    /**
+     * @generated from protobuf field: bool urutan = 14;
+     */
+    urutan: boolean;
+}
+/**
+ * @generated from protobuf message RentangMultiplisitasPb
+ */
+export interface RentangMultiplisitasPb {
+    /**
+     * @generated from protobuf field: int32 minimal = 1;
+     */
+    minimal: number;
+    /**
+     * @generated from protobuf field: int32 maksimal = 2;
+     */
+    maksimal: number;
 }
 /**
  * @generated from protobuf message SequenceDiagramPb
@@ -179,6 +257,31 @@ export enum PlatformPb {
      * @generated from protobuf enum value: PLATFORM_PB_NODE_JS = 2;
      */
     NODE_JS = 2
+}
+/**
+ * @generated from protobuf enum VisibilitasPb
+ */
+export enum VisibilitasPb {
+    /**
+     * @generated from protobuf enum value: VISIBILITAS_PB_TIDAK_DIATUR = 0;
+     */
+    TIDAK_DIATUR = 0,
+    /**
+     * @generated from protobuf enum value: VISIBILITAS_PB_PUBLIC = 1;
+     */
+    PUBLIC = 1,
+    /**
+     * @generated from protobuf enum value: VISIBILITAS_PB_PRIVATE = 2;
+     */
+    PRIVATE = 2,
+    /**
+     * @generated from protobuf enum value: VISIBILITAS_PB_PROTECTED = 3;
+     */
+    PROTECTED = 3,
+    /**
+     * @generated from protobuf enum value: VISIBILITAS_PB_PACKAGE = 4;
+     */
+    PACKAGE = 4
 }
 /**
  * @generated from protobuf enum JenisKomponenSequenceDiagramPb
@@ -352,13 +455,15 @@ class KelasPb$Type extends MessageType<KelasPb> {
     constructor() {
         super("KelasPb", [
             { no: 1, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 2, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "koleksi_atribut", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => AtributPb }
         ]);
     }
     create(value?: PartialMessage<KelasPb>): KelasPb {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.id = 0;
         message.nama = "";
+        message.koleksiAtribut = [];
         if (value !== undefined)
             reflectionMergePartial<KelasPb>(this, message, value);
         return message;
@@ -373,6 +478,9 @@ class KelasPb$Type extends MessageType<KelasPb> {
                     break;
                 case /* string nama */ 2:
                     message.nama = reader.string();
+                    break;
+                case /* repeated AtributPb koleksi_atribut */ 3:
+                    message.koleksiAtribut.push(AtributPb.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -392,6 +500,9 @@ class KelasPb$Type extends MessageType<KelasPb> {
         /* string nama = 2; */
         if (message.nama !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.nama);
+        /* repeated AtributPb koleksi_atribut = 3; */
+        for (let i = 0; i < message.koleksiAtribut.length; i++)
+            AtributPb.internalBinaryWrite(message.koleksiAtribut[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -402,6 +513,209 @@ class KelasPb$Type extends MessageType<KelasPb> {
  * @generated MessageType for protobuf message KelasPb
  */
 export const KelasPb = new KelasPb$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AtributPb$Type extends MessageType<AtributPb> {
+    constructor() {
+        super("AtributPb", [
+            { no: 1, name: "id", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+            { no: 2, name: "visibilitas", kind: "enum", T: () => ["VisibilitasPb", VisibilitasPb, "VISIBILITAS_PB_"] },
+            { no: 3, name: "diwariskan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "nama", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "rentang_multiplisitas", kind: "message", T: () => RentangMultiplisitasPb },
+            { no: 6, name: "tipe", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "bawaan", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "sebagai_id", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "baca_saja", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 10, name: "selalu_tulis_keunikan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 11, name: "unik", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 12, name: "tuliskan_keterurutan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 13, name: "terurut", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 14, name: "urutan", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<AtributPb>): AtributPb {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = 0;
+        message.visibilitas = 0;
+        message.diwariskan = false;
+        message.nama = "";
+        message.sebagaiId = false;
+        message.bacaSaja = false;
+        message.selaluTulisKeunikan = false;
+        message.unik = false;
+        message.tuliskanKeterurutan = false;
+        message.terurut = false;
+        message.urutan = false;
+        if (value !== undefined)
+            reflectionMergePartial<AtributPb>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AtributPb): AtributPb {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* uint32 id */ 1:
+                    message.id = reader.uint32();
+                    break;
+                case /* VisibilitasPb visibilitas */ 2:
+                    message.visibilitas = reader.int32();
+                    break;
+                case /* bool diwariskan */ 3:
+                    message.diwariskan = reader.bool();
+                    break;
+                case /* string nama */ 4:
+                    message.nama = reader.string();
+                    break;
+                case /* RentangMultiplisitasPb rentang_multiplisitas */ 5:
+                    message.rentangMultiplisitas = RentangMultiplisitasPb.internalBinaryRead(reader, reader.uint32(), options, message.rentangMultiplisitas);
+                    break;
+                case /* optional string tipe */ 6:
+                    message.tipe = reader.string();
+                    break;
+                case /* optional string bawaan */ 7:
+                    message.bawaan = reader.string();
+                    break;
+                case /* bool sebagai_id */ 8:
+                    message.sebagaiId = reader.bool();
+                    break;
+                case /* bool baca_saja */ 9:
+                    message.bacaSaja = reader.bool();
+                    break;
+                case /* bool selalu_tulis_keunikan */ 10:
+                    message.selaluTulisKeunikan = reader.bool();
+                    break;
+                case /* bool unik */ 11:
+                    message.unik = reader.bool();
+                    break;
+                case /* bool tuliskan_keterurutan */ 12:
+                    message.tuliskanKeterurutan = reader.bool();
+                    break;
+                case /* bool terurut */ 13:
+                    message.terurut = reader.bool();
+                    break;
+                case /* bool urutan */ 14:
+                    message.urutan = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AtributPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* uint32 id = 1; */
+        if (message.id !== 0)
+            writer.tag(1, WireType.Varint).uint32(message.id);
+        /* VisibilitasPb visibilitas = 2; */
+        if (message.visibilitas !== 0)
+            writer.tag(2, WireType.Varint).int32(message.visibilitas);
+        /* bool diwariskan = 3; */
+        if (message.diwariskan !== false)
+            writer.tag(3, WireType.Varint).bool(message.diwariskan);
+        /* string nama = 4; */
+        if (message.nama !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.nama);
+        /* RentangMultiplisitasPb rentang_multiplisitas = 5; */
+        if (message.rentangMultiplisitas)
+            RentangMultiplisitasPb.internalBinaryWrite(message.rentangMultiplisitas, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* optional string tipe = 6; */
+        if (message.tipe !== undefined)
+            writer.tag(6, WireType.LengthDelimited).string(message.tipe);
+        /* optional string bawaan = 7; */
+        if (message.bawaan !== undefined)
+            writer.tag(7, WireType.LengthDelimited).string(message.bawaan);
+        /* bool sebagai_id = 8; */
+        if (message.sebagaiId !== false)
+            writer.tag(8, WireType.Varint).bool(message.sebagaiId);
+        /* bool baca_saja = 9; */
+        if (message.bacaSaja !== false)
+            writer.tag(9, WireType.Varint).bool(message.bacaSaja);
+        /* bool selalu_tulis_keunikan = 10; */
+        if (message.selaluTulisKeunikan !== false)
+            writer.tag(10, WireType.Varint).bool(message.selaluTulisKeunikan);
+        /* bool unik = 11; */
+        if (message.unik !== false)
+            writer.tag(11, WireType.Varint).bool(message.unik);
+        /* bool tuliskan_keterurutan = 12; */
+        if (message.tuliskanKeterurutan !== false)
+            writer.tag(12, WireType.Varint).bool(message.tuliskanKeterurutan);
+        /* bool terurut = 13; */
+        if (message.terurut !== false)
+            writer.tag(13, WireType.Varint).bool(message.terurut);
+        /* bool urutan = 14; */
+        if (message.urutan !== false)
+            writer.tag(14, WireType.Varint).bool(message.urutan);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message AtributPb
+ */
+export const AtributPb = new AtributPb$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RentangMultiplisitasPb$Type extends MessageType<RentangMultiplisitasPb> {
+    constructor() {
+        super("RentangMultiplisitasPb", [
+            { no: 1, name: "minimal", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "maksimal", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<RentangMultiplisitasPb>): RentangMultiplisitasPb {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.minimal = 0;
+        message.maksimal = 0;
+        if (value !== undefined)
+            reflectionMergePartial<RentangMultiplisitasPb>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RentangMultiplisitasPb): RentangMultiplisitasPb {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 minimal */ 1:
+                    message.minimal = reader.int32();
+                    break;
+                case /* int32 maksimal */ 2:
+                    message.maksimal = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RentangMultiplisitasPb, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 minimal = 1; */
+        if (message.minimal !== 0)
+            writer.tag(1, WireType.Varint).int32(message.minimal);
+        /* int32 maksimal = 2; */
+        if (message.maksimal !== 0)
+            writer.tag(2, WireType.Varint).int32(message.maksimal);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RentangMultiplisitasPb
+ */
+export const RentangMultiplisitasPb = new RentangMultiplisitasPb$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SequenceDiagramPb$Type extends MessageType<SequenceDiagramPb> {
     constructor() {

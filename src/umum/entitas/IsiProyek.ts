@@ -22,6 +22,20 @@ export class IsiProyek {
   aturNama(nama: string): void {
     this.nama = nama
   }
+
+  serialisasi(): any {
+    return {
+      id: this.id,
+      nama: this.nama
+    }
+  }
+
+  static deserialisasi(data: any, objekLama?: IsiProyek): IsiProyek {
+    const isiProyek = objekLama ?? new IsiProyek()
+    isiProyek.aturId(data.id)
+    isiProyek.aturNama(data.nama)
+    return isiProyek
+  }
 }
 export interface ParameterBuatIsiProyek {
   id?: number

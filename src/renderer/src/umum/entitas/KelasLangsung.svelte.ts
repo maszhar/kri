@@ -1,4 +1,4 @@
-import type { ParameterBuatAtribut } from '../../../../umum/entitas/Atribut'
+import type { Atribut, ParameterBuatAtribut } from '../../../../umum/entitas/Atribut'
 import { Kelas, type ParameterBuatKelas } from '../../../../umum/entitas/Kelas'
 import { AtributLangsung } from './AtributLangsung.svelte'
 
@@ -35,10 +35,19 @@ export class KelasLangsung extends Kelas {
     return atributBaru
   }
 
-  static deserialisasi(data: any): KelasLangsung {
-    return new KelasLangsung({
-      id: data.id,
-      nama: data.nama
-    })
+  override aturKoleksiAtribut(koleksiAtribut: Atribut[]): void {
+    super.aturKoleksiAtribut(koleksiAtribut)
+    this.koleksiAtributLangsung = this.koleksiAtribut as AtributLangsung[]
+  }
+
+  static override deserialisasi(data: any): KelasLangsung {
+    const kelasLangsung = new KelasLangsung({})
+    const pengonversiAtribut = (dataAtribut: any): AtributLangsung => {
+      return AtributLangsung.deserialisasi(dataAtribut, undefined, (nama, atribut) =>
+        kelasLangsung.validasiNamaAnggota(nama, atribut)
+      )
+    }
+    super.deserialisasi(data, kelasLangsung, pengonversiAtribut)
+    return kelasLangsung
   }
 }

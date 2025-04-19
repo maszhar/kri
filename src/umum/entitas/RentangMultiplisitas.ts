@@ -1,3 +1,5 @@
+import { RentangMultiplisitasPb } from '../proto/kri'
+
 export class RentangMultiplisitas {
   private minimal: number | null = null
   private maksimal: number | null = null
@@ -84,6 +86,20 @@ export class RentangMultiplisitas {
     return new RentangMultiplisitas({
       minimal: data.minimal,
       maksimal: data.maksimal
+    })
+  }
+
+  keProto(): RentangMultiplisitasPb {
+    return {
+      maksimal: this.maksimal === null ? -1 : this.maksimal,
+      minimal: this.minimal === null ? -1 : this.minimal
+    }
+  }
+
+  static dariProto(proto: RentangMultiplisitasPb): RentangMultiplisitas {
+    return new RentangMultiplisitas({
+      maksimal: proto.maksimal,
+      minimal: proto.minimal
     })
   }
 }

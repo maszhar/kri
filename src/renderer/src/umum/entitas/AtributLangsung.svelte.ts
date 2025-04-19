@@ -85,4 +85,20 @@ export class AtributLangsung extends Atribut {
     this.namaLangsung = nama
     this.stringLangsung = super.toString()
   }
+
+  selesaikanDeserialisasi(): void {
+    this.namaLangsung = this.nama
+    this.stringLangsung = super.toString()
+  }
+
+  static override deserialisasi(
+    data: any,
+    _objekLama?: Atribut,
+    validasiNamaBaru?: (nama: string, atribut: Atribut) => void
+  ): AtributLangsung {
+    const atributLangsung = new AtributLangsung({}, validasiNamaBaru!)
+    super.deserialisasi(data, atributLangsung, validasiNamaBaru!)
+    atributLangsung.selesaikanDeserialisasi()
+    return atributLangsung
+  }
 }
