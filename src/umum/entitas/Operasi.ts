@@ -47,6 +47,7 @@ export class Operasi extends IsiProyek {
 
     // parameter
     hasil += '('
+    hasil += this.koleksiParameterOperasi.map((parameter) => parameter.toString()).join(', ')
     hasil += ')'
 
     // properti operasi
@@ -139,7 +140,7 @@ export class Operasi extends IsiProyek {
       indeksSimbolTutupParameter !== -1 &&
       indeksSimbolTutupParameter > indeksSimbolBukaParameter
     ) {
-      const indeksSimbolTitikDua = teksTersisa.indexOf(':')
+      const indeksSimbolTitikDua = teksTersisa.lastIndexOf(':')
 
       if (indeksSimbolTitikDua !== -1 && indeksSimbolTitikDua > indeksSimbolTutupParameter) {
         // deteksi properti operasi
@@ -278,7 +279,36 @@ export class Operasi extends IsiProyek {
         teksTersisa = teksTersisa.slice(0, indeksSimbolTitikDua).trim()
       }
 
+      // parameter
+      const teksParameter = teksTersisa.slice(
+        indeksSimbolBukaParameter + 1,
+        indeksSimbolTutupParameter
+      )
+      const pecahanTeksParameter = teksParameter.split(',')
+
+      let indeksParameter = 0
+      for (const isiTeksParameterMentah of pecahanTeksParameter) {
+        const isiTeksParameter = isiTeksParameterMentah.trim()
+
+        if (this.koleksiParameterOperasi.length < indeksParameter + 1) {
+          this.koleksiParameterOperasi.push(new ParameterOperasi({}))
+        }
+
+        const hasil = this.koleksiParameterOperasi[indeksParameter].aturDariTeks(isiTeksParameter)
+        if (hasil) {
+          indeksParameter++
+        }
+      }
+      if (this.koleksiParameterOperasi.length > indeksParameter) {
+        this.koleksiParameterOperasi.splice(
+          indeksParameter,
+          this.koleksiParameterOperasi.length - indeksParameter
+        )
+      }
+
       teksTersisa = teksTersisa.slice(0, indeksSimbolBukaParameter).trim()
+    } else if (this.koleksiParameterOperasi.length > 0) {
+      this.koleksiParameterOperasi.splice(0, this.koleksiParameterOperasi.length)
     }
 
     const nama = teksTersisa.replaceAll(/[^A-Za-z0-9_]/g, '')
